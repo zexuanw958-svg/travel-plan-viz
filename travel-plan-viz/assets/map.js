@@ -1,6 +1,16 @@
 // Leaflet 地图引擎。纯函数（buildNavLink/routeCoordinates）可单元测试；
 // initTravelMap 需浏览器 + Leaflet (L)。浏览器与 Node 双用。
 
+// HTML 转义，防止 XSS
+function escapeHTML(s) {
+  return String(s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
 // 生成跳转手机地图导航的通用 geo 链接
 function buildNavLink(lat, lng, label) {
   return 'geo:' + lat + ',' + lng + '?q=' + lat + ',' + lng + '(' + encodeURIComponent(label) + ')';
@@ -28,8 +38,8 @@ function initTravelMap(elementId, points) {
       iconAnchor: [14, 14],
     });
     L.marker([p.lat, p.lng], { icon: icon }).addTo(map).bindPopup(
-      '<b>' + (i + 1) + '. ' + p.name + '</b><br>'
-      + (p.time ? p.time + '<br>' : '')
+      '<b>' + (i + 1) + '. ' + escapeHTML(p.name) + '</b><br>'
+      + (p.time ? escapeHTML(p.time) + '<br>' : '')
       + '<a href="' + buildNavLink(p.lat, p.lng, p.name) + '">导航</a>'
     );
   });
