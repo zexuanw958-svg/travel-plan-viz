@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>香港 4 天 3 晚</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Noto+Serif+SC:wght@300;400;600&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy: #1a2744;
+      --navy-light: #243356;
+      --navy-deep: #0f1928;
+      --gold: #c9973a;
+      --gold-light: #e8b84b;
+      --gold-pale: #f0d896;
+      --crimson: #c0392b;
+      --crimson-light: #e74c3c;
+      --ivory: #f8f5ee;
+      --ivory-dark: #ede8dc;
+      --text-dim: rgba(248,245,238,0.6);
+      --text-muted: rgba(248,245,238,0.35);
+      --border-gold: rgba(201,151,58,0.3);
+      --border-gold-bright: rgba(201,151,58,0.6);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--navy-deep);
+      color: var(--ivory);
+      font-family: 'Noto Serif SC', serif;
+      font-weight: 300;
+      line-height: 1.7;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── Atmospheric background ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 50% at 50% -10%, rgba(201,151,58,0.08) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 40% at 80% 100%, rgba(192,57,43,0.06) 0%, transparent 50%),
+        repeating-linear-gradient(
+          90deg,
+          transparent,
+          transparent 39px,
+          rgba(201,151,58,0.04) 39px,
+          rgba(201,151,58,0.04) 40px
+        ),
+        repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 39px,
+          rgba(201,151,58,0.04) 39px,
+          rgba(201,151,58,0.04) 40px
+        );
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .page-wrap {
+      position: relative;
+      z-index: 1;
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 0 0 60px;
+    }
+
+    /* ── HERO HEADER ── */
+    .hero {
+      position: relative;
+      padding: 52px 24px 44px;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '香港';
+      position: absolute;
+      top: -10px;
+      right: -20px;
+      font-family: 'Playfair Display', serif;
+      font-size: 130px;
+      font-weight: 900;
+      color: rgba(201,151,58,0.06);
+      pointer-events: none;
+      line-height: 1;
+      letter-spacing: -4px;
+      white-space: nowrap;
+    }
+    .hero-eyebrow {
+      font-family: 'Courier Prime', monospace;
+      font-size: 11px;
+      letter-spacing: 3px;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 10px;
+      opacity: 0.9;
+    }
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 42px;
+      font-weight: 900;
+      line-height: 1.1;
+      color: var(--ivory);
+      margin-bottom: 6px;
+    }
+    .hero-title span {
+      color: var(--gold);
+      display: block;
+      font-style: italic;
+    }
+    .hero-subtitle {
+      font-family: 'Courier Prime', monospace;
+      font-size: 12px;
+      color: var(--text-dim);
+      letter-spacing: 1.5px;
+      margin-bottom: 28px;
+    }
+    .hero-divider {
+      width: 60px;
+      height: 2px;
+      background: linear-gradient(90deg, var(--gold), transparent);
+      margin-bottom: 28px;
+    }
+
+    /* ── TODO CHECKLIST ── */
+    .todo-section {
+      background: rgba(201,151,58,0.06);
+      border: 1px solid var(--border-gold);
+      border-left: 3px solid var(--gold);
+      border-radius: 4px;
+      padding: 20px;
+      margin-bottom: 4px;
+    }
+    .todo-section-label {
+      font-family: 'Courier Prime', monospace;
+      font-size: 10px;
+      letter-spacing: 2.5px;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .todo-section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border-gold);
+    }
+
+    /* Styles for engine-generated checklist */
+    .pretrip-todo {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .todo-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 10px 12px;
+      background: rgba(15,25,40,0.5);
+      border-radius: 3px;
+      border: 1px solid rgba(201,151,58,0.12);
+      font-size: 13px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .todo-item:hover { background: rgba(201,151,58,0.08); }
+    .todo-item input[type="checkbox"] {
+      margin-top: 2px;
+      flex-shrink: 0;
+      width: 14px;
+      height: 14px;
+      accent-color: var(--gold);
+      cursor: pointer;
+    }
+    .todo-deadline {
+      color: var(--crimson-light);
+      font-family: 'Courier Prime', monospace;
+      font-size: 11px;
+      white-space: nowrap;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      flex-shrink: 0;
+    }
+    .todo-text {
+      color: var(--ivory);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    /* ── SECTION WRAPPER ── */
+    .section {
+      padding: 0 24px;
+      margin-bottom: 36px;
+    }
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .section-num {
+      font-family: 'Courier Prime', monospace;
+      font-size: 10px;
+      color: var(--gold);
+      letter-spacing: 1px;
+      flex-shrink: 0;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--ivory);
+    }
+    .section-line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, var(--border-gold-bright), transparent);
+    }
+
+    /* ── FLIGHTS & HOTELS ── */
+    .travel-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .travel-card {
+      background: linear-gradient(135deg, rgba(26,39,68,0.95), rgba(15,25,40,0.9));
+      border: 1px solid var(--border-gold);
+      border-radius: 6px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      position: relative;
+      overflow: hidden;
+    }
+    .travel-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px;
+      height: 100%;
+      background: var(--gold);
+    }
+    .travel-card.hotel-card::before { background: var(--crimson); }
+    .travel-card-icon {
+      font-size: 22px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .travel-card-body { flex: 1; min-width: 0; }
+    .travel-card-label {
+      font-size: 13px;
+      color: var(--ivory);
+      font-weight: 600;
+      margin-bottom: 3px;
+      line-height: 1.4;
+    }
+    .travel-card-meta {
+      font-family: 'Courier Prime', monospace;
+      font-size: 11px;
+      color: var(--text-dim);
+      letter-spacing: 0.5px;
+    }
+    .booked-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: rgba(201,151,58,0.15);
+      border: 1px solid var(--border-gold-bright);
+      color: var(--gold-light);
+      font-family: 'Courier Prime', monospace;
+      font-size: 10px;
+      letter-spacing: 1px;
+      padding: 2px 8px;
+      border-radius: 2px;
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
+    .booked-badge::before { content: '✓'; font-size: 9px; }
+
+    /* ── MAP ── */
+    .map-section {
+      padding: 0 24px;
+      margin-bottom: 36px;
+    }
+    #map {
+      height: 420px;
+      border-radius: 6px;
+      border: 1px solid var(--border-gold);
+      overflow: hidden;
+    }
+
+    /* Leaflet route-pin styles */
+    .route-pin {
+      background: var(--crimson);
+      border: 2px solid var(--gold);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+    }
+    .route-pin__num {
+      color: #fff;
+      font-family: 'Courier Prime', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    /* ── DAILY TIMELINE ── */
+    .day-block {
+      padding: 0 24px;
+      margin-bottom: 44px;
+    }
+    .day-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+    .day-badge {
+      background: var(--crimson);
+      color: var(--ivory);
+      font-family: 'Courier Prime', monospace;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      padding: 4px 10px;
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+    .day-date {
+      font-family: 'Courier Prime', monospace;
+      font-size: 13px;
+      color: var(--gold);
+      letter-spacing: 0.5px;
+    }
+    .day-line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(192,57,43,0.4), transparent);
+    }
+
+    .timeline {
+      position: relative;
+      padding-left: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 8px;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background: linear-gradient(180deg, var(--gold) 0%, rgba(201,151,58,0.2) 100%);
+    }
+
+    .slot-card {
+      position: relative;
+      margin-bottom: 20px;
+    }
+    .slot-card::before {
+      content: '';
+      position: absolute;
+      left: -23px;
+      top: 14px;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--navy-deep);
+      border: 2px solid var(--gold);
+      z-index: 1;
+    }
+    .slot-period-tag {
+      font-family: 'Courier Prime', monospace;
+      font-size: 9px;
+      letter-spacing: 2px;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .slot-time-tag {
+      color: var(--text-dim);
+      font-size: 11px;
+    }
+
+    .slot-inner {
+      background: linear-gradient(135deg, rgba(26,39,68,0.8), rgba(15,25,40,0.9));
+      border: 1px solid var(--border-gold);
+      border-radius: 6px;
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+    .slot-inner:hover { border-color: var(--border-gold-bright); }
+
+    .slot-photo-wrap {
+      width: 100%;
+      height: 160px;
+      overflow: hidden;
+      position: relative;
+      background: var(--navy-light);
+    }
+    .slot-photo {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.85;
+      transition: opacity 0.3s;
+    }
+    .slot-photo:hover { opacity: 1; }
+    .slot-photo-placeholder {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 40px;
+      opacity: 0.3;
+    }
+
+    .slot-body {
+      padding: 12px 14px;
+    }
+    .slot-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--ivory);
+      margin-bottom: 6px;
+      line-height: 1.3;
+    }
+    .slot-rating {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 6px;
+    }
+    .stars { color: var(--gold); font-size: 12px; letter-spacing: 1px; }
+    .rating-num {
+      font-family: 'Courier Prime', monospace;
+      font-size: 12px;
+      color: var(--gold-pale);
+    }
+    .slot-review {
+      font-size: 12px;
+      color: var(--text-dim);
+      line-height: 1.6;
+      font-style: italic;
+    }
+
+    /* Engine-generated reminder badge */
+    .reminder-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: rgba(192,57,43,0.18);
+      border: 1px solid rgba(192,57,43,0.5);
+      color: #f39c94;
+      font-family: 'Courier Prime', monospace;
+      font-size: 10px;
+      letter-spacing: 0.5px;
+      padding: 3px 8px;
+      border-radius: 2px;
+      margin-top: 8px;
+      display: block;
+      width: fit-content;
+    }
+
+    /* ── MEALS ── */
+    .meals-card {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(201,151,58,0.07);
+      border: 1px solid var(--border-gold);
+      border-radius: 4px;
+      padding: 12px 14px;
+      margin-top: 8px;
+    }
+    .meals-icon { font-size: 20px; flex-shrink: 0; }
+    .meals-label {
+      font-family: 'Courier Prime', monospace;
+      font-size: 9px;
+      letter-spacing: 2px;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 2px;
+    }
+    .meals-food {
+      font-size: 13px;
+      color: var(--ivory);
+      line-height: 1.5;
+    }
+
+    /* ── FOOTER ── */
+    .footer {
+      text-align: center;
+      padding: 32px 24px;
+      font-family: 'Courier Prime', monospace;
+      font-size: 10px;
+      color: var(--text-muted);
+      letter-spacing: 1.5px;
+      border-top: 1px solid var(--border-gold);
+      margin: 0 24px;
+    }
+
+    /* ── Scroll reveal animation ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .reveal {
+      opacity: 0;
+      animation: fadeUp 0.5s ease forwards;
+    }
+    .reveal:nth-child(1) { animation-delay: 0.05s; }
+    .reveal:nth-child(2) { animation-delay: 0.1s; }
+    .reveal:nth-child(3) { animation-delay: 0.15s; }
+    .reveal:nth-child(4) { animation-delay: 0.2s; }
+    .reveal:nth-child(5) { animation-delay: 0.25s; }
+  </style>
+</head>
+<body>
+
+<div class="page-wrap">
+
+  <!-- ① HERO + TODO -->
+  <header class="hero reveal">
+    <div class="hero-eyebrow">Travel Plan · 2026</div>
+    <h1 class="hero-title">香港<span>4 天 3 晚</span></h1>
+    <p class="hero-subtitle">2026.07.01 — 2026.07.04 &nbsp;·&nbsp; HONG KONG SAR</p>
+    <div class="hero-divider"></div>
+
+    <div class="todo-section">
+      <div class="todo-section-label">出发前待办</div>
+      <div id="todo-list"></div>
+    </div>
+  </header>
+
+  <!-- ② FLIGHTS & HOTELS -->
+  <section class="section reveal">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2 class="section-title">航班 &amp; 酒店</h2>
+      <span class="section-line"></span>
+    </div>
+    <div class="travel-cards" id="travel-cards"></div>
+  </section>
+
+  <!-- ③ MAP -->
+  <div class="map-section reveal">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2 class="section-title">行程地图</h2>
+      <span class="section-line"></span>
+    </div>
+    <div id="map"></div>
+  </div>
+
+  <!-- ④⑤ DAILY TIMELINE -->
+  <div id="days-container"></div>
+
+  <footer class="footer">
+    HONG KONG · 4D3N · 2026 &nbsp;·&nbsp; TRAVEL PLAN VISUALIZATION
+  </footer>
+
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     INLINED ENGINE: map.js
+═══════════════════════════════════════════════════════════ -->
+<script>
+// Leaflet 地图引擎。纯函数（buildNavLink/routeCoordinates）可单元测试；
+// initTravelMap 需浏览器 + Leaflet (L)。浏览器与 Node 双用。
+
+// HTML 转义，防止 XSS
+function escapeHTML(s) {
+  return String(s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+// 生成跳转手机地图导航的通用 geo 链接
+function buildNavLink(lat, lng, label) {
+  return 'geo:' + lat + ',' + lng + '?q=' + lat + ',' + lng + '(' + encodeURIComponent(label) + ')';
+}
+
+// 从有序点位提取 [lat,lng] 数组，用于连线
+function routeCoordinates(points) {
+  return points.map(function (p) { return [p.lat, p.lng]; });
+}
+
+// 初始化地图：编号 divIcon 标记、按序虚线路线、点击弹出 名称+时间+导航链接。
+// elementId: 容器 id；points: [{lat, lng, name, time}]（按行程顺序）
+function initTravelMap(elementId, points) {
+  var map = L.map(elementId);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap',
+    maxZoom: 19,
+  }).addTo(map);
+
+  points.forEach(function (p, i) {
+    var icon = L.divIcon({
+      className: 'route-pin',
+      html: '<span class="route-pin__num">' + (i + 1) + '</span>',
+      iconSize: [28, 28],
+      iconAnchor: [14, 14],
+    });
+    L.marker([p.lat, p.lng], { icon: icon }).addTo(map).bindPopup(
+      '<b>' + (i + 1) + '. ' + escapeHTML(p.name) + '</b><br>'
+      + (p.time ? escapeHTML(p.time) + '<br>' : '')
+      + '<a href="' + buildNavLink(p.lat, p.lng, p.name) + '">导航</a>'
+    );
+  });
+
+  var coords = routeCoordinates(points);
+  if (coords.length > 1) {
+    L.polyline(coords, { dashArray: '6 8', weight: 2 }).addTo(map);
+  }
+  map.fitBounds(coords.length ? coords : [[0, 0]], { padding: [30, 30] });
+  return map;
+}
+
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = {
+    buildNavLink: buildNavLink,
+    routeCoordinates: routeCoordinates,
+    initTravelMap: initTravelMap,
+  };
+}
+</script>
+
+<!-- ═══════════════════════════════════════════════════════════
+     INLINED ENGINE: reminders.js
+═══════════════════════════════════════════════════════════ -->
+<script>
+// 出发前提醒：截止日期计算 + 渲染。浏览器与 Node 双用。
+
+// startDateISO: 'YYYY-MM-DD'；items: [{item, leadDays}]
+// 返回按 deadline 升序的 [{item, leadDays, deadline}]，deadline 为 'YYYY-MM-DD'
+// 用 UTC 做日期运算，避免本地时区导致的偏移。
+function computeReminders(startDateISO, items) {
+  return items
+    .map(function (it) {
+      var d = new Date(startDateISO + 'T00:00:00Z');
+      d.setUTCDate(d.getUTCDate() - it.leadDays);
+      return { item: it.item, leadDays: it.leadDays, deadline: d.toISOString().slice(0, 10) };
+    })
+    .sort(function (a, b) {
+      return a.deadline < b.deadline ? -1 : a.deadline > b.deadline ? 1 : 0;
+    });
+}
+
+function escapeHTML(s) {
+  return String(s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function renderChecklistHTML(reminders) {
+  var lis = reminders.map(function (r) {
+    return '<li class="todo-item">'
+      + '<input type="checkbox"> '
+      + '<span class="todo-deadline">' + r.deadline + '前</span> '
+      + '<span class="todo-text">' + escapeHTML(r.item) + '（建议提前' + r.leadDays + '天）</span>'
+      + '</li>';
+  }).join('');
+  return '<ul class="pretrip-todo">' + lis + '</ul>';
+}
+
+function reminderBadgeHTML(leadDays) {
+  return '<span class="reminder-badge">⚠️ 建议提前' + leadDays + '天订</span>';
+}
+
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = {
+    computeReminders: computeReminders,
+    renderChecklistHTML: renderChecklistHTML,
+    reminderBadgeHTML: reminderBadgeHTML,
+  };
+}
+</script>
+
+<!-- ═══════════════════════════════════════════════════════════
+     LEAFLET JS + PAGE DATA + INIT
+═══════════════════════════════════════════════════════════ -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+// ── Trip fixture data ──────────────────────────────────────
+const trip = {
+  title: "香港 4 天 3 晚",
+  startDate: "2026-07-01",
+  flights: [
+    { label: "去程 CA101 北京→香港", code: "CA101", time: "2026-07-01 08:30", booked: true },
+    { label: "返程 CA102 香港→北京", code: "CA102", time: "2026-07-04 20:15", booked: true }
+  ],
+  hotels: [ { name: "尖沙咀凯悦酒店", nights: 3, booked: true } ],
+  reminders: [
+    { item: "往返机票", leadDays: 30 },
+    { item: "迪士尼乐园门票", leadDays: 7 },
+    { item: "米其林餐厅订位", leadDays: 3 }
+  ],
+  days: [
+    { date: "2026-07-01", meals: { food: "尖沙咀车仔面 + 丝袜奶茶" }, slots: [
+      { period:"morning", name:"香港国际机场", time:"10:30", lat:22.308, lng:113.918, photo:"https://images.unsplash.com/photo-1521-hkairport", rating:4.3, review:"入境高效，交通便利", needsBooking:false, leadDays:0 },
+      { period:"noon", name:"尖沙咀星光大道", time:"14:00", lat:22.2934, lng:114.1722, photo:"https://images.unsplash.com/photo-avenue-of-stars", rating:4.4, review:"维港海景与影星手印", needsBooking:false, leadDays:0 },
+      { period:"evening", name:"幻彩咏香江灯光秀", time:"20:00", lat:22.2935, lng:114.1690, photo:"https://images.unsplash.com/photo-symphony-of-lights", rating:4.7, review:"全球最大型灯光音乐汇演", needsBooking:false, leadDays:0 }
+    ]},
+    { date: "2026-07-02", meals: { food: "中环镛记烧鹅" }, slots: [
+      { period:"morning", name:"太平山顶 (山顶缆车)", time:"09:30", lat:22.2759, lng:114.1455, photo:"https://images.unsplash.com/photo-victoria-peak", rating:4.6, review:"俯瞰全港最佳观景台", needsBooking:false, leadDays:0 },
+      { period:"noon", name:"中环石板街", time:"13:00", lat:22.2826, lng:114.1545, photo:"https://images.unsplash.com/photo-central-hk", rating:4.2, review:"old-town 风情小街", needsBooking:false, leadDays:0 },
+      { period:"evening", name:"兰桂坊", time:"19:30", lat:22.2809, lng:114.1556, photo:"https://images.unsplash.com/photo-lan-kwai-fong", rating:4.1, review:"夜生活与酒吧聚集地", needsBooking:false, leadDays:0 }
+    ]},
+    { date: "2026-07-03", meals: { food: "园内大街美式餐厅" }, slots: [
+      { period:"morning", name:"香港迪士尼乐园", time:"09:00", lat:22.3130, lng:114.0413, photo:"https://images.unsplash.com/photo-hk-disney", rating:4.5, review:"经典园区，适合全家", needsBooking:true, leadDays:7 },
+      { period:"evening", name:"迪士尼烟花秀", time:"20:30", lat:22.3130, lng:114.0413, photo:"https://images.unsplash.com/photo-disney-fireworks", rating:4.8, review:"城堡上空的梦幻烟花", needsBooking:false, leadDays:0 }
+    ]},
+    { date: "2026-07-04", meals: { food: "大屿山宝莲寺素斋" }, slots: [
+      { period:"morning", name:"昂坪360缆车", time:"09:00", lat:22.2576, lng:113.9050, photo:"https://images.unsplash.com/photo-ngong-ping", rating:4.4, review:"跨海登山缆车，风景壮丽", needsBooking:false, leadDays:0 },
+      { period:"noon", name:"天坛大佛", time:"11:30", lat:22.2540, lng:113.9050, photo:"https://images.unsplash.com/photo-tian-tan-buddha", rating:4.6, review:"世界最大户外青铜坐佛之一", needsBooking:false, leadDays:0 }
+    ]}
+  ]
+};
+
+// ── Helper: render star rating ────────────────────────────
+function starsHTML(rating) {
+  var full = Math.floor(rating);
+  var half = (rating - full) >= 0.3 ? 1 : 0;
+  var empty = 5 - full - half;
+  return '★'.repeat(full) + (half ? '½' : '') + '☆'.repeat(empty);
+}
+
+// ── Period labels ─────────────────────────────────────────
+var periodLabel = { morning: '上午', noon: '下午', evening: '傍晚/夜晚' };
+var periodEmoji = { morning: '🌅', noon: '☀️', evening: '🌙' };
+
+// ── ① Render todo checklist ──────────────────────────────
+var remindersData = computeReminders(trip.startDate, trip.reminders);
+document.getElementById('todo-list').innerHTML = renderChecklistHTML(remindersData);
+
+// ── ② Render flights & hotels ────────────────────────────
+var travelCardsEl = document.getElementById('travel-cards');
+var cardsHTML = '';
+
+trip.flights.forEach(function(f) {
+  cardsHTML += '<div class="travel-card">'
+    + '<div class="travel-card-icon">✈️</div>'
+    + '<div class="travel-card-body">'
+    +   '<div class="travel-card-label">' + f.label + '</div>'
+    +   '<div class="travel-card-meta">' + f.code + ' &nbsp;·&nbsp; ' + f.time + '</div>'
+    + '</div>'
+    + (f.booked ? '<span class="booked-badge">已预订</span>' : '')
+    + '</div>';
+});
+
+trip.hotels.forEach(function(h) {
+  cardsHTML += '<div class="travel-card hotel-card">'
+    + '<div class="travel-card-icon">🏨</div>'
+    + '<div class="travel-card-body">'
+    +   '<div class="travel-card-label">' + h.name + '</div>'
+    +   '<div class="travel-card-meta">' + h.nights + ' 晚</div>'
+    + '</div>'
+    + (h.booked ? '<span class="booked-badge">已预订</span>' : '')
+    + '</div>';
+});
+
+travelCardsEl.innerHTML = cardsHTML;
+
+// ── ③ Build map points & init Leaflet ────────────────────
+var mapPoints = [];
+trip.days.forEach(function(day) {
+  day.slots.forEach(function(slot) {
+    mapPoints.push({ lat: slot.lat, lng: slot.lng, name: slot.name, time: slot.date + ' ' + slot.time });
+  });
+});
+// attach date to each slot for time display
+trip.days.forEach(function(day) {
+  day.slots.forEach(function(slot) { slot.date = day.date; });
+});
+
+initTravelMap('map', mapPoints);
+
+// ── ④⑤ Render daily timeline ────────────────────────────
+var daysContainer = document.getElementById('days-container');
+var daysHTML = '';
+
+trip.days.forEach(function(day, di) {
+  var dateObj = new Date(day.date + 'T00:00:00Z');
+  var dateStr = day.date;
+  var dayNum = di + 1;
+
+  daysHTML += '<div class="day-block reveal">'
+    + '<div class="day-header">'
+    +   '<span class="day-badge">DAY ' + dayNum + '</span>'
+    +   '<span class="day-date">' + dateStr + '</span>'
+    +   '<span class="day-line"></span>'
+    + '</div>'
+    + '<div class="timeline">';
+
+  day.slots.forEach(function(slot) {
+    var badge = slot.needsBooking ? reminderBadgeHTML(slot.leadDays) : '';
+
+    daysHTML += '<div class="slot-card">'
+      + '<div class="slot-period-tag">'
+      +   (periodEmoji[slot.period] || '') + ' '
+      +   (periodLabel[slot.period] || slot.period)
+      +   ' <span class="slot-time-tag">' + slot.time + '</span>'
+      + '</div>'
+      + '<div class="slot-inner">'
+      +   '<div class="slot-photo-wrap">'
+      +     '<img class="slot-photo" src="' + slot.photo + '" alt="' + slot.name + '" onerror="this.style.display=\'none\'">'
+      +     '<div class="slot-photo-placeholder">🏙️</div>'
+      +   '</div>'
+      +   '<div class="slot-body">'
+      +     '<div class="slot-name">' + slot.name + '</div>'
+      +     '<div class="slot-rating">'
+      +       '<span class="stars">' + starsHTML(slot.rating) + '</span>'
+      +       '<span class="rating-num">' + slot.rating + '</span>'
+      +     '</div>'
+      +     '<div class="slot-review">' + slot.review + '</div>'
+      +     badge
+      +   '</div>'
+      + '</div>'
+      + '</div>';
+  });
+
+  daysHTML += '</div>'; // close .timeline
+
+  // ⑤ Meals
+  daysHTML += '<div class="meals-card">'
+    + '<div class="meals-icon">🍜</div>'
+    + '<div>'
+    +   '<div class="meals-label">今日推荐</div>'
+    +   '<div class="meals-food">' + day.meals.food + '</div>'
+    + '</div>'
+    + '</div>';
+
+  daysHTML += '</div>'; // close .day-block
+});
+
+daysContainer.innerHTML = daysHTML;
+</script>
+
+</body>
+</html>
