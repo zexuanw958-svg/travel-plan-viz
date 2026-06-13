@@ -15,12 +15,21 @@ function computeReminders(startDateISO, items) {
     });
 }
 
+function escapeHTML(s) {
+  return String(s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
 function renderChecklistHTML(reminders) {
   var lis = reminders.map(function (r) {
     return '<li class="todo-item">'
       + '<input type="checkbox"> '
       + '<span class="todo-deadline">' + r.deadline + '前</span> '
-      + '<span class="todo-text">' + r.item + '（建议提前' + r.leadDays + '天）</span>'
+      + '<span class="todo-text">' + escapeHTML(r.item) + '（建议提前' + r.leadDays + '天）</span>'
       + '</li>';
   }).join('');
   return '<ul class="pretrip-todo">' + lis + '</ul>';

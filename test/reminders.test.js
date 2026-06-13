@@ -29,3 +29,11 @@ test('reminderBadgeHTML 输出带提前天数的徽标', () => {
   assert.ok(badge.includes('⚠️'));
   assert.ok(badge.includes('建议提前7天订'));
 });
+
+test('renderChecklistHTML 对 item 文本做 HTML 转义', () => {
+  const html = renderChecklistHTML([
+    { item: '签证 & <保险>', leadDays: 30, deadline: '2026-06-01' },
+  ]);
+  assert.ok(html.includes('签证 &amp; &lt;保险&gt;'));
+  assert.ok(!html.includes('<保险>'));
+});
