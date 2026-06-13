@@ -5,7 +5,10 @@
 ## 每个景点/酒店需采集
 
 - 坐标（lat/lng）：搜索"<名称> 经纬度 / coordinates"，或从地图类结果取。
-- 真实图片 URL：取可公开访问的缩略图链接（优先 Wikimedia Commons 直链，跨域可靠）。
+- 真实图片 URL（**务必能加载**）：
+  - **不要手拼** `upload.wikimedia.org/.../thumb/X/XX/...` 这种带哈希前缀的直链——哈希猜错就 400/404。
+  - 用稳健形式：`https://commons.wikimedia.org/wiki/Special:FilePath/<URL编码的文件名>?width=600`，它会自动重定向到正确缩略图，无需哈希。文件名取自该图在 Commons 的真实文件名。
+  - **每个图片 URL 都要 `curl -s -o /dev/null -w "%{http_code}" -L <url>` 验证返回 200 才用**；非 200（文件不存在等）就换一张真实存在的图，实在没有就留空走 onerror 降级，绝不放已知打不开的链接。
 - 评分：来自点评类来源的概览分（注明是概览，非实时）。
 - 一句话点评：综合调研后用一句中文概括亮点。
 - 营业时间 + 休息日（如"12:30–22:30，周日休"）：搜索"<名称> 营业时间 opening hours"。
