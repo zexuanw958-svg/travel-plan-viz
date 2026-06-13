@@ -511,8 +511,8 @@ git commit -m "feat: SKILL.md 工作流编排"
 
 - [ ] **Step 1: 跑全部单元测试**
 
-Run: `node --test test/`
-Expected: PASS（共 5 个测试：reminders 3 + map 2）
+Run: `node --test test/*.test.js`
+Expected: PASS（共 6 个测试：reminders 4 + map 2）
 
 - [ ] **Step 2: 用样例行程驱动 skill 生成 HTML**
 

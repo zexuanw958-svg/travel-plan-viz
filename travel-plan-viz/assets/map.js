@@ -26,7 +26,7 @@ function routeCoordinates(points) {
 function initTravelMap(elementId, points) {
   var map = L.map(elementId);
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '© OpenStreetMap',
+    attribution: '© OpenStreetMap contributors',
     maxZoom: 19,
   }).addTo(map);
 

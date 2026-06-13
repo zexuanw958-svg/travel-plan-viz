@@ -619,7 +619,7 @@ function routeCoordinates(points) {
 function initTravelMap(elementId, points) {
   var map = L.map(elementId);
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '© OpenStreetMap',
+    attribution: '© OpenStreetMap contributors',
     maxZoom: 19,
   }).addTo(map);
 
@@ -797,12 +797,8 @@ travelCardsEl.innerHTML = cardsHTML;
 var mapPoints = [];
 trip.days.forEach(function(day) {
   day.slots.forEach(function(slot) {
-    mapPoints.push({ lat: slot.lat, lng: slot.lng, name: slot.name, time: slot.date + ' ' + slot.time });
+    mapPoints.push({ lat: slot.lat, lng: slot.lng, name: slot.name, time: day.date + ' ' + slot.time });
   });
-});
-// attach date to each slot for time display
-trip.days.forEach(function(day) {
-  day.slots.forEach(function(slot) { slot.date = day.date; });
 });
 
 initTravelMap('map', mapPoints);

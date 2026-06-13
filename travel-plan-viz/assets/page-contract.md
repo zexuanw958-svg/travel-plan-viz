@@ -47,3 +47,4 @@ const trip = {
 - 单个 `.html` 文件，手机优先、可离线（图片为在线 URL，离线时可截图存档）。
 - `map.js` 与 `reminders.js` 的内容必须内联进 HTML（不外链本地文件），保证单文件自包含。
 - 每趟行程用不同配色以便区分。
+- `escapeHTML` 函数在 `map.js` 与 `reminders.js` 中各自定义一份，属故意重复——两个文件须各自独立（Node require 与浏览器内联均不依赖另一方），维护时请勿合并去重。
