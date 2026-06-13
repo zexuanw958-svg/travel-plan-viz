@@ -101,5 +101,6 @@ travel-plan-viz/
 - **设计步骤解耦（无硬依赖）**：原设计硬调 `frontend-design`，现改为可插拔——优先用 `frontend-design` 或 `huashu-design`（任一已安装），都没有则用 `references/design-guidelines.md` 内置准则。使 skill 可独立分享，不强制先装其他 skill。
 - **跨 Agent 支持**：工具名去 Claude 专属化（联网搜索改用通用说法），可安装到 Claude Code（`~/.claude/skills`）与 OpenAI Codex（`~/.codex/skills`）；其他 Agent 的适配方法与通用提示词见 `references/porting-to-other-agents.md`。
 - **模式 B 增值建议**：已有计划时，除了转成 HTML，还顺手对照"完善行程"维度在对话里给最多 3–4 条克制的可选优化建议（不硬凑、不说教、不阻塞生成）。这是相对"纯提示词转 HTML"玩法的差异化。
+- **响应式统一**：原契约只写"手机优先"未规定桌面，导致各页桌面宽度不一（东京曾只有 460px 窄列）。现明确：手机单列，桌面（≥768px）容器加宽到 ~880–960px 居中、卡片多列网格、地图更宽，必须含 `@media` 断点。
 
 > 这些能力均已写入 `page-contract.md` / `research-guide.md` / `SKILL.md`，并在 `samples/` 的香港、深圳样例中体现。
