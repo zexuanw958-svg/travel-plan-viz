@@ -1072,11 +1072,7 @@ ul.pretrip-todo { list-style: none; display: flex; flex-direction: column; gap: 
         <div class="slot-card">
           <div class="slot-inner">
             <div class="slot-img-wrap">
-              <img
-                src="https://commons.wikimedia.org/wiki/Special:FilePath/Happy_Valley_Park.JPG?width=600"
-                alt="欢乐谷"
-                onerror="this.parentElement.innerHTML='<div class=\'slot-img-fallback\'>🎢</div>'"
-              />
+              <div class="slot-img-fallback">🎢</div>
             </div>
             <div class="slot-body">
               <div class="slot-top">
@@ -1524,7 +1520,7 @@ var trip = {
         { label: "方案B · 东部华侨城", summary: "大鹏半岛自然山野亲水乐园，距市区约1小时，需自驾，门票约¥298" }
       ],
       slots: [
-        { period: "morning", name: "欢乐谷主题乐园", time: "10:00–16:00", lat: 22.536, lng: 113.973, photo: "https://commons.wikimedia.org/wiki/Special:FilePath/Happy_Valley_Park.JPG?width=600", rating: 4.2, review: "华侨城旗下老牌主题乐园，七大主题区集过山车·水上项目·特效剧场，暑期加开特效水秀", openingHours: "周一–五 10:00–19:00，周末 10:00–20:00", ticketPrice: "全天票约¥208，优待票约¥130（参考价）", transport: { mode: "地铁1/2号线世界之窗站A出口步行3分钟", fare: "约¥4", duration: "步行3分钟" }, seasonal: "暑期特效水秀（7–8月加场）", needsBooking: true, leadDays: 3 },
+        { period: "morning", name: "欢乐谷主题乐园", time: "10:00–16:00", lat: 22.536, lng: 113.973, photo: "", rating: 4.2, review: "华侨城旗下老牌主题乐园，七大主题区集过山车·水上项目·特效剧场，暑期加开特效水秀", openingHours: "周一–五 10:00–19:00，周末 10:00–20:00", ticketPrice: "全天票约¥208，优待票约¥130（参考价）", transport: { mode: "地铁1/2号线世界之窗站A出口步行3分钟", fare: "约¥4", duration: "步行3分钟" }, seasonal: "暑期特效水秀（7–8月加场）", needsBooking: true, leadDays: 3 },
         { period: "noon", name: "华强北电子商业街", time: "17:00–19:00", lat: 22.548, lng: 114.094, photo: "https://commons.wikimedia.org/wiki/Special:FilePath/Huaqiangbei%26Shennan_Cross2021.jpg?width=600", rating: 4.1, review: "中国电子元器件集散地，赛格广场云集数码产品，感受深圳科技制造基因", openingHours: "各商场约10:00–21:30", ticketPrice: "免费逛", transport: { mode: "地铁1/7号线华强北站步行即到", fare: "约¥4", duration: "即达" }, needsBooking: false, leadDays: 0 },
         { period: "evening", name: "蛇口海上世界", time: "19:30–21:30", lat: 22.484, lng: 113.908, photo: "https://commons.wikimedia.org/wiki/Special:FilePath/Minghua_ship_at_Shekou_Seaworld_2018-10-12_2.jpg?width=600", rating: 4.3, review: "停泊大型邮轮改造的文创商业区，夜间灯光迷人，酒吧餐厅林立，深圳夜生活中心之一", openingHours: "全天开放，夜间更热闹", ticketPrice: "免费进入", transport: { mode: "地铁2号线海上世界站步行5分钟", fare: "约¥4", duration: "步行5分钟" }, needsBooking: false, leadDays: 0 }
       ],
