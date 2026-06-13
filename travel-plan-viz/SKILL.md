@@ -5,7 +5,7 @@ description: 把旅行行程做成美观、可离线、手机优先的单文件 
 
 # 旅行计划可视化
 
-把一趟旅行变成单文件 HTML 页面：交互地图、每日时间轴、出发前订票提醒。机械逻辑用自带引擎（`assets/map.js`、`assets/reminders.js`），美学交给 frontend-design。
+把一趟旅行变成单文件 HTML 页面：交互地图、每日时间轴、出发前订票提醒。机械逻辑用自带引擎（`assets/map.js`、`assets/reminders.js`），美学交给设计步骤（`frontend-design` / `huashu-design`，或内置准则兜底）。
 
 ## 第一步：判断模式
 
