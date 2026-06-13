@@ -1,0 +1,1729 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>东京 5天4晚 · 行程计划</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500;700;900&family=Bebas+Neue&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+/* ── Design Tokens ─────────────────────────────────── */
+:root {
+  --bg:         #f8f8f6;
+  --bg-card:    #ffffff;
+  --bg-section: #f2f2ef;
+  --ink:        #0d0d1a;
+  --ink-mid:    #2a2a3d;
+  --ink-soft:   #6b6b82;
+  --indigo:     #1a237e;
+  --indigo-lt:  #3949ab;
+  --sakura:     #e91e63;
+  --sakura-lt:  #ff4081;
+  --teal:       #00838f;
+  --teal-lt:    #00acc1;
+  --amber:      #f59e0b;
+  --morning:    #e3f2fd;
+  --noon:       #fce4ec;
+  --evening:    #ede7f6;
+  --border:     rgba(26,35,126,0.10);
+  --shadow:     0 2px 16px rgba(26,35,126,0.08);
+  --radius:     14px;
+  --radius-sm:  8px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Zen Kaku Gothic New', sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  font-size: 14px;
+  line-height: 1.65;
+  /* Subtle grid texture */
+  background-image:
+    linear-gradient(rgba(26,35,126,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(26,35,126,0.03) 1px, transparent 1px);
+  background-size: 24px 24px;
+  min-height: 100vh;
+}
+
+/* ── Layout wrapper ─────────────────────────────────── */
+.page-wrap {
+  max-width: 460px;
+  margin: 0 auto;
+  padding: 0 0 60px;
+}
+
+/* ── Hero Header ─────────────────────────────────────── */
+.hero {
+  background: var(--indigo);
+  color: #fff;
+  padding: 48px 24px 36px;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -40px; right: -40px;
+  width: 200px; height: 200px;
+  border-radius: 50%;
+  background: rgba(233,30,99,0.18);
+  pointer-events: none;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: -60px; left: -20px;
+  width: 160px; height: 160px;
+  border-radius: 50%;
+  background: rgba(0,131,143,0.15);
+  pointer-events: none;
+}
+/* Sakura petal decorations */
+.hero-petals {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.petal {
+  position: absolute;
+  width: 8px; height: 10px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 50% 0 50% 0;
+  transform: rotate(45deg);
+}
+.petal:nth-child(1) { top: 15%; left: 12%; width: 12px; height: 14px; opacity: 0.12; }
+.petal:nth-child(2) { top: 28%; right: 18%; opacity: 0.08; }
+.petal:nth-child(3) { top: 60%; left: 25%; width: 6px; height: 8px; opacity: 0.10; }
+.petal:nth-child(4) { bottom: 20%; right: 8%; width: 10px; height: 12px; opacity: 0.09; }
+.petal:nth-child(5) { top: 45%; right: 35%; opacity: 0.07; }
+
+.hero-eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--sakura-lt);
+  margin-bottom: 8px;
+}
+.hero-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 56px;
+  letter-spacing: 0.04em;
+  line-height: 0.95;
+  color: #fff;
+  position: relative;
+  z-index: 1;
+}
+.hero-title span {
+  color: var(--sakura-lt);
+}
+.hero-dates {
+  margin-top: 14px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  position: relative;
+  z-index: 1;
+}
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.20);
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-size: 12px;
+  color: rgba(255,255,255,0.90);
+  font-weight: 500;
+}
+
+/* ── Section container ───────────────────────────────── */
+.section {
+  margin: 0 12px 16px;
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 20px 12px;
+  border-bottom: 1px solid var(--border);
+}
+.section-icon {
+  width: 32px; height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+.section-icon.indigo { background: rgba(26,35,126,0.10); }
+.section-icon.sakura { background: rgba(233,30,99,0.10); }
+.section-icon.teal   { background: rgba(0,131,143,0.10); }
+.section-icon.amber  { background: rgba(245,158,11,0.10); }
+.section-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 22px;
+  letter-spacing: 0.05em;
+  color: var(--indigo);
+}
+.section-body {
+  padding: 16px 20px;
+}
+
+/* ── Checklist ───────────────────────────────────────── */
+.checklist-wrap {
+  background: linear-gradient(135deg, var(--indigo) 0%, #283593 100%);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin: 12px 12px 16px;
+  box-shadow: 0 4px 20px rgba(26,35,126,0.25);
+}
+.checklist-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 20px;
+  letter-spacing: 0.06em;
+  color: #fff;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.pretrip-todo {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.todo-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 10px;
+  padding: 10px 14px;
+}
+.todo-item input[type="checkbox"] {
+  width: 17px; height: 17px;
+  accent-color: var(--sakura-lt);
+  margin-top: 1px;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+.todo-deadline {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--sakura-lt);
+  font-weight: 500;
+  white-space: nowrap;
+  flex-shrink: 0;
+  line-height: 1.8;
+}
+.todo-text {
+  font-size: 13px;
+  color: rgba(255,255,255,0.90);
+  line-height: 1.5;
+}
+
+/* ── Pre-trip Info ───────────────────────────────────── */
+.info-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.info-row {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+.info-row-icon {
+  font-size: 18px;
+  flex-shrink: 0;
+  width: 28px;
+  text-align: center;
+  margin-top: 1px;
+}
+.info-row-body {}
+.info-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.10em;
+  color: var(--sakura);
+  margin-bottom: 3px;
+}
+.info-text {
+  font-size: 13px;
+  color: var(--ink-mid);
+  line-height: 1.6;
+}
+.typhoon-alert {
+  background: linear-gradient(135deg, rgba(233,30,99,0.08), rgba(233,30,99,0.04));
+  border-left: 3px solid var(--sakura);
+  border-radius: 0 8px 8px 0;
+  padding: 10px 14px;
+  margin-top: 8px;
+  font-size: 12.5px;
+  color: var(--ink-mid);
+  line-height: 1.55;
+}
+.app-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 4px;
+}
+.pill {
+  background: rgba(26,35,126,0.07);
+  color: var(--indigo);
+  border-radius: 20px;
+  padding: 3px 10px;
+  font-size: 12px;
+  font-weight: 500;
+  border: 1px solid rgba(26,35,126,0.12);
+}
+.pill.teal { background: rgba(0,131,143,0.07); color: var(--teal); border-color: rgba(0,131,143,0.15); }
+.pill.sakura { background: rgba(233,30,99,0.07); color: var(--sakura); border-color: rgba(233,30,99,0.15); }
+
+/* ── Flights ─────────────────────────────────────────── */
+.flight-candidate {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 14px;
+  background: var(--bg-section);
+  border-radius: var(--radius-sm);
+  border-left: 3px solid var(--teal);
+  margin-bottom: 10px;
+}
+.flight-candidate:last-child { margin-bottom: 0; }
+.flight-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.flight-label {
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--indigo);
+}
+.flight-tag {
+  font-size: 10px;
+  font-family: 'DM Mono', monospace;
+  background: rgba(0,131,143,0.10);
+  color: var(--teal);
+  border: 1px solid rgba(0,131,143,0.18);
+  border-radius: 4px;
+  padding: 2px 6px;
+  white-space: nowrap;
+}
+.flight-time {
+  font-size: 12.5px;
+  color: var(--ink-mid);
+  font-weight: 500;
+}
+.flight-note {
+  font-size: 11.5px;
+  color: var(--ink-soft);
+  line-height: 1.45;
+}
+
+/* ── Hotels ──────────────────────────────────────────── */
+.hotel-area {
+  margin-bottom: 18px;
+}
+.hotel-area:last-child { margin-bottom: 0; }
+.hotel-area-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 18px;
+  letter-spacing: 0.05em;
+  color: var(--indigo);
+  margin-bottom: 4px;
+}
+.hotel-area-reason {
+  font-size: 12px;
+  color: var(--ink-soft);
+  margin-bottom: 10px;
+  line-height: 1.5;
+}
+.hotel-options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.hotel-option {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 10px 12px;
+  background: var(--bg-section);
+  border-radius: var(--radius-sm);
+}
+.hotel-tier {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  border-radius: 4px;
+  padding: 2px 7px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.tier-economy { background: rgba(0,131,143,0.10); color: var(--teal); }
+.tier-mid     { background: rgba(26,35,126,0.10); color: var(--indigo-lt); }
+.tier-luxury  { background: rgba(233,30,99,0.10); color: var(--sakura); }
+.hotel-body {}
+.hotel-name {
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--ink);
+}
+.hotel-price {
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  color: var(--teal);
+  font-weight: 500;
+  margin: 2px 0;
+}
+.hotel-note {
+  font-size: 11.5px;
+  color: var(--ink-soft);
+  line-height: 1.4;
+}
+
+/* ── Disclaimer ──────────────────────────────────────── */
+.disclaimer-box {
+  background: linear-gradient(135deg, rgba(245,158,11,0.06), rgba(245,158,11,0.02));
+  border: 1px solid rgba(245,158,11,0.25);
+  border-left: 4px solid var(--amber);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  margin: 12px 12px 16px;
+  font-size: 11.5px;
+  color: #5a4a00;
+  line-height: 1.65;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+.disclaimer-icon {
+  font-size: 18px;
+  flex-shrink: 0;
+  margin-top: -1px;
+}
+
+/* ── Map ─────────────────────────────────────────────── */
+.map-section {
+  margin: 0 12px 16px;
+}
+.map-section .section-header {
+  background: var(--bg-card);
+  border-radius: var(--radius) var(--radius) 0 0;
+  border: 1px solid var(--border);
+  border-bottom: none;
+  padding: 14px 20px 12px;
+}
+#map {
+  height: 380px;
+  border-radius: 0 0 var(--radius) var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-top: none;
+}
+
+/* Leaflet pin override */
+.route-pin {
+  background: var(--sakura);
+  border: 2px solid #fff;
+  border-radius: 50%;
+  box-shadow: 0 2px 8px rgba(233,30,99,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.route-pin__num {
+  color: #fff;
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+/* ── Day blocks ──────────────────────────────────────── */
+.day-block {
+  margin: 0 12px 24px;
+}
+.day-header {
+  background: var(--indigo);
+  border-radius: var(--radius) var(--radius) 0 0;
+  padding: 14px 20px 12px;
+  position: relative;
+  overflow: hidden;
+}
+.day-header::after {
+  content: '';
+  position: absolute;
+  bottom: -1px; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--sakura), var(--teal));
+}
+.day-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  color: rgba(255,255,255,0.55);
+  text-transform: uppercase;
+  margin-bottom: 3px;
+}
+.day-title-row {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+.day-weekday {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 34px;
+  color: #fff;
+  letter-spacing: 0.03em;
+  line-height: 1;
+}
+.day-theme {
+  font-size: 13px;
+  color: rgba(255,255,255,0.75);
+  font-weight: 500;
+}
+.day-tips-banner {
+  background: rgba(255,255,255,0.08);
+  border-left: 3px solid var(--sakura-lt);
+  margin: 0;
+  padding: 8px 20px;
+  font-size: 12px;
+  color: rgba(255,255,255,0.75);
+  line-height: 1.5;
+}
+
+/* ── Slot card ───────────────────────────────────────── */
+.slot-card {
+  background: var(--bg-card);
+  border-left: 1px solid var(--border);
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  position: relative;
+}
+.slot-card:last-of-type {
+  border-radius: 0;
+}
+.slot-period-bar {
+  height: 3px;
+  width: 100%;
+}
+.period-morning .slot-period-bar { background: linear-gradient(90deg, #64b5f6, #29b6f6); }
+.period-noon    .slot-period-bar { background: linear-gradient(90deg, var(--sakura), #ff80ab); }
+.period-evening .slot-period-bar { background: linear-gradient(90deg, var(--indigo-lt), var(--teal)); }
+
+.slot-img-wrap {
+  position: relative;
+  width: 100%;
+  height: 180px;
+  background: #e8eaf6;
+  overflow: hidden;
+}
+.slot-img-wrap img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.slot-img-wrap.img-fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 56px;
+  background: linear-gradient(135deg, #e8eaf6, #fce4ec);
+}
+.slot-period-label {
+  position: absolute;
+  top: 10px;
+  left: 12px;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  padding: 3px 9px;
+  border-radius: 20px;
+  backdrop-filter: blur(6px);
+}
+.period-morning  .slot-period-label { background: rgba(100,181,246,0.85); color: #0d47a1; }
+.period-noon     .slot-period-label { background: rgba(233,30,99,0.85);   color: #fff; }
+.period-evening  .slot-period-label { background: rgba(26,35,126,0.85);   color: #fff; }
+
+.slot-body {
+  padding: 14px 16px 16px;
+}
+.slot-name-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+.slot-name {
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--ink);
+  line-height: 1.3;
+  flex: 1;
+}
+.slot-rating {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  background: rgba(245,158,11,0.10);
+  border-radius: 6px;
+  padding: 2px 7px;
+  flex-shrink: 0;
+}
+.slot-rating-star { color: var(--amber); font-size: 12px; }
+.slot-rating-num { font-family: 'DM Mono', monospace; font-size: 12px; font-weight: 500; color: #92400e; }
+
+.slot-time {
+  font-family: 'DM Mono', monospace;
+  font-size: 11.5px;
+  color: var(--teal);
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+.slot-review {
+  font-size: 13px;
+  color: var(--ink-mid);
+  line-height: 1.6;
+  margin-bottom: 10px;
+}
+.reminder-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: linear-gradient(135deg, rgba(233,30,99,0.12), rgba(233,30,99,0.06));
+  border: 1px solid rgba(233,30,99,0.25);
+  color: var(--sakura);
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  display: block;
+  width: fit-content;
+}
+.slot-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.meta-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 7px;
+}
+.meta-icon {
+  font-size: 13px;
+  flex-shrink: 0;
+  width: 18px;
+  text-align: center;
+  margin-top: 0.5px;
+}
+.meta-text {
+  font-size: 12px;
+  color: var(--ink-mid);
+  line-height: 1.5;
+}
+.meta-label {
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+.seasonal-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: linear-gradient(135deg, rgba(0,131,143,0.10), rgba(0,131,143,0.05));
+  border: 1px solid rgba(0,131,143,0.20);
+  color: var(--teal);
+  border-radius: 6px;
+  padding: 3px 9px;
+  font-size: 11.5px;
+  font-weight: 600;
+  margin-top: 4px;
+  width: fit-content;
+}
+
+/* ── Dining card ─────────────────────────────────────── */
+.dining-section {
+  background: linear-gradient(135deg, rgba(0,131,143,0.05), rgba(0,172,193,0.03));
+  border-top: 1px dashed rgba(0,131,143,0.20);
+  padding: 12px 16px;
+}
+.dining-header {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.10em;
+  color: var(--teal);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.dining-item {
+  margin-bottom: 10px;
+}
+.dining-item:last-child { margin-bottom: 0; }
+.dining-meal-row {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 4px;
+}
+.dining-meal-badge {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  background: var(--teal);
+  color: #fff;
+  border-radius: 4px;
+  padding: 2px 7px;
+}
+.dining-place {
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--ink);
+}
+.dining-hours {
+  font-size: 11px;
+  color: var(--ink-soft);
+  margin-bottom: 6px;
+  font-family: 'DM Mono', monospace;
+}
+.dish-list {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.dish-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 12.5px;
+}
+.dish-name { color: var(--ink-mid); }
+.dish-price {
+  font-family: 'DM Mono', monospace;
+  color: var(--sakura);
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* ── Day block footer (closes the card group) ──────── */
+.day-block-footer {
+  height: 4px;
+  background: linear-gradient(90deg, var(--indigo), var(--teal));
+  border-radius: 0 0 var(--radius) var(--radius);
+  border-left: 1px solid var(--border);
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+/* ── Global Tips ─────────────────────────────────────── */
+.tips-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.tip-item {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+.tip-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 20px;
+  color: var(--sakura);
+  line-height: 1;
+  flex-shrink: 0;
+  width: 20px;
+  text-align: center;
+  margin-top: -1px;
+}
+.tip-text {
+  font-size: 13px;
+  color: var(--ink-mid);
+  line-height: 1.6;
+}
+
+/* ── Footer ──────────────────────────────────────────── */
+.page-footer {
+  text-align: center;
+  padding: 20px 24px 32px;
+  font-size: 11px;
+  color: var(--ink-soft);
+  line-height: 1.5;
+}
+.footer-divider {
+  width: 40px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--sakura), var(--teal));
+  border-radius: 2px;
+  margin: 0 auto 14px;
+}
+
+/* ── Utility ─────────────────────────────────────────── */
+.spacer { height: 16px; }
+.divider {
+  height: 1px;
+  background: var(--border);
+  margin: 12px 0;
+}
+</style>
+</head>
+<body>
+
+<div class="page-wrap">
+
+  <!-- ① HERO + TITLE ──────────────────────────────── -->
+  <div class="hero">
+    <div class="hero-petals">
+      <div class="petal"></div><div class="petal"></div>
+      <div class="petal"></div><div class="petal"></div>
+      <div class="petal"></div>
+    </div>
+    <div class="hero-eyebrow">✈ 行程计划 · 北京出发</div>
+    <div class="hero-title">东<span>京</span><br>5天4晚</div>
+    <div class="hero-dates">
+      <div class="hero-badge">📅 2026-09-10 周四</div>
+      <div class="hero-badge">→ 09-14 周一</div>
+      <div class="hero-badge">🗾 Tokyo, Japan</div>
+    </div>
+  </div>
+
+  <!-- ① CHECKLIST ────────────────────────────────── -->
+  <div class="spacer"></div>
+  <div class="checklist-wrap">
+    <div class="checklist-title">📋 出发前待办清单</div>
+    <div id="checklist-container"></div>
+  </div>
+
+  <!-- ② PRE-TRIP INFO ────────────────────────────── -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon sakura">☀️</div>
+      <div class="section-title">行前须知</div>
+    </div>
+    <div class="section-body">
+      <div class="info-grid">
+        <div class="info-row">
+          <div class="info-row-icon">🌡️</div>
+          <div class="info-row-body">
+            <div class="info-label">9月天气</div>
+            <div class="info-text">9月上中旬平均28°C / 22°C，闷热潮湿；上午多晴，午后至傍晚偶有短时阵雨</div>
+            <div class="typhoon-alert">⚠️ 台风警告：9月为台风季尾声，出发前3天起关注日本气象厅（JMA）预警；台风登陆时公共交通与景点可能关闭，建议预留弹性日</div>
+          </div>
+        </div>
+        <div class="info-row">
+          <div class="info-row-icon">👕</div>
+          <div class="info-row-body">
+            <div class="info-label">穿搭建议</div>
+            <div class="info-text">短袖短裤为主 + 轻薄防晒衣 + 折叠晴雨伞；室内空调较冷，随身备一件薄外套；迪士尼海洋可能全天步行，推荐运动鞋</div>
+          </div>
+        </div>
+        <div class="info-row">
+          <div class="info-row-icon">💳</div>
+          <div class="info-row-body">
+            <div class="info-label">支付方式</div>
+            <div class="info-text">推荐 Suica（西瓜卡）：Apple/华为钱包可添加，覆盖东京地铁/JR/公交/便利店；市区景点间JR Pass不划算，建议按需买 IC 卡即可；另备约2000–3000日元现金</div>
+          </div>
+        </div>
+        <div class="info-row">
+          <div class="info-row-icon">📱</div>
+          <div class="info-row-body">
+            <div class="info-label">必备 App</div>
+            <div class="app-pills">
+              <span class="pill">Google Maps</span>
+              <span class="pill teal">Yahoo!乗換案内</span>
+              <span class="pill sakura">迪士尼 App</span>
+              <span class="pill">teamLab 官网</span>
+              <span class="pill teal">日本气象厅</span>
+            </div>
+          </div>
+        </div>
+        <div class="info-row">
+          <div class="info-row-icon">🎟️</div>
+          <div class="info-row-body">
+            <div class="info-label">购票时机</div>
+            <div class="info-text">迪士尼海洋：官网最迟7天前购票，旺季提前2周；teamLab Planets：官网/Klook提前3–5天预约；热门餐厅建议出发前提前预约</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ③ FLIGHTS ───────────────────────────────────── -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon teal">✈️</div>
+      <div class="section-title">航班参考</div>
+    </div>
+    <div class="section-body">
+      <p style="font-size:12px;color:var(--ink-soft);margin-bottom:12px;">以下为参考班次，<strong style="color:var(--teal)">待选 · 请自行前往航空公司官网核实预订</strong>，价格仅为区间参考</p>
+      <div id="flights-container"></div>
+    </div>
+  </div>
+
+  <!-- ④ HOTELS ────────────────────────────────────── -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon indigo">🏨</div>
+      <div class="section-title">住宿推荐</div>
+    </div>
+    <div class="section-body">
+      <div id="hotels-container"></div>
+    </div>
+  </div>
+
+  <!-- ⑤ DISCLAIMER ───────────────────────────────── -->
+  <div class="disclaimer-box">
+    <div class="disclaimer-icon">⚠️</div>
+    <div id="disclaimer-text"></div>
+  </div>
+
+  <!-- ⑥ MAP ──────────────────────────────────────── -->
+  <div class="map-section">
+    <div class="section-header" style="background:var(--bg-card);border-radius:var(--radius) var(--radius) 0 0;border:1px solid var(--border);border-bottom:none;">
+      <div class="section-icon sakura">🗺️</div>
+      <div class="section-title">行程地图</div>
+    </div>
+    <div id="map" style="height:380px;border-radius:0 0 var(--radius) var(--radius);overflow:hidden;border:1px solid var(--border);border-top:none;"></div>
+  </div>
+
+  <!-- ⑦⑧ DAILY TIMELINE ──────────────────────────── -->
+  <div id="timeline-container"></div>
+
+  <!-- ⑨ GLOBAL TIPS ───────────────────────────────── -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon sakura">💡</div>
+      <div class="section-title">全程实用贴士</div>
+    </div>
+    <div class="section-body">
+      <div class="tips-list" id="tips-container"></div>
+    </div>
+  </div>
+
+  <!-- FOOTER ─────────────────────────────────────── -->
+  <div class="page-footer">
+    <div class="footer-divider"></div>
+    <div>东京 5天4晚 · 2026年9月10日–14日</div>
+    <div style="margin-top:4px;color:#aaa;">信息仅供参考，出行前请务必核实</div>
+  </div>
+
+</div><!-- .page-wrap -->
+
+<!-- ── Leaflet JS ──────────────────────────────────── -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<!-- ── map.js (inlined verbatim) ─────────────────────── -->
+<script>
+// Leaflet 地图引擎。纯函数（buildNavLink/routeCoordinates）可单元测试；
+// initTravelMap 需浏览器 + Leaflet (L)。浏览器与 Node 双用。
+
+// HTML 转义，防止 XSS
+function escapeHTML(s) {
+  return String(s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+// 生成跳转手机地图导航的通用 geo 链接
+function buildNavLink(lat, lng, label) {
+  return 'geo:' + lat + ',' + lng + '?q=' + lat + ',' + lng + '(' + encodeURIComponent(label) + ')';
+}
+
+// 从有序点位提取 [lat,lng] 数组，用于连线
+function routeCoordinates(points) {
+  return points.map(function (p) { return [p.lat, p.lng]; });
+}
+
+// 初始化地图：编号 divIcon 标记、按序虚线路线、点击弹出 名称+时间+导航链接。
+// elementId: 容器 id；points: [{lat, lng, name, time}]（按行程顺序）
+function initTravelMap(elementId, points) {
+  var map = L.map(elementId);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap contributors',
+    maxZoom: 19,
+  }).addTo(map);
+
+  points.forEach(function (p, i) {
+    var icon = L.divIcon({
+      className: 'route-pin',
+      html: '<span class="route-pin__num">' + (i + 1) + '</span>',
+      iconSize: [28, 28],
+      iconAnchor: [14, 14],
+    });
+    L.marker([p.lat, p.lng], { icon: icon }).addTo(map).bindPopup(
+      '<b>' + (i + 1) + '. ' + escapeHTML(p.name) + '</b><br>'
+      + (p.time ? escapeHTML(p.time) + '<br>' : '')
+      + '<a href="' + buildNavLink(p.lat, p.lng, p.name) + '">导航</a>'
+    );
+  });
+
+  var coords = routeCoordinates(points);
+  if (coords.length > 1) {
+    L.polyline(coords, { dashArray: '6 8', weight: 2 }).addTo(map);
+  }
+  map.fitBounds(coords.length ? coords : [[0, 0]], { padding: [30, 30] });
+  return map;
+}
+
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = {
+    buildNavLink: buildNavLink,
+    routeCoordinates: routeCoordinates,
+    initTravelMap: initTravelMap,
+  };
+}
+</script>
+
+<!-- ── reminders.js (inlined verbatim) ───────────────── -->
+<script>
+// 出发前提醒：截止日期计算 + 渲染。浏览器与 Node 双用。
+
+// startDateISO: 'YYYY-MM-DD'；items: [{item, leadDays}]
+// 返回按 deadline 升序的 [{item, leadDays, deadline}]，deadline 为 'YYYY-MM-DD'
+// 用 UTC 做日期运算，避免本地时区导致的偏移。
+function computeReminders(startDateISO, items) {
+  return items
+    .map(function (it) {
+      var d = new Date(startDateISO + 'T00:00:00Z');
+      d.setUTCDate(d.getUTCDate() - it.leadDays);
+      return { item: it.item, leadDays: it.leadDays, deadline: d.toISOString().slice(0, 10) };
+    })
+    .sort(function (a, b) {
+      return a.deadline < b.deadline ? -1 : a.deadline > b.deadline ? 1 : 0;
+    });
+}
+
+function escapeHTML(s) {
+  return String(s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function renderChecklistHTML(reminders) {
+  var lis = reminders.map(function (r) {
+    return '<li class="todo-item">'
+      + '<input type="checkbox"> '
+      + '<span class="todo-deadline">' + r.deadline + '前</span> '
+      + '<span class="todo-text">' + escapeHTML(r.item) + '（建议提前' + r.leadDays + '天）</span>'
+      + '</li>';
+  }).join('');
+  return '<ul class="pretrip-todo">' + lis + '</ul>';
+}
+
+function reminderBadgeHTML(leadDays) {
+  return '<span class="reminder-badge">⚠️ 建议提前' + leadDays + '天订</span>';
+}
+
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = {
+    computeReminders: computeReminders,
+    renderChecklistHTML: renderChecklistHTML,
+    reminderBadgeHTML: reminderBadgeHTML,
+  };
+}
+</script>
+
+<!-- ── Trip Data + Render ─────────────────────────────── -->
+<script>
+const trip = {
+  title: "东京 5 天 4 晚",
+  startDate: "2026-09-10",
+  colorScheme: "indigo-sakura",
+
+  preTrip: {
+    weather: {
+      summary: "9月上中旬平均28°C / 22°C，闷热潮湿；上午多晴，午后至傍晚偶有短时阵雨",
+      typhoon: "9月为台风季尾声，出发前3天起关注日本气象厅（JMA）预警；台风登陆时公共交通与景点可能关闭，建议预留弹性日"
+    },
+    packing: "短袖短裤为主 + 轻薄防晒衣 + 折叠晴雨伞；室内空调较冷，随身备一件薄外套；迪士尼海洋可能全天步行，推荐运动鞋",
+    payment: "推荐 Suica（西瓜卡）：Apple/华为钱包可添加，覆盖东京地铁/JR/公交/便利店；市区景点间JR Pass不划算，建议按需买 IC 卡即可；另备约2000–3000日元现金",
+    apps: ["Google Maps（地铁路线）", "Yahoo!乗換案内（换乘）", "东京迪士尼 App（等待时间+餐厅预约）", "teamLab 官网预约", "日本气象厅 App（台风监测）"],
+    ticketTip: "迪士尼海洋：官网最迟7天前购票，旺季提前2周；teamLab Planets：官网/Klook提前3–5天预约；热门餐厅建议出发前提前预约"
+  },
+
+  flights: {
+    booked: [],
+    candidates: [
+      { label: "国航 CA183", code: "CA183", time: "北京PEK 08:00 → 东京NRT 12:30", note: "波音737，直飞，约3.5h，参考¥1800–3500" },
+      { label: "全日空 NH906", code: "NH906", time: "北京PEK 10:10 → 东京HND 14:10", note: "波音787，直飞，约4h，参考¥2200–4500，羽田更近市区" },
+      { label: "日航 JL780", code: "JL780", time: "北京PEK 09:00 → 东京NRT 13:10", note: "波音787，直飞，约4h，参考¥2000–4000" },
+      { label: "海南航空 HU7917", code: "HU7917", time: "北京PEK 07:30 → 东京NRT 12:00", note: "波音737，直飞，参考¥1500–2800，性价比较高" },
+      { label: "春秋航空 9C6892", code: "9C6892", time: "北京PKX 06:40 → 东京NRT 11:10", note: "空客A320，直飞，低成本，参考¥800–1800，大兴机场出发" }
+    ]
+  },
+
+  hotelAreas: [
+    {
+      area: "浅草/上野",
+      reason: "本次行程覆盖浅草寺、上野、晴空塔，住此区步行可达多个景点；地铁连通全城，性价比高",
+      options: [
+        { tier: "经济", name: "KHAOSAN TOKYO LABORATORY", priceRange: "约¥200–350/晚", note: "浅草核心区背包旅馆，步行至雷门约5分钟" },
+        { tier: "中档", name: "东武酒店 Levant 东京", priceRange: "约¥600–900/晚", note: "锦系町站直达，近晴空塔，设施新" },
+        { tier: "高端", name: "The Gate Hotel Asakusa Kaminarimon", priceRange: "约¥1500–2500/晚", note: "雷门对面，房间可俯瞰浅草街景" }
+      ]
+    },
+    {
+      area: "新宿",
+      reason: "交通枢纽，JR/地铁/高速巴士汇聚，去明治神宫/原宿/涩谷最快；购物娱乐资源丰富",
+      options: [
+        { tier: "经济", name: "新宿 9h 旅馆", priceRange: "约¥250–400/晚", note: "胶囊酒店，设计感强，位置优越" },
+        { tier: "中档", name: "新宿华盛顿酒店", priceRange: "约¥700–1100/晚", note: "新宿站步行8分钟，商务型，交通便利" },
+        { tier: "高端", name: "Park Hyatt Tokyo", priceRange: "约¥3500–6000/晚", note: "西新宿52–55楼，《迷失东京》取景地，俯瞰富士山" }
+      ]
+    }
+  ],
+
+  disclaimer: "本页全部信息（天气、航班、酒店、餐厅、景点、门票、价格、营业时间、评分、活动等）均为 AI 基于公开资料整理的参考建议，可能不准确或已过时，不保证与实时情况一致；请务必在官方渠道、订票订房平台、地图 App 上核实后再做决定或前往。航班信息仅供参考，请以各航空公司官网为准。",
+
+  tips: [
+    "9月上午凉爽，户外景点优先安排上午10点前；午后阳光强烈，可转室内（迪士尼/teamLab/商场）",
+    "Suica 卡覆盖全部公共交通，无需频繁购票；首次充值约2000日元够用2–3天",
+    "台风预警时（警戒级以上）：关注JMA官网，迪士尼等景区会公告临时关闭；提前看好室内备选",
+    "便利店（7-Eleven/全家/罗森）可热食、打印、充电，紧急购物首选",
+    "餐厅避开12:00–13:30 和 18:30–20:00 高峰，排队时间减半",
+    "涩谷十字路口人多，拍照建议去楼上星巴克或SHIBUYA SKY俯拍效果更佳"
+  ],
+
+  reminders: [
+    { item: "北京→东京往返机票", leadDays: 45 },
+    { item: "东京酒店（9月旺季）", leadDays: 30 },
+    { item: "东京迪士尼海洋门票（官网）", leadDays: 7 },
+    { item: "teamLab Planets 预约票", leadDays: 3 }
+  ],
+
+  days: [
+    {
+      date: "2026-09-10",
+      weekday: "周四",
+      theme: "抵达东京 · 浅草入魂",
+      tips: ["到达后先去酒店寄存行李，轻装出行；浅草可步行游览全程约3–4小时"],
+      slots: [
+        {
+          period: "morning",
+          name: "抵达东京（成田/羽田）",
+          time: "2026-09-10 上午",
+          lat: 35.7720,
+          lng: 140.3929,
+          photo: "",
+          rating: 0,
+          review: "成田机场乘京成特急到浅草约75分钟¥1270；羽田乘东京单轨/京急约35分钟¥660",
+          openingHours: "全天",
+          transport: { mode: "京成特急（NRT）/ 京急线（HND）", fare: "¥660–1270", duration: "35–75分钟" },
+          needsBooking: false,
+          leadDays: 0
+        },
+        {
+          period: "noon",
+          name: "浅草寺 & 雷门",
+          time: "2026-09-10 14:00–17:00",
+          lat: 35.7148,
+          lng: 139.7967,
+          photo: "https://commons.wikimedia.org/wiki/Special:FilePath/Senso-ji%2C_Asakusa%2C_Tokyo.jpg?width=600",
+          rating: 4.8,
+          review: "东京最古老寺庙，雷门大红灯笼是必拍地标，仲见世通小吃一路飘香",
+          openingHours: "06:00–17:00（4–9月）",
+          closedDays: "全年开放",
+          ticketPrice: "免费（御守另购）",
+          transport: { mode: "地铁银座线/都营浅草线", fare: "约¥180–220", duration: "视出发地而定" },
+          seasonal: "9月末～10月举行浅草寺「拔鬼节」传统活动",
+          needsBooking: false,
+          leadDays: 0
+        },
+        {
+          period: "evening",
+          name: "东京晴空塔（夜景）",
+          time: "2026-09-10 18:30–20:30",
+          lat: 35.7101,
+          lng: 139.8107,
+          photo: "https://commons.wikimedia.org/wiki/Special:FilePath/Tokyo_Skytree_2023.jpg?width=600",
+          rating: 4.6,
+          review: "634米全球最高自立式塔，夜景尤其壮观，可远眺富士山（天气晴朗时）",
+          openingHours: "08:00–22:00（最晚入场21:00）",
+          closedDays: "全年无休",
+          ticketPrice: "350m展望台成人约¥2570；450m追加约¥1030",
+          transport: { mode: "步行", fare: "免费", duration: "浅草寺步行约15分钟" },
+          needsBooking: false,
+          leadDays: 0
+        }
+      ],
+      dining: [
+        {
+          meal: "晚餐",
+          place: "浅草 ひさご（鳗鱼饭老店）",
+          hours: "11:30–14:00 / 17:00–21:00，周一休",
+          dishes: [
+            { name: "鳗鱼盖饭（鰻重）", price: "约¥3000–4500" },
+            { name: "鳗鱼茶碗蒸", price: "约¥800" }
+          ]
+        }
+      ]
+    },
+    {
+      date: "2026-09-11",
+      weekday: "周五",
+      theme: "神宫原宿 · 涩谷之夜",
+      tips: ["明治神宫清晨最安静，9点前入园人少；竹下通周五下午人流量大，上午逛更从容"],
+      slots: [
+        {
+          period: "morning",
+          name: "明治神宫",
+          time: "2026-09-11 09:00–11:00",
+          lat: 35.6764,
+          lng: 139.6993,
+          photo: "https://commons.wikimedia.org/wiki/Special:FilePath/Sake_Barrel_Offerings_at_Meiji_Shrine%2C_Tokyo%2C_Japan%2C_rows.JPG",
+          rating: 4.7,
+          review: "70万平米原始森林中的宁静神社，酒桶奉献是热门打卡点，氛围肃穆神圣",
+          openingHours: "日出–日落（约05:00–18:00，9月）",
+          closedDays: "全年开放",
+          ticketPrice: "免费（御苑¥500）",
+          transport: { mode: "JR山手线", fare: "约¥160", duration: "新宿乘山手线至原宿站约5分钟" },
+          needsBooking: false,
+          leadDays: 0
+        },
+        {
+          period: "noon",
+          name: "原宿竹下通",
+          time: "2026-09-11 11:30–13:30",
+          lat: 35.6702,
+          lng: 139.7027,
+          photo: "https://commons.wikimedia.org/wiki/Special:FilePath/Takeshita_street_2012.JPG?width=600",
+          rating: 4.3,
+          review: "日本青年潮流文化圣地，可丽饼、棉花糖、彩色炸鸡一应俱全",
+          openingHours: "各店约10:00–20:00",
+          closedDays: "各店不同",
+          ticketPrice: "免费逛街",
+          transport: { mode: "步行", fare: "免费", duration: "明治神宫步行约3分钟" },
+          needsBooking: false,
+          leadDays: 0
+        },
+        {
+          period: "evening",
+          name: "涩谷十字路口",
+          time: "2026-09-11 18:00–21:00",
+          lat: 35.6595,
+          lng: 139.7004,
+          photo: "https://commons.wikimedia.org/wiki/Special:FilePath/Tokyo_Shibuya_Scramble_Crossing_2018-10-09.jpg?width=600",
+          rating: 4.6,
+          review: "全球最繁忙十字路口，绿灯时数千人同时穿越，夜晚霓虹灯下震撼视觉",
+          openingHours: "全天（夜间更热闹）",
+          closedDays: "全年开放",
+          ticketPrice: "免费",
+          transport: { mode: "地铁/JR", fare: "约¥180", duration: "原宿步行约15分钟或一站地铁" },
+          needsBooking: false,
+          leadDays: 0
+        }
+      ],
+      dining: [
+        {
+          meal: "午餐",
+          place: "原宿 KAWAII MONSTER CAFE（表参道）",
+          hours: "11:00–22:00",
+          dishes: [
+            { name: "彩虹蛋糕", price: "约¥1200" },
+            { name: "KAWAII 套餐", price: "约¥2800" }
+          ]
+        },
+        {
+          meal: "晚餐",
+          place: "涩谷 炼瓦亭（西餐老铺）",
+          hours: "11:15–21:30，周一休",
+          dishes: [
+            { name: "蛋包饭（发明地）", price: "约¥1500" },
+            { name: "猪排配菜套餐", price: "约¥2000" }
+          ]
+        }
+      ]
+    },
+    {
+      date: "2026-09-12",
+      weekday: "周六",
+      theme: "迪士尼海洋 · 奇幻全天",
+      tips: ["周六是最高峰之一，开园前30分钟到场；先冲最热门项目「地心历险」和「玩具总动员」；DPA(迪士尼尊享卡)建议入园后立即购买热门项目"],
+      slots: [
+        {
+          period: "morning",
+          name: "东京迪士尼海洋（全天）",
+          time: "2026-09-12 08:30–21:00",
+          lat: 35.6265,
+          lng: 139.8852,
+          photo: "https://commons.wikimedia.org/wiki/Special:FilePath/Tokyo_DisneySea_Mediterranean_Harbour_View1_201306.jpg",
+          rating: 4.9,
+          review: "全球最受好评主题乐园之一，地中海港湾+神秘岛+失落河三角洲等7大主题区，2024年新开Fantasy Springs",
+          openingHours: "08:30–21:00（节假日可能延长）",
+          closedDays: "全年无休（极少例外）",
+          ticketPrice: "成人约¥10900（1日票，官网购）",
+          transport: { mode: "JR京叶线", fare: "约¥440", duration: "东京站乘JR京叶线至舞滨约15分钟" },
+          seasonal: "9月举行「迪士尼万圣节」限定活动（2026年日期待官网公告）",
+          needsBooking: true,
+          leadDays: 7
+        }
+      ],
+      dining: [
+        {
+          meal: "园内午餐",
+          place: "迪士尼海洋园内 Magellan's（地中海港湾）",
+          hours: "11:30–19:00",
+          dishes: [
+            { name: "烤牛肉套餐", price: "约¥3500" },
+            { name: "海鲜意面", price: "约¥2800" }
+          ]
+        }
+      ]
+    },
+    {
+      date: "2026-09-13",
+      weekday: "周日",
+      theme: "数字艺术 · 海湾购物",
+      tips: ["teamLab建议上午场（10:00）人少，光影效果更纯粹；台场到银座地铁约30分钟"],
+      slots: [
+        {
+          period: "morning",
+          name: "teamLab Planets TOKYO（丰洲）",
+          time: "2026-09-13 10:00–12:30",
+          lat: 35.6491,
+          lng: 139.7895,
+          photo: "https://commons.wikimedia.org/wiki/Special:FilePath/At_teamLab_Planets_(48277793276).jpg?width=600",
+          rating: 4.7,
+          review: "沉浸式光影水体艺术体验，赤脚踏水穿越无限花海，拍照圣地中的战斗机",
+          openingHours: "10:00–22:00（最晚入场21:00）",
+          closedDays: "不定期维护日，预约前确认",
+          ticketPrice: "成人约¥3200（官网/Klook购）",
+          transport: { mode: "百合鸥线", fare: "约¥330", duration: "新豐洲站步行1分钟" },
+          needsBooking: true,
+          leadDays: 3
+        },
+        {
+          period: "noon",
+          name: "台场（お台场）",
+          time: "2026-09-13 14:00–17:00",
+          lat: 35.6268,
+          lng: 139.7754,
+          photo: "https://commons.wikimedia.org/wiki/Special:FilePath/Bayshore_Route_from_Aomi_Odaiba_crosswalk_at_dusk%2C_Koto_City,_Tokyo.jpg?width=600",
+          rating: 4.2,
+          review: "东京湾人工岛，彩虹大桥全景、自由女神像、DiverCity购物中心，傍晚光线超美",
+          openingHours: "全天（各设施不同）",
+          closedDays: "各设施不同",
+          ticketPrice: "免费（购物另计）",
+          transport: { mode: "百合鸥线", fare: "约¥330", duration: "从新豐洲约15分钟" },
+          seasonal: "9月「お台场彩虹烟火节」（往年8–9月举行，请关注官网）",
+          needsBooking: false,
+          leadDays: 0
+        },
+        {
+          period: "evening",
+          name: "银座购物",
+          time: "2026-09-13 18:00–21:00",
+          lat: 35.6717,
+          lng: 139.7650,
+          photo: "https://commons.wikimedia.org/wiki/Special:FilePath/SuzuranStreetGinza.jpg?width=600",
+          rating: 4.4,
+          review: "东京最高端购物街区，GINZA SIX、伊东屋文具、各大奢侈品牌旗舰店云集",
+          openingHours: "各店约11:00–21:00",
+          closedDays: "各店不同",
+          ticketPrice: "免费逛街",
+          transport: { mode: "地铁有乐町线/银座线", fare: "约¥200", duration: "台场至银座约25–30分钟" },
+          needsBooking: false,
+          leadDays: 0
+        }
+      ],
+      dining: [
+        {
+          meal: "午餐",
+          place: "台场 DiverCity 美食广场",
+          hours: "11:00–21:00",
+          dishes: [
+            { name: "拉面套餐", price: "约¥1200" },
+            { name: "日式定食", price: "约¥1500" }
+          ]
+        },
+        {
+          meal: "晚餐",
+          place: "银座 资生堂 THE RESTAURANT",
+          hours: "11:30–21:00，周一休",
+          dishes: [
+            { name: "午间套餐（晚有同款）", price: "约¥5000–8000" },
+            { name: "季节鱼料理", price: "约¥3500" }
+          ]
+        }
+      ]
+    },
+    {
+      date: "2026-09-14",
+      weekday: "周一",
+      theme: "上野文艺 · 阿美横扫货 · 返程",
+      tips: ["上野多数博物馆周一闭馆，以公园散步+阿美横购物为主；回程建议下午3点前离开市区确保不误机"],
+      slots: [
+        {
+          period: "morning",
+          name: "上野公园",
+          time: "2026-09-14 08:30–10:30",
+          lat: 35.7146,
+          lng: 139.7742,
+          photo: "https://commons.wikimedia.org/wiki/Special:FilePath/UenoPark_Hanami.jpg",
+          rating: 4.5,
+          review: "东京最大城市公园，含多个博物馆；9月荷花已谢，绿荫清爽，晨跑散步胜地",
+          openingHours: "全天开放（园内设施各异）",
+          closedDays: "公园本身无休；周一：美术馆/博物馆多数闭馆",
+          ticketPrice: "公园免费",
+          transport: { mode: "JR山手线/京浜东北线", fare: "约¥160", duration: "浅草乘地铁约10分钟" },
+          needsBooking: false,
+          leadDays: 0
+        },
+        {
+          period: "noon",
+          name: "阿美横町",
+          time: "2026-09-14 10:30–13:00",
+          lat: 35.7076,
+          lng: 139.7741,
+          photo: "https://commons.wikimedia.org/wiki/Special:FilePath/Fishmonger_by_cloneofsnake_in_Ameyoko%2C_Tokyo.jpg?width=600",
+          rating: 4.4,
+          review: "400米塞满400家店的下町市场，海鲜、零食、药妆、球鞋一网打尽，讨价还价热闹非凡",
+          openingHours: "各店约10:00–20:00",
+          closedDays: "各店不同，周一仍大部分开着",
+          ticketPrice: "免费",
+          transport: { mode: "步行", fare: "免费", duration: "上野公园步行约5分钟" },
+          needsBooking: false,
+          leadDays: 0
+        },
+        {
+          period: "evening",
+          name: "返程（成田/羽田）",
+          time: "2026-09-14 下午",
+          lat: 35.7720,
+          lng: 140.3929,
+          photo: "",
+          rating: 0,
+          review: "建议航班前3小时到机场；上野乘京成特急到成田约60分钟¥1270",
+          openingHours: "依航班",
+          transport: { mode: "京成特急（NRT）/ 京急线（HND）", fare: "¥660–1270", duration: "35–75分钟" },
+          needsBooking: false,
+          leadDays: 0
+        }
+      ],
+      dining: [
+        {
+          meal: "午餐",
+          place: "上野 精养轩（创业1872年西餐老铺）",
+          hours: "11:00–21:00",
+          dishes: [
+            { name: "ハヤシライス（干烧牛肉饭）", price: "约¥1800" },
+            { name: "炸猪排定食", price: "约¥2200" }
+          ]
+        }
+      ]
+    }
+  ]
+};
+
+// ── Map points ──────────────────────────────────────────
+const mapPoints = [
+  {lat:35.7720, lng:140.3929, name:"抵达东京（成田/羽田）", time:"2026-09-10 上午"},
+  {lat:35.7148, lng:139.7967, name:"浅草寺 & 雷门", time:"2026-09-10 14:00–17:00"},
+  {lat:35.7101, lng:139.8107, name:"东京晴空塔（夜景）", time:"2026-09-10 18:30–20:30"},
+  {lat:35.6764, lng:139.6993, name:"明治神宫", time:"2026-09-11 09:00–11:00"},
+  {lat:35.6702, lng:139.7027, name:"原宿竹下通", time:"2026-09-11 11:30–13:30"},
+  {lat:35.6595, lng:139.7004, name:"涩谷十字路口", time:"2026-09-11 18:00–21:00"},
+  {lat:35.6265, lng:139.8852, name:"东京迪士尼海洋", time:"2026-09-12 08:30–21:00"},
+  {lat:35.6491, lng:139.7895, name:"teamLab Planets TOKYO", time:"2026-09-13 10:00–12:30"},
+  {lat:35.6268, lng:139.7754, name:"台场（お台场）", time:"2026-09-13 14:00–17:00"},
+  {lat:35.6717, lng:139.7650, name:"银座购物", time:"2026-09-13 18:00–21:00"},
+  {lat:35.7146, lng:139.7742, name:"上野公园", time:"2026-09-14 08:30–10:30"},
+  {lat:35.7076, lng:139.7741, name:"阿美横町", time:"2026-09-14 10:30–13:00"},
+  {lat:35.7720, lng:140.3929, name:"返程（成田/羽田）", time:"2026-09-14 下午"}
+];
+
+// ── Period labels ─────────────────────────────────────
+var periodLabel = { morning: '上午', noon: '下午', evening: '晚间' };
+var periodEmoji = { morning: '🌅', noon: '☀️', evening: '🌙' };
+
+// ── Slot emoji fallback ───────────────────────────────
+function slotFallbackEmoji(name) {
+  if (!name) return '📍';
+  if (name.includes('机场') || name.includes('成田') || name.includes('羽田') || name.includes('抵达') || name.includes('返程')) return '✈️';
+  if (name.includes('迪士尼')) return '🎡';
+  if (name.includes('神宫') || name.includes('浅草寺')) return '⛩️';
+  if (name.includes('晴空塔')) return '🗼';
+  if (name.includes('竹下') || name.includes('原宿')) return '🎀';
+  if (name.includes('涩谷')) return '🚦';
+  if (name.includes('teamLab')) return '🌊';
+  if (name.includes('台场')) return '🌉';
+  if (name.includes('银座')) return '🛍️';
+  if (name.includes('上野')) return '🌿';
+  if (name.includes('阿美')) return '🐟';
+  return '📍';
+}
+
+// ── Render helpers ────────────────────────────────────
+function renderChecklist() {
+  var reminders = computeReminders(trip.startDate, trip.reminders);
+  document.getElementById('checklist-container').innerHTML = renderChecklistHTML(reminders);
+}
+
+function renderFlights() {
+  var html = '';
+  trip.flights.candidates.forEach(function(f) {
+    html += '<div class="flight-candidate">'
+      + '<div class="flight-top">'
+      +   '<span class="flight-label">' + escapeHTML(f.label) + '</span>'
+      +   '<span class="flight-tag">待选 · 请自行核实</span>'
+      + '</div>'
+      + '<div class="flight-time">' + escapeHTML(f.time) + '</div>'
+      + '<div class="flight-note">' + escapeHTML(f.note) + '</div>'
+      + '</div>';
+  });
+  document.getElementById('flights-container').innerHTML = html;
+}
+
+function renderHotels() {
+  var tierMap = { '经济': 'tier-economy', '中档': 'tier-mid', '高端': 'tier-luxury' };
+  var html = '';
+  trip.hotelAreas.forEach(function(area, ai) {
+    if (ai > 0) html += '<div class="divider"></div>';
+    html += '<div class="hotel-area">'
+      + '<div class="hotel-area-name">📍 ' + escapeHTML(area.area) + '</div>'
+      + '<div class="hotel-area-reason">' + escapeHTML(area.reason) + '</div>'
+      + '<div class="hotel-options">';
+    area.options.forEach(function(opt) {
+      var cls = tierMap[opt.tier] || 'tier-economy';
+      html += '<div class="hotel-option">'
+        + '<span class="hotel-tier ' + cls + '">' + escapeHTML(opt.tier) + '</span>'
+        + '<div class="hotel-body">'
+        +   '<div class="hotel-name">' + escapeHTML(opt.name) + '</div>'
+        +   '<div class="hotel-price">' + escapeHTML(opt.priceRange) + '</div>'
+        +   '<div class="hotel-note">' + escapeHTML(opt.note) + '</div>'
+        + '</div>'
+        + '</div>';
+    });
+    html += '</div></div>';
+  });
+  document.getElementById('hotels-container').innerHTML = html;
+}
+
+function renderDisclaimer() {
+  document.getElementById('disclaimer-text').textContent = trip.disclaimer;
+}
+
+function renderSlotCard(slot) {
+  var periodClass = 'period-' + slot.period;
+  var label = periodLabel[slot.period] || slot.period;
+  var emoji = periodEmoji[slot.period] || '⏰';
+  var fallback = slotFallbackEmoji(slot.name);
+
+  var html = '<div class="slot-card ' + periodClass + '">';
+
+  // period bar
+  html += '<div class="slot-period-bar"></div>';
+
+  // image
+  html += '<div class="slot-img-wrap" id="imgwrap-' + slot.name.replace(/\s/g,'') + '">';
+  if (slot.photo) {
+    html += '<img src="' + escapeHTML(slot.photo) + '" alt="' + escapeHTML(slot.name) + '" '
+      + 'onerror="this.style.display=\'none\';this.parentElement.classList.add(\'img-fallback\');this.parentElement.setAttribute(\'data-emoji\',\'' + fallback + '\')">';
+  } else {
+    html += '</div>';
+    // re-open with fallback class
+    html = html.replace('<div class="slot-img-wrap" id="imgwrap-' + slot.name.replace(/\s/g,'') + '">',
+      '<div class="slot-img-wrap img-fallback" id="imgwrap-' + slot.name.replace(/\s/g,'') + '" data-emoji="' + fallback + '">');
+  }
+  if (slot.photo) html += '</div>';
+
+  // period label overlay
+  // (we need to inject it before the close of img-wrap, so rebuild)
+  // Actually: period label is inside img-wrap via absolute positioning — handled via CSS .slot-period-label
+  // We inject it inline:
+
+  // body
+  html += '<div class="slot-body">';
+
+  // period label inside body (since it's below image)
+  html += '<div style="display:flex;align-items:center;gap:6px;margin-bottom:8px;">'
+    + '<span style="font-size:10px;font-weight:700;letter-spacing:0.10em;text-transform:uppercase;'
+    + 'padding:2px 9px;border-radius:20px;'
+    + (slot.period==='morning' ? 'background:rgba(100,181,246,0.15);color:#0d47a1;' :
+       slot.period==='noon'    ? 'background:rgba(233,30,99,0.12);color:#c2185b;' :
+                                 'background:rgba(26,35,126,0.12);color:#1a237e;')
+    + '">' + emoji + ' ' + label + '</span>'
+    + '</div>';
+
+  // name + rating
+  html += '<div class="slot-name-row">'
+    + '<div class="slot-name">' + escapeHTML(slot.name) + '</div>';
+  if (slot.rating && slot.rating > 0) {
+    html += '<div class="slot-rating"><span class="slot-rating-star">★</span><span class="slot-rating-num">' + slot.rating.toFixed(1) + '</span></div>';
+  }
+  html += '</div>';
+
+  // time
+  html += '<div class="slot-time">🕐 ' + escapeHTML(slot.time) + '</div>';
+
+  // booking badge
+  if (slot.needsBooking) {
+    html += reminderBadgeHTML(slot.leadDays);
+  }
+
+  // review
+  html += '<div class="slot-review">' + escapeHTML(slot.review) + '</div>';
+
+  // meta fields
+  html += '<div class="slot-meta">';
+  if (slot.openingHours) {
+    html += '<div class="meta-row"><span class="meta-icon">🕐</span><span class="meta-text"><span class="meta-label">营业：</span>' + escapeHTML(slot.openingHours) + '</span></div>';
+  }
+  if (slot.closedDays) {
+    html += '<div class="meta-row"><span class="meta-icon">📅</span><span class="meta-text"><span class="meta-label">休息：</span>' + escapeHTML(slot.closedDays) + '</span></div>';
+  }
+  if (slot.ticketPrice) {
+    html += '<div class="meta-row"><span class="meta-icon">🎟️</span><span class="meta-text"><span class="meta-label">门票：</span>' + escapeHTML(slot.ticketPrice) + '</span></div>';
+  }
+  if (slot.transport) {
+    html += '<div class="meta-row"><span class="meta-icon">🚇</span><span class="meta-text"><span class="meta-label">交通：</span>'
+      + escapeHTML(slot.transport.mode) + ' · ' + escapeHTML(slot.transport.fare) + ' · ' + escapeHTML(slot.transport.duration)
+      + '</span></div>';
+  }
+  if (slot.seasonal) {
+    html += '<div class="seasonal-tag">🌸 ' + escapeHTML(slot.seasonal) + '</div>';
+  }
+  html += '</div>'; // .slot-meta
+
+  html += '</div>'; // .slot-body
+  html += '</div>'; // .slot-card
+
+  return html;
+}
+
+function renderDining(diningArr) {
+  if (!diningArr || diningArr.length === 0) return '';
+  var html = '<div class="dining-section">'
+    + '<div class="dining-header">🍽️ 当日餐饮推荐</div>';
+  diningArr.forEach(function(d) {
+    html += '<div class="dining-item">'
+      + '<div class="dining-meal-row">'
+      +   '<span class="dining-meal-badge">' + escapeHTML(d.meal) + '</span>'
+      +   '<span class="dining-place">' + escapeHTML(d.place) + '</span>'
+      + '</div>'
+      + '<div class="dining-hours">⏰ ' + escapeHTML(d.hours) + '</div>'
+      + '<div class="dish-list">';
+    d.dishes.forEach(function(dish) {
+      html += '<div class="dish-row">'
+        + '<span class="dish-name">• ' + escapeHTML(dish.name) + '</span>'
+        + '<span class="dish-price">' + escapeHTML(dish.price) + '</span>'
+        + '</div>';
+    });
+    html += '</div></div>';
+  });
+  html += '</div>';
+  return html;
+}
+
+function renderTimeline() {
+  var container = document.getElementById('timeline-container');
+  var html = '';
+  trip.days.forEach(function(day, di) {
+    var dateLabel = 'Day ' + (di + 1) + ' · ' + day.date;
+    html += '<div class="day-block">';
+    html += '<div class="day-header">'
+      + '<div class="day-num">' + dateLabel + '</div>'
+      + '<div class="day-title-row">'
+      +   '<div class="day-weekday">' + escapeHTML(day.weekday) + '</div>'
+      +   '<div class="day-theme">' + escapeHTML(day.theme) + '</div>'
+      + '</div>'
+      + '</div>';
+
+    if (day.tips && day.tips.length) {
+      day.tips.forEach(function(tip) {
+        html += '<div class="day-tips-banner">💡 ' + escapeHTML(tip) + '</div>';
+      });
+    }
+
+    day.slots.forEach(function(slot) {
+      html += renderSlotCard(slot);
+    });
+
+    // Dining
+    html += renderDining(day.dining);
+
+    html += '<div class="day-block-footer"></div>';
+    html += '</div>'; // .day-block
+  });
+  container.innerHTML = html;
+
+  // Fix img-fallback: inject emoji text as fallback content
+  document.querySelectorAll('.img-fallback').forEach(function(el) {
+    if (!el.querySelector('.fallback-text')) {
+      var span = document.createElement('span');
+      span.className = 'fallback-text';
+      span.style.cssText = 'font-size:56px;line-height:1;';
+      span.textContent = el.getAttribute('data-emoji') || '📍';
+      el.appendChild(span);
+    }
+  });
+}
+
+function renderTips() {
+  var html = '';
+  trip.tips.forEach(function(tip, i) {
+    html += '<div class="tip-item">'
+      + '<div class="tip-num">' + (i + 1) + '</div>'
+      + '<div class="tip-text">' + escapeHTML(tip) + '</div>'
+      + '</div>';
+  });
+  document.getElementById('tips-container').innerHTML = html;
+}
+
+// ── Init ──────────────────────────────────────────────
+(function init() {
+  renderChecklist();
+  renderFlights();
+  renderHotels();
+  renderDisclaimer();
+  renderTimeline();
+  renderTips();
+
+  // Map
+  initTravelMap('map', mapPoints);
+})();
+</script>
+
+</body>
+</html>
