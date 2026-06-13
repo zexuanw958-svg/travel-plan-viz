@@ -74,630 +74,431 @@ section + section { padding-top: 0; }
   overflow: hidden;
   padding: 0;
 }
-
 .hero-grid {
-  position: absolute;
-  inset: 0;
+  position: absolute; inset: 0;
   background-image:
     linear-gradient(rgba(200,148,58,0.06) 1px, transparent 1px),
     linear-gradient(90deg, rgba(200,148,58,0.06) 1px, transparent 1px);
   background-size: 60px 60px;
   opacity: 0.6;
 }
-
 .hero-gradient {
-  position: absolute;
-  inset: 0;
+  position: absolute; inset: 0;
   background:
     radial-gradient(ellipse 70% 50% at 80% 20%, rgba(200,148,58,0.12) 0%, transparent 60%),
     radial-gradient(ellipse 50% 70% at 5% 85%, rgba(192,57,43,0.08) 0%, transparent 55%),
     linear-gradient(170deg, #120d08 0%, #1a1410 50%, #1e1912 100%);
 }
-
-/* Decorative diagonal stripe */
 .hero-stripe {
-  position: absolute;
-  top: 0; right: -100px;
+  position: absolute; top: 0; right: -100px;
   width: 3px; height: 200%;
   background: linear-gradient(180deg, transparent 0%, rgba(200,148,58,0.4) 30%, rgba(200,148,58,0.2) 70%, transparent 100%);
-  transform: rotate(15deg);
-  transform-origin: top right;
+  transform: rotate(15deg); transform-origin: top right;
 }
-.hero-stripe:nth-child(3) { right: -160px; opacity: 0.4; }
-
 .hero-content {
-  position: relative;
-  z-index: 2;
+  position: relative; z-index: 2;
   padding: 60px 20px 80px;
-  max-width: 860px;
-  margin: 0 auto;
-  width: 100%;
+  max-width: 860px; margin: 0 auto; width: 100%;
 }
-
 .hero-label {
-  font-family: 'DM Mono', monospace;
-  font-size: 10px;
-  font-weight: 400;
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 24px;
-  animation: fadeUp 0.9s ease both;
+  font-family: 'DM Mono', monospace; font-size: 10px; font-weight: 400;
+  letter-spacing: 0.28em; text-transform: uppercase; color: var(--gold);
+  margin-bottom: 24px; animation: fadeUp 0.9s ease both;
 }
 .hero-label::before { content: '[ '; }
 .hero-label::after  { content: ' ]'; }
-
 .hero-title {
-  font-family: 'Cormorant Garamond', serif;
-  font-weight: 700;
-  font-size: clamp(60px, 14vw, 120px);
-  line-height: 0.92;
-  color: var(--parchment);
-  letter-spacing: -0.02em;
+  font-family: 'Cormorant Garamond', serif; font-weight: 700;
+  font-size: clamp(60px, 14vw, 120px); line-height: 0.92;
+  color: var(--parchment); letter-spacing: -0.02em;
   animation: fadeUp 0.9s 0.08s ease both;
 }
-.hero-title .accent {
-  color: var(--gold-lt);
-  font-style: italic;
-  display: block;
-}
-
+.hero-title .accent { color: var(--gold-lt); font-style: italic; display: block; }
 .hero-sub {
-  margin-top: 28px;
-  font-size: 12px;
-  letter-spacing: 0.18em;
-  color: rgba(247,242,235,0.45);
-  text-transform: uppercase;
+  margin-top: 28px; font-size: 12px; letter-spacing: 0.18em;
+  color: rgba(247,242,235,0.45); text-transform: uppercase;
   animation: fadeUp 0.9s 0.16s ease both;
 }
-
 .hero-dates {
-  display: flex;
-  align-items: stretch;
-  gap: 0;
-  margin-top: 48px;
-  border: 1px solid rgba(200,148,58,0.22);
-  border-radius: var(--r-sm);
-  overflow: hidden;
-  width: fit-content;
-  animation: fadeUp 0.9s 0.24s ease both;
+  display: flex; align-items: stretch; gap: 0; margin-top: 48px;
+  border: 1px solid rgba(200,148,58,0.22); border-radius: var(--r-sm);
+  overflow: hidden; width: fit-content; animation: fadeUp 0.9s 0.24s ease both;
 }
-.hero-date-cell {
-  padding: 14px 24px;
-  background: rgba(200,148,58,0.06);
-}
-.hero-date-cell + .hero-date-cell {
-  border-left: 1px solid rgba(200,148,58,0.22);
-}
+.hero-date-cell { padding: 14px 24px; background: rgba(200,148,58,0.06); }
+.hero-date-cell + .hero-date-cell { border-left: 1px solid rgba(200,148,58,0.22); }
 .hero-date-cell .label {
-  font-size: 9px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 5px;
+  font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 5px;
 }
 .hero-date-cell .value {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 18px;
-  font-weight: 600;
-  color: var(--parchment);
-  letter-spacing: 0.04em;
+  font-family: 'Cormorant Garamond', serif; font-size: 18px;
+  font-weight: 600; color: var(--parchment); letter-spacing: 0.04em;
 }
 .hero-date-sep {
-  display: flex;
-  align-items: center;
-  padding: 0 16px;
-  background: rgba(200,148,58,0.04);
-  color: rgba(200,148,58,0.5);
-  font-size: 18px;
-  border-left: 1px solid rgba(200,148,58,0.22);
+  display: flex; align-items: center; padding: 0 16px;
+  background: rgba(200,148,58,0.04); color: rgba(200,148,58,0.5);
+  font-size: 18px; border-left: 1px solid rgba(200,148,58,0.22);
 }
-
 .hero-down {
-  margin-top: 64px;
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  color: rgba(247,242,235,0.3);
-  font-size: 9px;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  animation: fadeUp 0.9s 0.36s ease both;
+  margin-top: 64px; display: flex; align-items: center; gap: 14px;
+  color: rgba(247,242,235,0.3); font-size: 9px; letter-spacing: 0.22em;
+  text-transform: uppercase; animation: fadeUp 0.9s 0.36s ease both;
 }
-.hero-down-line {
-  height: 1px;
-  width: 36px;
-  background: rgba(200,148,58,0.3);
-}
-
+.hero-down-line { height: 1px; width: 36px; background: rgba(200,148,58,0.3); }
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(22px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
 /* ─── SECTION HEADERS ─────────────────────────────────────── */
-.section-header {
-  display: flex;
-  align-items: baseline;
-  gap: 14px;
-  margin-bottom: 28px;
-}
+.section-header { display: flex; align-items: baseline; gap: 14px; margin-bottom: 28px; }
 .section-header h2 {
-  font-family: 'Noto Serif SC', serif;
-  font-size: clamp(20px, 4.5vw, 27px);
-  font-weight: 700;
-  color: var(--ink);
+  font-family: 'Noto Serif SC', serif; font-size: clamp(20px, 4.5vw, 27px);
+  font-weight: 700; color: var(--ink);
 }
 .section-tag {
-  font-size: 9px;
-  font-weight: 400;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--muted);
-  font-family: 'DM Mono', monospace;
+  font-size: 9px; font-weight: 400; letter-spacing: 0.22em;
+  text-transform: uppercase; color: var(--muted); font-family: 'DM Mono', monospace;
 }
 
 /* ─── CHECKLIST ────────────────────────────────────────────── */
 .checklist-card {
-  background: var(--ink);
-  border-radius: var(--r-lg);
-  padding: 36px;
-  position: relative;
-  overflow: hidden;
-  box-shadow: var(--shadow-card);
+  background: var(--ink); border-radius: var(--r-lg); padding: 36px;
+  position: relative; overflow: hidden; box-shadow: var(--shadow-card);
 }
 .checklist-card::after {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 3px;
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
   background: linear-gradient(90deg, var(--gold) 0%, var(--gold-lt) 50%, transparent 100%);
 }
 .checklist-card h2 {
-  font-family: 'Noto Serif SC', serif;
-  font-size: 20px;
-  font-weight: 700;
-  color: var(--parchment);
-  margin-bottom: 6px;
+  font-family: 'Noto Serif SC', serif; font-size: 20px; font-weight: 700;
+  color: var(--parchment); margin-bottom: 6px;
 }
 .checklist-card .subtitle {
-  font-size: 11px;
-  color: rgba(247,242,235,0.4);
-  margin-bottom: 26px;
-  letter-spacing: 0.06em;
+  font-size: 11px; color: rgba(247,242,235,0.4);
+  margin-bottom: 26px; letter-spacing: 0.06em;
 }
-
 .pretrip-todo { list-style: none; display: flex; flex-direction: column; gap: 8px; }
-
 .todo-item {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  padding: 13px 16px;
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.07);
-  border-radius: var(--r-sm);
-  font-size: 12px;
-  color: rgba(247,242,235,0.82);
-  letter-spacing: 0.02em;
-  transition: background 0.2s;
+  display: flex; align-items: flex-start; gap: 12px; padding: 13px 16px;
+  background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.07);
+  border-radius: var(--r-sm); font-size: 12px; color: rgba(247,242,235,0.82);
+  letter-spacing: 0.02em; transition: background 0.2s;
 }
 .todo-item:hover { background: rgba(200,148,58,0.07); }
-
 .todo-item input[type="checkbox"] {
-  flex-shrink: 0;
-  width: 16px; height: 16px;
-  margin-top: 1px;
-  accent-color: var(--gold);
-  cursor: pointer;
+  flex-shrink: 0; width: 16px; height: 16px; margin-top: 1px;
+  accent-color: var(--gold); cursor: pointer;
 }
 .todo-deadline {
-  font-size: 10px;
-  font-weight: 500;
-  letter-spacing: 0.08em;
-  color: var(--gold-lt);
-  background: rgba(200,148,58,0.12);
-  padding: 2px 8px;
-  border-radius: 3px;
-  white-space: nowrap;
-  flex-shrink: 0;
-  border: 1px solid rgba(200,148,58,0.2);
+  font-size: 10px; font-weight: 500; letter-spacing: 0.08em;
+  color: var(--gold-lt); background: rgba(200,148,58,0.12);
+  padding: 2px 8px; border-radius: 3px; white-space: nowrap;
+  flex-shrink: 0; border: 1px solid rgba(200,148,58,0.2);
 }
 .todo-text { flex: 1; line-height: 1.55; }
 
-/* ─── DISCLAIMER ───────────────────────────────────────────── */
-.disclaimer-box {
-  margin-top: 24px;
-  background: rgba(192,57,43,0.07);
-  border: 1px solid rgba(192,57,43,0.2);
-  border-left: 3px solid var(--rouge);
-  border-radius: var(--r-sm);
-  padding: 14px 18px;
-  font-size: 11px;
-  line-height: 1.7;
-  color: var(--ink-soft);
-  letter-spacing: 0.02em;
+/* ─── PRE-TRIP INFO ───────────────────────────────────────── */
+.pretrip-section { margin-bottom: 40px; }
+.pretrip-card {
+  background: linear-gradient(135deg, #1a1410 0%, #1e1610 100%);
+  border-radius: var(--r-lg); overflow: hidden; box-shadow: var(--shadow-card);
+  border: 1px solid rgba(200,148,58,0.15);
 }
-.disclaimer-box strong {
-  color: var(--rouge);
-  font-weight: 600;
-  font-family: 'Noto Serif SC', serif;
+.pretrip-card-header {
+  padding: 28px 32px 20px; border-bottom: 1px solid rgba(200,148,58,0.12);
+  display: flex; align-items: center; gap: 14px;
+}
+.pretrip-card-header h3 {
+  font-family: 'Noto Serif SC', serif; font-size: 18px; font-weight: 700;
+  color: var(--parchment);
+}
+.pretrip-icon { font-size: 24px; }
+.pretrip-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 0;
+}
+@media (max-width: 600px) { .pretrip-grid { grid-template-columns: 1fr; } }
+.pretrip-item {
+  padding: 20px 28px; border-bottom: 1px solid rgba(200,148,58,0.08);
+  border-right: 1px solid rgba(200,148,58,0.08);
+}
+.pretrip-item:nth-child(even) { border-right: none; }
+@media (max-width: 600px) { .pretrip-item { border-right: none; } }
+.pretrip-item-label {
+  font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 8px; font-family: 'DM Mono', monospace;
+}
+.pretrip-item-text { font-size: 12px; color: rgba(247,242,235,0.78); line-height: 1.65; }
+
+/* Typhoon warning — full-width, highlighted */
+.pretrip-typhoon {
+  grid-column: 1 / -1; padding: 18px 28px;
+  background: rgba(192,57,43,0.12); border-top: 1px solid rgba(192,57,43,0.2);
+  border-left: 3px solid var(--rouge); display: flex; align-items: flex-start; gap: 12px;
+}
+.pretrip-typhoon-icon { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
+.pretrip-typhoon-text { font-size: 12px; color: rgba(247,242,235,0.82); line-height: 1.65; }
+.pretrip-typhoon-text strong { color: #e87060; font-family: 'Noto Serif SC', serif; }
+
+.apps-list {
+  display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px;
+}
+.app-pill {
+  font-size: 10px; padding: 3px 10px; background: rgba(200,148,58,0.1);
+  border: 1px solid rgba(200,148,58,0.2); border-radius: 100px;
+  color: var(--gold-lt); letter-spacing: 0.04em;
 }
 
+/* ─── DISCLAIMER ───────────────────────────────────────────── */
+.disclaimer-box {
+  margin-top: 24px; background: rgba(192,57,43,0.07);
+  border: 1px solid rgba(192,57,43,0.2); border-left: 3px solid var(--rouge);
+  border-radius: var(--r-sm); padding: 14px 18px;
+  font-size: 11px; line-height: 1.7; color: var(--ink-soft); letter-spacing: 0.02em;
+}
+.disclaimer-box strong { color: var(--rouge); font-weight: 600; font-family: 'Noto Serif SC', serif; }
+
 /* ─── FLIGHTS ──────────────────────────────────────────────── */
-.flights-section {
-  margin-bottom: 40px;
-}
+.flights-section { margin-bottom: 40px; }
 .flight-block-label {
-  font-size: 10px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--muted);
-  font-family: 'DM Mono', monospace;
-  margin-bottom: 12px;
-  padding-bottom: 8px;
-  border-bottom: 1px solid var(--border);
+  font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--muted); font-family: 'DM Mono', monospace;
+  margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid var(--border);
 }
-.candidates-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-bottom: 20px;
-}
+.candidates-grid { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
 .candidate-card {
-  background: var(--cream);
-  border: 1px solid rgba(26,20,16,0.08);
-  border-radius: var(--r-md);
-  padding: 16px 18px;
-  display: flex;
-  align-items: flex-start;
-  gap: 16px;
-  box-shadow: var(--shadow-card);
-  transition: box-shadow 0.2s, transform 0.2s;
+  background: var(--cream); border: 1px solid rgba(26,20,16,0.08);
+  border-radius: var(--r-md); padding: 16px 18px;
+  display: flex; align-items: flex-start; gap: 16px;
+  box-shadow: var(--shadow-card); transition: box-shadow 0.2s, transform 0.2s;
 }
-.candidate-card:hover {
-  box-shadow: var(--shadow-hover);
-  transform: translateY(-1px);
-}
+.candidate-card:hover { box-shadow: var(--shadow-hover); transform: translateY(-1px); }
 .candidate-airline-strip {
-  flex-shrink: 0;
-  width: 44px; height: 44px;
-  background: var(--ink);
-  border-radius: var(--r-sm);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--gold);
-  letter-spacing: 0.04em;
+  flex-shrink: 0; width: 44px; height: 44px; background: var(--ink);
+  border-radius: var(--r-sm); display: flex; align-items: center; justify-content: center;
+  font-family: 'Cormorant Garamond', serif; font-size: 13px; font-weight: 700;
+  color: var(--gold); letter-spacing: 0.04em;
 }
 .candidate-info { flex: 1; min-width: 0; }
-.candidate-code {
-  font-family: 'DM Mono', monospace;
-  font-size: 15px;
-  font-weight: 500;
-  color: var(--ink);
-  margin-bottom: 3px;
-}
-.candidate-time {
-  font-size: 12px;
-  color: var(--muted);
-  margin-bottom: 5px;
-  letter-spacing: 0.02em;
-}
-.candidate-note {
-  font-size: 10px;
-  color: var(--muted);
-  background: rgba(26,20,16,0.04);
-  border-radius: 3px;
-  padding: 3px 8px;
-  display: inline-block;
-  letter-spacing: 0.04em;
-}
+.candidate-code { font-family: 'DM Mono', monospace; font-size: 15px; font-weight: 500; color: var(--ink); margin-bottom: 3px; }
+.candidate-time { font-size: 12px; color: var(--muted); margin-bottom: 5px; letter-spacing: 0.02em; }
+.candidate-note { font-size: 10px; color: var(--muted); background: rgba(26,20,16,0.04); border-radius: 3px; padding: 3px 8px; display: inline-block; letter-spacing: 0.04em; }
 .candidate-pill {
-  flex-shrink: 0;
-  font-size: 9px;
-  font-weight: 500;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--muted);
-  background: rgba(138,122,104,0.08);
-  border: 1px solid rgba(138,122,104,0.2);
-  padding: 4px 9px;
-  border-radius: 100px;
-  white-space: nowrap;
-  align-self: flex-start;
-  margin-top: 2px;
+  flex-shrink: 0; font-size: 9px; font-weight: 500; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--muted); background: rgba(138,122,104,0.08);
+  border: 1px solid rgba(138,122,104,0.2); padding: 4px 9px; border-radius: 100px;
+  white-space: nowrap; align-self: flex-start; margin-top: 2px;
 }
 
 /* ─── HOTEL AREAS ──────────────────────────────────────────── */
 .hotel-areas { display: flex; flex-direction: column; gap: 20px; }
-
 .hotel-area-card {
-  background: var(--cream);
-  border: 1px solid rgba(26,20,16,0.08);
-  border-radius: var(--r-lg);
-  overflow: hidden;
-  box-shadow: var(--shadow-card);
+  background: var(--cream); border: 1px solid rgba(26,20,16,0.08);
+  border-radius: var(--r-lg); overflow: hidden; box-shadow: var(--shadow-card);
 }
 .hotel-area-head {
-  background: var(--ink);
-  padding: 20px 24px;
-  display: flex;
-  align-items: flex-start;
-  gap: 14px;
+  background: var(--ink); padding: 20px 24px; display: flex; align-items: flex-start; gap: 14px;
 }
 .hotel-area-num {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 36px;
-  font-weight: 600;
-  color: var(--gold);
-  line-height: 1;
-  flex-shrink: 0;
-  margin-top: -2px;
+  font-family: 'Cormorant Garamond', serif; font-size: 36px; font-weight: 600;
+  color: var(--gold); line-height: 1; flex-shrink: 0; margin-top: -2px;
 }
-.hotel-area-meta {}
-.hotel-area-name {
-  font-family: 'Noto Serif SC', serif;
-  font-size: 18px;
-  font-weight: 700;
-  color: var(--parchment);
-  margin-bottom: 4px;
-}
-.hotel-area-reason {
-  font-size: 11px;
-  color: rgba(247,242,235,0.5);
-  letter-spacing: 0.04em;
-  line-height: 1.6;
-}
-
-.hotel-tiers {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0;
-}
-@media (max-width: 600px) {
-  .hotel-tiers { grid-template-columns: 1fr; }
-}
-.hotel-tier {
-  padding: 18px 20px;
-  border-top: 1px solid rgba(26,20,16,0.06);
-  position: relative;
-}
+.hotel-area-name { font-family: 'Noto Serif SC', serif; font-size: 18px; font-weight: 700; color: var(--parchment); margin-bottom: 4px; }
+.hotel-area-reason { font-size: 11px; color: rgba(247,242,235,0.5); letter-spacing: 0.04em; line-height: 1.6; }
+.hotel-tiers { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; }
+@media (max-width: 600px) { .hotel-tiers { grid-template-columns: 1fr; } }
+.hotel-tier { padding: 18px 20px; border-top: 1px solid rgba(26,20,16,0.06); position: relative; }
 .hotel-tier + .hotel-tier { border-left: 1px solid rgba(26,20,16,0.06); }
-@media (max-width: 600px) {
-  .hotel-tier + .hotel-tier { border-left: none; }
-}
+@media (max-width: 600px) { .hotel-tier + .hotel-tier { border-left: none; } }
 .tier-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 9px;
-  font-weight: 500;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  margin-bottom: 8px;
-  padding: 3px 9px;
-  border-radius: 3px;
+  display: inline-flex; align-items: center; gap: 5px; font-size: 9px;
+  font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase;
+  margin-bottom: 8px; padding: 3px 9px; border-radius: 3px;
 }
 .tier-badge.eco  { color: var(--jade);   background: rgba(42,127,111,0.09);  border: 1px solid rgba(42,127,111,0.2); }
 .tier-badge.mid  { color: var(--gold);   background: rgba(200,148,58,0.09);  border: 1px solid rgba(200,148,58,0.2); }
-.tier-badge.lux  { color: var(--indigo); background: rgba(58,74,140,0.09);  border: 1px solid rgba(58,74,140,0.2); }
-
-.hotel-name {
-  font-family: 'Noto Serif SC', serif;
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--ink);
-  margin-bottom: 4px;
-  line-height: 1.4;
-}
-.hotel-price {
-  font-family: 'DM Mono', monospace;
-  font-size: 11px;
-  color: var(--muted);
-  margin-bottom: 5px;
-}
-.hotel-note {
-  font-size: 11px;
-  color: var(--ink-soft);
-  line-height: 1.55;
-}
+.tier-badge.lux  { color: var(--indigo); background: rgba(58,74,140,0.09);   border: 1px solid rgba(58,74,140,0.2); }
+.hotel-name { font-family: 'Noto Serif SC', serif; font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 4px; line-height: 1.4; }
+.hotel-price { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); margin-bottom: 5px; }
+.hotel-note { font-size: 11px; color: var(--ink-soft); line-height: 1.55; }
 
 /* ─── MAP ─────────────────────────────────────────────────── */
 .map-card {
-  background: var(--cream);
-  border-radius: var(--r-lg);
-  overflow: hidden;
-  box-shadow: var(--shadow-card);
-  border: 1px solid rgba(26,20,16,0.07);
+  background: var(--cream); border-radius: var(--r-lg); overflow: hidden;
+  box-shadow: var(--shadow-card); border: 1px solid rgba(26,20,16,0.07);
 }
-.map-head {
-  padding: 22px 26px 0;
-  margin-bottom: 16px;
-}
-.map-head h2 {
-  font-family: 'Noto Serif SC', serif;
-  font-size: 18px;
-  font-weight: 700;
-  color: var(--ink);
-}
-.map-head p {
-  font-size: 11px;
-  color: var(--muted);
-  margin-top: 3px;
-  letter-spacing: 0.04em;
-}
+.map-head { padding: 22px 26px 0; margin-bottom: 16px; }
+.map-head h2 { font-family: 'Noto Serif SC', serif; font-size: 18px; font-weight: 700; color: var(--ink); }
+.map-head p { font-size: 11px; color: var(--muted); margin-top: 3px; letter-spacing: 0.04em; }
 #map { height: 420px; width: 100%; }
 .route-pin {
-  background: var(--ink) !important;
-  border: 2px solid var(--gold) !important;
-  border-radius: 50%;
-  display: flex !important;
-  align-items: center;
-  justify-content: center;
+  background: var(--ink) !important; border: 2px solid var(--gold) !important;
+  border-radius: 50%; display: flex !important; align-items: center; justify-content: center;
   box-shadow: 0 2px 8px rgba(0,0,0,0.3);
 }
-.route-pin__num {
-  font-family: 'DM Mono', monospace;
-  font-size: 10px;
-  font-weight: 500;
-  color: var(--gold);
-  line-height: 1;
-}
+.route-pin__num { font-family: 'DM Mono', monospace; font-size: 10px; font-weight: 500; color: var(--gold); line-height: 1; }
 
 /* ─── DAY SECTIONS ────────────────────────────────────────── */
 .day-section { margin-bottom: 60px; }
-
-.day-header {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  margin-bottom: 28px;
-  padding-bottom: 18px;
-  border-bottom: 1px solid rgba(26,20,16,0.07);
-}
-.day-number {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 64px;
-  font-weight: 700;
-  line-height: 1;
-  color: transparent;
-  -webkit-text-stroke: 1.5px;
-  flex-shrink: 0;
-}
+.day-header { display: flex; align-items: center; gap: 20px; margin-bottom: 16px; padding-bottom: 18px; border-bottom: 1px solid rgba(26,20,16,0.07); }
+.day-number { font-family: 'Cormorant Garamond', serif; font-size: 64px; font-weight: 700; line-height: 1; color: transparent; -webkit-text-stroke: 1.5px; flex-shrink: 0; }
 .day-1 .day-number { -webkit-text-stroke-color: var(--day1); }
 .day-2 .day-number { -webkit-text-stroke-color: var(--day2); }
 .day-3 .day-number { -webkit-text-stroke-color: var(--day3); }
 .day-4 .day-number { -webkit-text-stroke-color: var(--day4); }
+.day-info .day-date { font-size: 10px; letter-spacing: 0.16em; color: var(--muted); text-transform: uppercase; font-family: 'DM Mono', monospace; }
+.day-info .day-title { font-family: 'Noto Serif SC', serif; font-size: 18px; font-weight: 700; color: var(--ink); margin-top: 3px; }
+.day-info .day-theme { font-size: 11px; color: var(--muted); margin-top: 2px; letter-spacing: 0.04em; }
 
-.day-info .day-date {
-  font-size: 10px;
-  letter-spacing: 0.16em;
-  color: var(--muted);
-  text-transform: uppercase;
-  font-family: 'DM Mono', monospace;
+/* ─── DAILY TIPS ──────────────────────────────────────────── */
+.day-tips-row {
+  display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px;
+  padding: 12px 16px; background: rgba(200,148,58,0.05);
+  border: 1px solid rgba(200,148,58,0.12); border-radius: var(--r-sm);
+  border-left: 3px solid var(--gold);
 }
-.day-info .day-title {
-  font-family: 'Noto Serif SC', serif;
-  font-size: 18px;
-  font-weight: 700;
-  color: var(--ink);
-  margin-top: 3px;
+.day-tip-item {
+  display: flex; align-items: flex-start; gap: 6px;
+  font-size: 11px; color: var(--ink-soft); line-height: 1.5;
+  width: 100%;
 }
+.day-tip-icon { flex-shrink: 0; font-size: 12px; margin-top: 1px; color: var(--gold); }
+
+/* ─── ALTERNATIVES (二选一) ───────────────────────────────── */
+.alternatives-panel {
+  margin-bottom: 24px;
+}
+.alternatives-label {
+  font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--indigo); font-family: 'DM Mono', monospace;
+  margin-bottom: 10px; display: flex; align-items: center; gap: 8px;
+}
+.alternatives-label::before, .alternatives-label::after {
+  content: ''; flex: 1; height: 1px; background: rgba(58,74,140,0.2);
+}
+.alternatives-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+@media (max-width: 480px) { .alternatives-grid { grid-template-columns: 1fr; } }
+.alt-card {
+  background: rgba(58,74,140,0.04); border: 1px solid rgba(58,74,140,0.18);
+  border-radius: var(--r-md); padding: 16px 18px;
+  transition: background 0.2s, border-color 0.2s;
+}
+.alt-card:hover { background: rgba(58,74,140,0.08); border-color: rgba(58,74,140,0.3); }
+.alt-card:first-child { border-color: rgba(200,148,58,0.3); background: rgba(200,148,58,0.04); }
+.alt-card:first-child:hover { background: rgba(200,148,58,0.08); }
+.alt-label {
+  font-family: 'Noto Serif SC', serif; font-size: 13px; font-weight: 700;
+  color: var(--ink); margin-bottom: 6px; line-height: 1.4;
+}
+.alt-card:first-child .alt-label { color: var(--gold); }
+.alt-summary { font-size: 11px; color: var(--ink-soft); line-height: 1.65; }
 
 /* ─── TIMELINE ────────────────────────────────────────────── */
-.timeline {
-  position: relative;
-  padding-left: 30px;
-}
+.timeline { position: relative; padding-left: 30px; }
 .timeline::before {
-  content: '';
-  position: absolute;
-  left: 9px; top: 8px; bottom: 8px;
-  width: 1px;
-  background: repeating-linear-gradient(
-    to bottom,
-    rgba(138,122,104,0.25) 0px,
-    rgba(138,122,104,0.25) 5px,
-    transparent 5px,
-    transparent 11px
-  );
+  content: ''; position: absolute; left: 9px; top: 8px; bottom: 8px; width: 1px;
+  background: repeating-linear-gradient(to bottom, rgba(138,122,104,0.25) 0px, rgba(138,122,104,0.25) 5px, transparent 5px, transparent 11px);
 }
 .slot-card {
-  position: relative;
-  background: #fff;
-  border-radius: var(--r-md);
-  overflow: hidden;
-  box-shadow: var(--shadow-card);
-  margin-bottom: 16px;
-  border: 1px solid rgba(26,20,16,0.06);
-  transition: box-shadow 0.25s, transform 0.25s;
+  position: relative; background: #fff; border-radius: var(--r-md);
+  overflow: hidden; box-shadow: var(--shadow-card); margin-bottom: 16px;
+  border: 1px solid rgba(26,20,16,0.06); transition: box-shadow 0.25s, transform 0.25s;
 }
-.slot-card:hover {
-  box-shadow: var(--shadow-hover);
-  transform: translateX(3px) translateY(-2px);
-}
+.slot-card:hover { box-shadow: var(--shadow-hover); transform: translateX(3px) translateY(-2px); }
 .slot-card::before {
-  content: '';
-  position: absolute;
-  left: -25px; top: 20px;
-  width: 9px; height: 9px;
-  border-radius: 50%;
-  border: 2px solid var(--cream);
+  content: ''; position: absolute; left: -25px; top: 20px;
+  width: 9px; height: 9px; border-radius: 50%; border: 2px solid var(--cream);
 }
 .day-1 .slot-card::before { background: var(--day1); box-shadow: 0 0 0 2px var(--day1); }
 .day-2 .slot-card::before { background: var(--day2); box-shadow: 0 0 0 2px var(--day2); }
 .day-3 .slot-card::before { background: var(--day3); box-shadow: 0 0 0 2px var(--day3); }
 .day-4 .slot-card::before { background: var(--day4); box-shadow: 0 0 0 2px var(--day4); }
-
-.slot-photo-wrap {
-  width: 100%; height: 185px; overflow: hidden; position: relative;
-}
-.slot-photo {
-  width: 100%; height: 100%; object-fit: cover;
-  transition: transform 0.45s ease;
-}
+.slot-photo-wrap { width: 100%; height: 185px; overflow: hidden; position: relative; }
+.slot-photo { width: 100%; height: 100%; object-fit: cover; transition: transform 0.45s ease; }
 .slot-card:hover .slot-photo { transform: scale(1.05); }
-
 .slot-period-badge {
   position: absolute; top: 10px; left: 10px;
-  font-family: 'DM Mono', monospace;
-  font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase;
-  padding: 4px 10px;
-  border-radius: 3px;
-  backdrop-filter: blur(6px);
-  background: rgba(26,20,16,0.6);
-  color: rgba(247,242,235,0.9);
+  font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.14em;
+  text-transform: uppercase; padding: 4px 10px; border-radius: 3px;
+  backdrop-filter: blur(6px); background: rgba(26,20,16,0.6); color: rgba(247,242,235,0.9);
 }
 .slot-body { padding: 16px 18px 18px; }
-.slot-time {
-  font-family: 'DM Mono', monospace;
-  font-size: 10px; letter-spacing: 0.14em; color: var(--muted);
-  text-transform: uppercase; margin-bottom: 5px;
-}
-.slot-name {
-  font-family: 'Noto Serif SC', serif;
-  font-size: 16px; font-weight: 700;
-  color: var(--ink); margin-bottom: 7px; line-height: 1.35;
-}
-.slot-meta {
-  display: flex; align-items: center; gap: 8px;
-  margin-bottom: 8px; flex-wrap: wrap;
-}
-.slot-rating {
-  display: flex; align-items: center; gap: 3px;
-  font-family: 'DM Mono', monospace;
-  font-size: 11px; color: var(--gold);
-}
+.slot-time { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.14em; color: var(--muted); text-transform: uppercase; margin-bottom: 5px; }
+.slot-name { font-family: 'Noto Serif SC', serif; font-size: 16px; font-weight: 700; color: var(--ink); margin-bottom: 7px; line-height: 1.35; }
+.slot-meta { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; flex-wrap: wrap; }
+.slot-rating { display: flex; align-items: center; gap: 3px; font-family: 'DM Mono', monospace; font-size: 11px; color: var(--gold); }
 .slot-review { font-size: 12px; color: var(--ink-soft); line-height: 1.65; letter-spacing: 0.02em; }
+
+/* ─── SLOT INFO PILLS ─────────────────────────────────────── */
+.slot-info-pills { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.slot-pill {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 10px; padding: 3px 9px; border-radius: 100px;
+  letter-spacing: 0.03em; white-space: nowrap;
+}
+.slot-pill-hours   { color: var(--jade);   background: rgba(42,127,111,0.07);  border: 1px solid rgba(42,127,111,0.18); }
+.slot-pill-ticket  { color: var(--indigo); background: rgba(58,74,140,0.07);   border: 1px solid rgba(58,74,140,0.18); }
+.slot-pill-transport { color: var(--muted); background: rgba(138,122,104,0.07); border: 1px solid rgba(138,122,104,0.18); }
+.slot-pill-seasonal { color: var(--rouge); background: rgba(192,57,43,0.07);   border: 1px solid rgba(192,57,43,0.18); }
 
 /* ─── REMINDER BADGE ─────────────────────────────────────── */
 .reminder-badge {
-  display: inline-flex; align-items: center; gap: 4px;
-  font-size: 10px; font-weight: 500;
-  font-family: 'DM Mono', monospace; letter-spacing: 0.06em;
-  color: #fff;
-  background: var(--rouge);
-  padding: 3px 10px; border-radius: 3px; margin-top: 6px;
+  display: inline-flex; align-items: center; gap: 4px; font-size: 10px;
+  font-weight: 500; font-family: 'DM Mono', monospace; letter-spacing: 0.06em;
+  color: #fff; background: var(--rouge); padding: 3px 10px; border-radius: 3px; margin-top: 6px;
 }
 
-/* ─── FOOD CARD ───────────────────────────────────────────── */
-.food-card {
-  display: flex; align-items: flex-start; gap: 14px;
-  background: var(--ink);
-  border-radius: var(--r-md); padding: 18px 20px;
-  margin-top: 6px; margin-bottom: 2px;
+/* ─── DINING CARDS ────────────────────────────────────────── */
+.dining-section { margin-top: 4px; display: flex; flex-direction: column; gap: 10px; }
+.dining-card {
+  background: var(--ink); border-radius: var(--r-md); padding: 18px 20px;
+  display: flex; flex-direction: column; gap: 10px;
 }
-.food-icon { font-size: 28px; flex-shrink: 0; margin-top: 2px; }
-.food-label {
-  font-family: 'DM Mono', monospace;
-  font-size: 9px; letter-spacing: 0.22em;
-  text-transform: uppercase; color: var(--gold-lt); margin-bottom: 5px;
+.dining-header { display: flex; align-items: flex-start; gap: 12px; }
+.dining-icon { font-size: 22px; flex-shrink: 0; margin-top: 1px; }
+.dining-meta { flex: 1; }
+.dining-meal-label {
+  font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.22em;
+  text-transform: uppercase; color: var(--gold-lt); margin-bottom: 4px;
 }
-.food-text { font-size: 12px; color: rgba(247,242,235,0.8); line-height: 1.65; }
+.dining-place { font-family: 'Noto Serif SC', serif; font-size: 14px; font-weight: 700; color: var(--parchment); margin-bottom: 3px; }
+.dining-hours { font-size: 11px; color: rgba(247,242,235,0.45); }
+.dining-dishes { display: flex; flex-direction: column; gap: 5px; padding-top: 4px; border-top: 1px solid rgba(255,255,255,0.06); }
+.dish-item {
+  display: flex; align-items: center; justify-content: space-between;
+  font-size: 12px; color: rgba(247,242,235,0.75);
+}
+.dish-name { flex: 1; }
+.dish-price {
+  font-family: 'DM Mono', monospace; font-size: 10px; color: var(--gold-lt);
+  background: rgba(200,148,58,0.1); padding: 2px 8px; border-radius: 3px;
+  white-space: nowrap; margin-left: 8px;
+}
+
+/* ─── TIPS SECTION ────────────────────────────────────────── */
+.tips-section { margin-bottom: 40px; }
+.tips-card {
+  background: var(--ink); border-radius: var(--r-lg); overflow: hidden;
+  box-shadow: var(--shadow-card);
+}
+.tips-card-header {
+  padding: 24px 28px 16px; border-bottom: 1px solid rgba(200,148,58,0.1);
+  display: flex; align-items: center; gap: 12px;
+}
+.tips-card-header h3 { font-family: 'Noto Serif SC', serif; font-size: 18px; font-weight: 700; color: var(--parchment); }
+.tips-list { list-style: none; padding: 16px 28px 24px; display: flex; flex-direction: column; gap: 12px; }
+.tip-item {
+  display: flex; align-items: flex-start; gap: 12px; font-size: 12px;
+  color: rgba(247,242,235,0.78); line-height: 1.65;
+}
+.tip-num {
+  flex-shrink: 0; width: 22px; height: 22px; border-radius: 50%;
+  background: rgba(200,148,58,0.12); border: 1px solid rgba(200,148,58,0.2);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'DM Mono', monospace; font-size: 9px; color: var(--gold);
+  margin-top: 2px;
+}
 
 /* ─── FOOTER ──────────────────────────────────────────────── */
 footer {
@@ -705,27 +506,19 @@ footer {
   text-align: center; position: relative; overflow: hidden;
 }
 footer::before {
-  content: '';
-  position: absolute; inset: 0;
+  content: ''; position: absolute; inset: 0;
   background-image:
     linear-gradient(rgba(200,148,58,0.04) 1px, transparent 1px),
     linear-gradient(90deg, rgba(200,148,58,0.04) 1px, transparent 1px);
   background-size: 50px 50px;
 }
 .footer-cta {
-  position: relative;
-  font-family: 'Cormorant Garamond', serif;
+  position: relative; font-family: 'Cormorant Garamond', serif;
   font-size: clamp(28px, 7vw, 50px); font-weight: 700; font-style: italic;
-  color: var(--parchment); letter-spacing: 0.02em; margin-bottom: 16px;
-  line-height: 1.15;
+  color: var(--parchment); letter-spacing: 0.02em; margin-bottom: 16px; line-height: 1.15;
 }
 .footer-cta em { color: var(--gold-lt); font-style: normal; }
-footer .meta {
-  position: relative;
-  font-family: 'DM Mono', monospace;
-  font-size: 10px; color: rgba(247,242,235,0.25);
-  letter-spacing: 0.14em;
-}
+footer .meta { position: relative; font-family: 'DM Mono', monospace; font-size: 10px; color: rgba(247,242,235,0.25); letter-spacing: 0.14em; }
 
 /* ─── DIVIDER ─────────────────────────────────────────────── */
 .divider {
@@ -742,6 +535,8 @@ footer .meta {
   .timeline { padding-left: 22px; }
   .slot-card::before { left: -17px; }
   .checklist-card { padding: 24px; }
+  .pretrip-card-header { padding: 20px 20px 16px; }
+  .pretrip-item { padding: 16px 20px; }
 }
 </style>
 </head>
@@ -753,35 +548,19 @@ footer .meta {
   <div class="hero-gradient"></div>
   <div class="hero-stripe"></div>
   <div class="hero-stripe" style="right:-160px;opacity:.35"></div>
-
   <div class="hero-content">
     <div class="hero-label">旅行行程计划</div>
-    <h1 class="hero-title">
-      香港<span class="accent">四天三晚</span>
-    </h1>
+    <h1 class="hero-title">香港<span class="accent">四天三晚</span></h1>
     <p class="hero-sub">东方之珠 · The Pearl of the Orient</p>
-
     <div class="hero-dates">
-      <div class="hero-date-cell">
-        <div class="label">出发</div>
-        <div class="value">2026 · 07 · 15</div>
-      </div>
+      <div class="hero-date-cell"><div class="label">出发</div><div class="value">2026 · 07 · 15</div></div>
       <div class="hero-date-sep">→</div>
-      <div class="hero-date-cell">
-        <div class="label">返程</div>
-        <div class="value">2026 · 07 · 18</div>
-      </div>
+      <div class="hero-date-cell"><div class="label">返程</div><div class="value">2026 · 07 · 18</div></div>
       <div class="hero-date-cell" style="background:rgba(200,148,58,0.10);border-left:1px solid rgba(200,148,58,0.22);">
-        <div class="label">总时长</div>
-        <div class="value">4 天 · 3 晚</div>
+        <div class="label">总时长</div><div class="value">4 天 · 3 晚</div>
       </div>
     </div>
-
-    <div class="hero-down">
-      <div class="hero-down-line"></div>
-      向下滚动查看行程
-      <div class="hero-down-line"></div>
-    </div>
+    <div class="hero-down"><div class="hero-down-line"></div>向下滚动查看行程<div class="hero-down-line"></div></div>
   </div>
 </header>
 
@@ -796,6 +575,17 @@ footer .meta {
   </div>
 </section>
 
+<!-- ═══════════════════════ PRE-TRIP INFO ══════════════════ -->
+<section>
+  <div class="container">
+    <div class="section-header">
+      <h2>行前须知</h2>
+      <span class="section-tag">// Pre-Trip · 7月定制</span>
+    </div>
+    <div class="pretrip-section" id="pretrip-info"><!-- JS 生成 --></div>
+  </div>
+</section>
+
 <!-- ═══════════════════════ FLIGHTS ════════════════════════ -->
 <section>
   <div class="container">
@@ -803,16 +593,14 @@ footer .meta {
       <h2>推荐航班</h2>
       <span class="section-tag">// Flights · 待选</span>
     </div>
-
     <div class="flights-section">
       <div class="flight-block-label">✈ 去程 — 北京 (PEK/PKX) → 香港 (HKG) · 2026-07-15</div>
       <div class="candidates-grid" id="outbound-flights"></div>
-
       <div class="flight-block-label" style="margin-top:20px;">✈ 返程 — 香港 (HKG) → 北京 (PEK/PKX) · 2026-07-18</div>
       <div class="candidates-grid" id="return-flights"></div>
     </div>
 
-    <!-- ═══════════════════════ HOTEL AREAS ════════════════ -->
+    <!-- HOTEL AREAS -->
     <div class="section-header" style="margin-top:40px;">
       <h2>推荐住宿片区</h2>
       <span class="section-tag">// Hotels · 按片区+价位</span>
@@ -844,274 +632,18 @@ footer .meta {
       <h2>每日行程</h2>
       <span class="section-tag">// 4 Days</span>
     </div>
+    <div id="daily-itinerary"><!-- JS 生成 --></div>
+  </div>
+</section>
 
-    <!-- DAY 1 -->
-    <div class="day-section day-1">
-      <div class="day-header">
-        <div class="day-number">01</div>
-        <div class="day-info">
-          <div class="day-date">2026 年 07 月 15 日 · 周三</div>
-          <div class="day-title">抵港 · 尖沙咀海滨漫游</div>
-        </div>
-      </div>
-      <div class="timeline">
-        <div class="slot-card">
-          <div class="slot-photo-wrap">
-            <img class="slot-photo" src="https://upload.wikimedia.org/wikipedia/commons/0/06/Avenue_of_Stars_201901.jpg" alt="星光大道" onerror="this.src='https://placehold.co/400x300/1a1410/c8943a?text=图片加载中'">
-            <span class="slot-period-badge">☀ 上午</span>
-          </div>
-          <div class="slot-body">
-            <div class="slot-time">11:00</div>
-            <div class="slot-name">抵港 &amp; 尖沙咀星光大道</div>
-            <div class="slot-meta">
-              <div class="slot-rating">★★★★★ 4.6</div>
-            </div>
-            <div class="slot-review">沿维多利亚港海滨漫步，欣赏香港岛壮阔天际线，夜晚幻彩咏香江灯光表演令人叹为观止</div>
-          </div>
-        </div>
-
-        <div class="slot-card">
-          <div class="slot-photo-wrap">
-            <img class="slot-photo" src="https://upload.wikimedia.org/wikipedia/commons/5/59/Tsim_Sha_Tsui_Ferry_Pier.jpg" alt="天星小轮码头" onerror="this.src='https://placehold.co/400x300/1a1410/c8943a?text=图片加载中'">
-            <span class="slot-period-badge">🌤 中午</span>
-          </div>
-          <div class="slot-body">
-            <div class="slot-time">13:30</div>
-            <div class="slot-name">尖沙咀天星小轮码头</div>
-            <div class="slot-meta">
-              <div class="slot-rating">★★★★★ 4.7</div>
-            </div>
-            <div class="slot-review">百年历史的天星小轮，以不足10港元渡海，感受香港最具代表性的出行方式</div>
-          </div>
-        </div>
-
-        <div class="slot-card">
-          <div class="slot-photo-wrap">
-            <img class="slot-photo" src="https://upload.wikimedia.org/wikipedia/commons/9/90/Victoria_Harbour_%28Hong_Kong%29.jpg" alt="维多利亚港夜景" onerror="this.src='https://placehold.co/400x300/1a1410/c8943a?text=图片加载中'">
-            <span class="slot-period-badge">🌙 晚上</span>
-          </div>
-          <div class="slot-body">
-            <div class="slot-time">19:00</div>
-            <div class="slot-name">维多利亚港夜景</div>
-            <div class="slot-meta">
-              <div class="slot-rating">★★★★★ 4.9</div>
-            </div>
-            <div class="slot-review">入夜后璀璨绝伦，两岸灯光倒映水面，幻彩咏香江表演每晚8点整准时上演</div>
-          </div>
-        </div>
-
-        <div class="food-card">
-          <div class="food-icon">🥟</div>
-          <div>
-            <div class="food-label">// 今日美食推荐</div>
-            <div class="food-text">早茶点心：推荐尖沙咀「添好运」点心专门家，虾饺、叉烧包、蛋挞，正宗港式早茶体验</div>
-          </div>
-        </div>
-      </div>
+<!-- ═══════════════════════ GLOBAL TIPS ════════════════════ -->
+<section>
+  <div class="container">
+    <div class="section-header">
+      <h2>全程实用贴士</h2>
+      <span class="section-tag">// Travel Tips</span>
     </div>
-
-    <div class="divider"></div>
-
-    <!-- DAY 2 -->
-    <div class="day-section day-2">
-      <div class="day-header">
-        <div class="day-number">02</div>
-        <div class="day-info">
-          <div class="day-date">2026 年 07 月 16 日 · 周四</div>
-          <div class="day-title">山顶 · 铜锣湾 · 兰桂坊</div>
-        </div>
-      </div>
-      <div class="timeline">
-        <div class="slot-card">
-          <div class="slot-photo-wrap">
-            <img class="slot-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/High_West_and_Victoria_Peak_from_Victoria_Gap_%28crop1%29.jpg/330px-High_West_and_Victoria_Peak_from_Victoria_Gap_%28crop1%29.jpg" alt="太平山顶" onerror="this.src='https://placehold.co/400x300/1a1410/c8943a?text=图片加载中'">
-            <span class="slot-period-badge">☀ 上午</span>
-          </div>
-          <div class="slot-body">
-            <div class="slot-time">09:00</div>
-            <div class="slot-name">太平山顶（山顶缆车）</div>
-            <div class="slot-meta">
-              <div class="slot-rating">★★★★★ 4.8</div>
-            </div>
-            <div class="slot-review">海拔552米俯瞰全港，山顶凌霄阁观景台提供360°全景，清晨人少视野最佳</div>
-          </div>
-        </div>
-
-        <div class="slot-card">
-          <div class="slot-photo-wrap">
-            <img class="slot-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Tung_Choi_Street_201705.JPG/250px-Tung_Choi_Street_201705.JPG" alt="铜锣湾时代广场" onerror="this.src='https://placehold.co/400x300/1a1410/c8943a?text=图片加载中'">
-            <span class="slot-period-badge">🌤 中午</span>
-          </div>
-          <div class="slot-body">
-            <div class="slot-time">13:00</div>
-            <div class="slot-name">铜锣湾时代广场</div>
-            <div class="slot-meta">
-              <div class="slot-rating">★★★★☆ 4.4</div>
-            </div>
-            <div class="slot-review">香港最繁华购物区之一，时代广场16层高的购物中心云集国际一线品牌与本地餐饮</div>
-          </div>
-        </div>
-
-        <div class="slot-card">
-          <div class="slot-photo-wrap">
-            <img class="slot-photo" src="https://upload.wikimedia.org/wikipedia/commons/4/4b/LKF_Street_View01.jpg" alt="兰桂坊夜生活" onerror="this.src='https://placehold.co/400x300/1a1410/c8943a?text=图片加载中'">
-            <span class="slot-period-badge">🌙 晚上</span>
-          </div>
-          <div class="slot-body">
-            <div class="slot-time">20:00</div>
-            <div class="slot-name">兰桂坊夜生活</div>
-            <div class="slot-meta">
-              <div class="slot-rating">★★★★★ 4.5</div>
-            </div>
-            <div class="slot-review">中环核心的酒吧街，云集各国餐厅与酒吧，夜晚人声鼎沸，是香港最具活力的夜生活地标</div>
-          </div>
-        </div>
-
-        <div class="food-card">
-          <div class="food-icon">🧇</div>
-          <div>
-            <div class="food-label">// 今日美食推荐</div>
-            <div class="food-text">菠萝包配奶茶：到港式茶餐厅点一份「冰火菠萝油」（热菠萝包夹冰冻牛油），配丝袜奶茶，体验最地道的港式下午茶</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="divider"></div>
-
-    <!-- DAY 3 -->
-    <div class="day-section day-3">
-      <div class="day-header">
-        <div class="day-number">03</div>
-        <div class="day-info">
-          <div class="day-date">2026 年 07 月 17 日 · 周五</div>
-          <div class="day-title">黄大仙 · 旺角 · 庙街夜市</div>
-        </div>
-      </div>
-      <div class="timeline">
-        <div class="slot-card">
-          <div class="slot-photo-wrap">
-            <img class="slot-photo" src="https://upload.wikimedia.org/wikipedia/commons/2/2e/HK_WongTaiSinTemple.JPG" alt="黄大仙祠" onerror="this.src='https://placehold.co/400x300/1a1410/c8943a?text=图片加载中'">
-            <span class="slot-period-badge">☀ 上午</span>
-          </div>
-          <div class="slot-body">
-            <div class="slot-time">09:00</div>
-            <div class="slot-name">黄大仙祠</div>
-            <div class="slot-meta">
-              <div class="slot-rating">★★★★★ 4.6</div>
-            </div>
-            <div class="slot-review">香港最著名的道教寺庙，金碧辉煌的建筑群每日香火鼎盛，签文灵验远近驰名</div>
-          </div>
-        </div>
-
-        <div class="slot-card">
-          <div class="slot-photo-wrap">
-            <img class="slot-photo" src="https://upload.wikimedia.org/wikipedia/commons/b/b2/Tung_Choi_Street_201705.JPG" alt="旺角女人街" onerror="this.src='https://placehold.co/400x300/1a1410/c8943a?text=图片加载中'">
-            <span class="slot-period-badge">🌤 中午</span>
-          </div>
-          <div class="slot-body">
-            <div class="slot-time">13:00</div>
-            <div class="slot-name">旺角女人街（通菜街）</div>
-            <div class="slot-meta">
-              <div class="slot-rating">★★★★☆ 4.3</div>
-            </div>
-            <div class="slot-review">全港最热闹的街头市集，数百摊位售卖平价服饰、首饰与纪念品，砍价乐趣十足</div>
-          </div>
-        </div>
-
-        <div class="slot-card">
-          <div class="slot-photo-wrap">
-            <img class="slot-photo" src="https://upload.wikimedia.org/wikipedia/commons/3/35/NightMarketTempleStreet.jpg" alt="庙街夜市" onerror="this.src='https://placehold.co/400x300/1a1410/c8943a?text=图片加载中'">
-            <span class="slot-period-badge">🌙 晚上</span>
-          </div>
-          <div class="slot-body">
-            <div class="slot-time">19:30</div>
-            <div class="slot-name">庙街夜市</div>
-            <div class="slot-meta">
-              <div class="slot-rating">★★★★★ 4.5</div>
-            </div>
-            <div class="slot-review">香港最具传统特色的夜市，算命摊、粤剧歌手、海鲜大排档交织成独一无二的老香港风情</div>
-          </div>
-        </div>
-
-        <div class="food-card">
-          <div class="food-icon">🍢</div>
-          <div>
-            <div class="food-label">// 今日美食推荐</div>
-            <div class="food-text">庙街小食：在庙街夜市品尝煎蚝饼、鱼蛋粉、咖喱鱼蛋，感受最市井的香港街头风味</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="divider"></div>
-
-    <!-- DAY 4 -->
-    <div class="day-section day-4">
-      <div class="day-header">
-        <div class="day-number">04</div>
-        <div class="day-info">
-          <div class="day-date">2026 年 07 月 18 日 · 周六</div>
-          <div class="day-title">大屿山 · 昂坪360 · 大澳渔村 · 返程</div>
-        </div>
-      </div>
-      <div class="timeline">
-        <div class="slot-card">
-          <div class="slot-photo-wrap">
-            <img class="slot-photo" src="https://upload.wikimedia.org/wikipedia/commons/a/ad/Ngong_Ping_360_Cable_Car_and_HKG_2021-09.jpg" alt="昂坪360缆车" onerror="this.src='https://placehold.co/400x300/1a1410/c8943a?text=图片加载中'">
-            <span class="slot-period-badge">☀ 上午</span>
-          </div>
-          <div class="slot-body">
-            <div class="slot-time">09:30</div>
-            <div class="slot-name">昂坪360缆车 &amp; 天坛大佛</div>
-            <div class="slot-meta">
-              <div class="slot-rating">★★★★★ 4.7</div>
-              <span class="reminder-badge">⚠️ 建议提前7天订</span>
-            </div>
-            <div class="slot-review">5.7公里空中缆车俯瞰大屿山全景，山顶天坛大佛庄严巍峨，宝莲禅寺香烟袅袅</div>
-          </div>
-        </div>
-
-        <div class="slot-card">
-          <div class="slot-photo-wrap">
-            <img class="slot-photo" src="https://upload.wikimedia.org/wikipedia/commons/7/74/1_tai_o_hong_kong_2013.jpg" alt="大澳渔村" onerror="this.src='https://placehold.co/400x300/1a1410/c8943a?text=图片加载中'">
-            <span class="slot-period-badge">🌤 中午</span>
-          </div>
-          <div class="slot-body">
-            <div class="slot-time">12:30</div>
-            <div class="slot-name">大澳渔村</div>
-            <div class="slot-meta">
-              <div class="slot-rating">★★★★★ 4.5</div>
-            </div>
-            <div class="slot-review">香港「东方威尼斯」，棚屋水乡风貌保存完好，乘船游览水道可见白海豚出没</div>
-          </div>
-        </div>
-
-        <div class="slot-card">
-          <div class="slot-photo-wrap">
-            <img class="slot-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/1_tai_o_hong_kong_2013.jpg/400px-1_tai_o_hong_kong_2013.jpg" alt="返程香港国际机场" onerror="this.src='https://placehold.co/400x300/1a1410/c8943a?text=图片加载中'">
-            <span class="slot-period-badge">🌙 晚上</span>
-          </div>
-          <div class="slot-body">
-            <div class="slot-time">16:00</div>
-            <div class="slot-name">返程 香港国际机场</div>
-            <div class="slot-meta">
-              <div class="slot-rating">★★★★★ 4.8</div>
-            </div>
-            <div class="slot-review">香港国际机场，连续多年获评全球最佳机场，免税店与美食选择丰富，提前2小时到达</div>
-          </div>
-        </div>
-
-        <div class="food-card">
-          <div class="food-icon">🦞</div>
-          <div>
-            <div class="food-label">// 今日美食推荐</div>
-            <div class="food-text">大澳海鲜：在大澳渔村品尝现捕海鲜，虾膏炒饭、盐水虾、炸鱼皮，渔家风味原汁原味</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
+    <div class="tips-section" id="global-tips"><!-- JS 生成 --></div>
   </div>
 </section>
 
@@ -1248,172 +780,347 @@ if (typeof module !== 'undefined' && module.exports) {
 const trip = {
   title: "香港 4 天 3 晚",
   startDate: "2026-07-15",
+  colorScheme: "parchment-gold-rouge",
 
-  // ── 航班：待选班次（北京→香港 及 香港→北京）──────────────
+  preTrip: {
+    weather: {
+      summary: "7 月平均 31°C / 26°C，午后 3–6 点常有短时强雷暴，上午与晚上多晴",
+      typhoon: "7–9 月为台风季，出发前 3 天起关注香港天文台预警（8 号风球以上交通景点关闭）"
+    },
+    packing: "短袖短裤 + 轻薄防晒衣 + 防滑凉鞋 + 晴雨两用伞；室内空调极冷，务必带一件长袖外套",
+    payment: "推荐电子八达通（Apple/华为钱包可加，内地卡可充值），另备 500–800 港币现金给传统茶餐厅/红色小巴",
+    apps: ["MTR Mobile（港铁）", "香港天文台（天气）", "景点官方 App（如迪士尼查排队）"],
+    ticketTip: "热门景点门票建议提前 3–7 天网上购买，避免现场排队"
+  },
+
   flights: {
-    booked: [],   // 用户尚未预订，暂无已确认班次
+    booked: [],
     candidates: [
-      // ── 去程 ──
-      {
-        label: "去程",
-        code: "CA 101",
-        time: "PEK 08:00 → HKG 11:30（直飞，约3.5h）",
-        note: "中国国际航空 · 波音737/A320 · 直飞 · 大致¥1200–2200"
-      },
-      {
-        label: "去程",
-        code: "CX 836",
-        time: "PEK 09:40 → HKG 13:10（直飞，约3.5h）",
-        note: "国泰航空 · 空客A330 · 直飞 · 大致¥1500–3000"
-      },
-      {
-        label: "去程",
-        code: "HU 7603",
-        time: "PKX 07:30 → HKG 11:05（直飞，约3.5h）",
-        note: "海南航空 · 波音737 · 直飞，大兴机场出发 · 大致¥1000–2000"
-      },
-      {
-        label: "去程",
-        code: "KA 903",
-        time: "PEK 13:05 → HKG 16:25（直飞，约3.5h）",
-        note: "港龙/国泰旗下 · A320 · 直飞 · 下午出发适合当日安排 · 大致¥1300–2500"
-      },
-      // ── 返程 ──
-      {
-        label: "返程",
-        code: "CA 102",
-        time: "HKG 14:30 → PEK 18:00（直飞，约3.5h）",
-        note: "中国国际航空 · 波音737/A320 · 直飞 · 大致¥1200–2200"
-      },
-      {
-        label: "返程",
-        code: "CX 837",
-        time: "HKG 16:55 → PEK 20:30（直飞，约3.5h）",
-        note: "国泰航空 · 空客A330 · 直飞 · 傍晚班，方便游玩后直奔机场 · 大致¥1500–3000"
-      },
-      {
-        label: "返程",
-        code: "HU 7604",
-        time: "HKG 19:00 → PKX 22:30（直飞，约3.5h）",
-        note: "海南航空 · 波音737 · 直飞，抵大兴机场 · 大致¥1000–2000"
-      }
+      { label: "去程", code: "CA 101",  time: "PEK 08:00 → HKG 11:30（直飞，约3.5h）", note: "中国国际航空 · 波音737/A320 · 直飞 · 大致¥1200–2200" },
+      { label: "去程", code: "CX 836",  time: "PEK 09:40 → HKG 13:10（直飞，约3.5h）", note: "国泰航空 · 空客A330 · 直飞 · 大致¥1500–3000" },
+      { label: "去程", code: "HU 7603", time: "PKX 07:30 → HKG 11:05（直飞，约3.5h）", note: "海南航空 · 波音737 · 直飞，大兴机场出发 · 大致¥1000–2000" },
+      { label: "去程", code: "KA 903",  time: "PEK 13:05 → HKG 16:25（直飞，约3.5h）", note: "港龙/国泰旗下 · A320 · 直飞 · 下午出发适合当日安排 · 大致¥1300–2500" },
+      { label: "返程", code: "CA 102",  time: "HKG 14:30 → PEK 18:00（直飞，约3.5h）", note: "中国国际航空 · 波音737/A320 · 直飞 · 大致¥1200–2200" },
+      { label: "返程", code: "CX 837",  time: "HKG 16:55 → PEK 20:30（直飞，约3.5h）", note: "国泰航空 · 空客A330 · 直飞 · 傍晚班，方便游玩后直奔机场 · 大致¥1500–3000" },
+      { label: "返程", code: "HU 7604", time: "HKG 19:00 → PKX 22:30（直飞，约3.5h）", note: "海南航空 · 波音737 · 直飞，抵大兴机场 · 大致¥1000–2000" }
     ]
   },
 
-  // ── 酒店：按片区 + 价位推荐 ─────────────────────────────
   hotelAreas: [
     {
       area: "尖沙咀",
       reason: "毗邻星光大道、天星小轮码头，地铁荃湾线/西铁线交汇，步行可达维多利亚港，是本行程第1–3天的地理核心",
       options: [
-        {
-          tier: "经济",
-          name: "帝国酒店 (Hotel Imperial)",
-          priceRange: "约 ¥400–600/晚",
-          note: "位于尖沙咀中心，步行5分钟达地铁站，性价比高"
-        },
-        {
-          tier: "中档",
-          name: "香港帝苑酒店 (Royal Garden Hotel)",
-          priceRange: "约 ¥900–1400/晚",
-          note: "坐落尖东，室内花园中庭设计独特，离东铁站近"
-        },
-        {
-          tier: "高端",
-          name: "香港半岛酒店 (The Peninsula HK)",
-          priceRange: "约 ¥3000–6000/晚",
-          note: "百年传奇顶级酒店，维港正对面，劳斯莱斯接机服务"
-        }
+        { tier: "经济", name: "帝国酒店 (Hotel Imperial)",         priceRange: "约 ¥400–600/晚",   note: "位于尖沙咀中心，步行5分钟达地铁站，性价比高" },
+        { tier: "中档", name: "香港帝苑酒店 (Royal Garden Hotel)", priceRange: "约 ¥900–1400/晚",  note: "坐落尖东，室内花园中庭设计独特，离东铁站近" },
+        { tier: "高端", name: "香港半岛酒店 (The Peninsula HK)",   priceRange: "约 ¥3000–6000/晚", note: "百年传奇顶级酒店，维港正对面，劳斯莱斯接机服务" }
       ]
     },
     {
       area: "铜锣湾／中环",
       reason: "第2天太平山顶缆车、铜锣湾购物及兰桂坊夜生活均在此区，适合喜欢夜生活与购物的旅客",
       options: [
-        {
-          tier: "经济",
-          name: "维景酒店 (Metropark Hotel)",
-          priceRange: "约 ¥350–550/晚",
-          note: "铜锣湾地铁站附近，周边餐厅密集，出行便利"
-        },
-        {
-          tier: "中档",
-          name: "香港铜锣湾希尔顿逸林 (DoubleTree by Hilton HK)",
-          priceRange: "约 ¥850–1300/晚",
-          note: "铜锣湾核心地带，步行至时代广场约5分钟"
-        },
-        {
-          tier: "高端",
-          name: "香港四季酒店 (Four Seasons HK)",
-          priceRange: "约 ¥3500–7000/晚",
-          note: "中环IFC旁，维港全景无敌，米其林级别餐厅坐镇"
-        }
+        { tier: "经济", name: "维景酒店 (Metropark Hotel)",                     priceRange: "约 ¥350–550/晚",   note: "铜锣湾地铁站附近，周边餐厅密集，出行便利" },
+        { tier: "中档", name: "香港铜锣湾希尔顿逸林 (DoubleTree by Hilton HK)", priceRange: "约 ¥850–1300/晚",  note: "铜锣湾核心地带，步行至时代广场约5分钟" },
+        { tier: "高端", name: "香港四季酒店 (Four Seasons HK)",                 priceRange: "约 ¥3500–7000/晚", note: "中环IFC旁，维港全景无敌，米其林级别餐厅坐镇" }
       ]
     }
   ],
 
-  disclaimer: "航班与酒店为基于公开资料的建议，可能与实时班次/房价/房态有出入，请务必在订票/订房 App 上核实后再预订。",
+  disclaimer: "航班、酒店、门票、营业时间、活动等信息为基于公开资料的建议，可能与实时情况有出入，请务必在官方/订票订房 App 上核实后再预订或前往。",
 
-  // ── 出发前提醒 ───────────────────────────────────────────
+  tips: [
+    "户外活动尽量排在上午 9 点前与晚上 7 点后，下午雷暴时段安排室内（商场/博物馆/乐园）",
+    "热门餐厅避开 12–13 点、18–20 点高峰；非高峰几乎不排队",
+    "如遇台风预警（8 号风球以上），公共交通与景点会关闭，留酒店休息",
+    "八达通可在地铁站自助机添加，支持内地银联卡；初次建议充值 200 港币",
+    "港铁全程可到达本行程绝大多数景点，建议下载 MTR Mobile 查实时班次"
+  ],
+
   reminders: [
-    { item: "北京→香港往返机票", leadDays: 45 },
-    { item: "旺季酒店预订（7月暑期紧张）", leadDays: 30 },
-    { item: "昂坪360缆车票", leadDays: 7 },
+    { item: "北京→香港往返机票",            leadDays: 45 },
+    { item: "旺季酒店预订（7月暑期紧张）",  leadDays: 30 },
+    { item: "昂坪360缆车票",                 leadDays: 7 },
     { item: "黄大仙祠参观（免费但宜早到）", leadDays: 3 },
     { item: "热门餐厅预订（如米其林推荐）", leadDays: 3 }
   ],
 
-  // ── 行程（原有数据，保持不变）────────────────────────────
   days: [
     {
       date: "2026-07-15",
-      meals: { food: "早茶点心：推荐尖沙咀「添好运」点心专门家，虾饺、叉烧包、蛋挞，正宗港式早茶体验" },
+      weekday: "周三",
+      theme: "抵港 · 尖沙咀海滨漫游",
+      tips: ["抵港后先在地铁站办理八达通", "下午如遇雷暴可进商场购物避雨", "晚8点准时到星光大道看幻彩咏香江"],
       slots: [
-        { period: "morning", name: "抵港 & 尖沙咀星光大道", time: "11:00", lat: 22.2930972, lng: 114.1747611, photo: "https://upload.wikimedia.org/wikipedia/commons/0/06/Avenue_of_Stars_201901.jpg", rating: 4.6, review: "沿维多利亚港海滨漫步，欣赏香港岛壮阔天际线，夜晚幻彩咏香江灯光表演令人叹为观止", needsBooking: false, leadDays: 0 },
-        { period: "noon",    name: "尖沙咀天星小轮码头",   time: "13:30", lat: 22.2937,     lng: 114.1677,    photo: "https://upload.wikimedia.org/wikipedia/commons/5/59/Tsim_Sha_Tsui_Ferry_Pier.jpg", rating: 4.7, review: "百年历史的天星小轮，以不足10港元渡海，感受香港最具代表性的出行方式", needsBooking: false, leadDays: 0 },
-        { period: "evening", name: "维多利亚港夜景",        time: "19:00", lat: 22.2942,     lng: 114.1800,    photo: "https://upload.wikimedia.org/wikipedia/commons/9/90/Victoria_Harbour_%28Hong_Kong%29.jpg", rating: 4.9, review: "入夜后璀璨绝伦，两岸灯光倒映水面，幻彩咏香江表演每晚8点整准时上演", needsBooking: false, leadDays: 0 }
+        {
+          period: "morning", name: "抵港 & 尖沙咀星光大道", time: "11:00",
+          lat: 22.2930972, lng: 114.1747611,
+          photo: "https://upload.wikimedia.org/wikipedia/commons/0/06/Avenue_of_Stars_201901.jpg",
+          rating: 4.6, review: "沿维多利亚港海滨漫步，欣赏香港岛壮阔天际线，夜晚幻彩咏香江灯光表演令人叹为观止",
+          openingHours: "全天开放", ticketPrice: "免费",
+          transport: { mode: "机场快线 + 地铁", fare: "机场快线约 ¥115，地铁约 ¥10", duration: "机场至尖沙咀约 40 分钟" },
+          seasonal: "暑期海滨灯光装置展（7–8月）",
+          needsBooking: false, leadDays: 0
+        },
+        {
+          period: "noon", name: "尖沙咀天星小轮码头", time: "13:30",
+          lat: 22.2937, lng: 114.1677,
+          photo: "https://upload.wikimedia.org/wikipedia/commons/5/59/Tsim_Sha_Tsui_Ferry_Pier.jpg",
+          rating: 4.7, review: "百年历史的天星小轮，以不足10港元渡海，感受香港最具代表性的出行方式",
+          openingHours: "06:30–23:30", ticketPrice: "约 ¥3（下层）/ ¥3.6（上层）",
+          transport: { mode: "步行", fare: "免费", duration: "从星光大道步行约 5 分钟" },
+          needsBooking: false, leadDays: 0
+        },
+        {
+          period: "evening", name: "维多利亚港夜景", time: "19:00",
+          lat: 22.2942, lng: 114.1800,
+          photo: "https://upload.wikimedia.org/wikipedia/commons/9/90/Victoria_Harbour_%28Hong_Kong%29.jpg",
+          rating: 4.9, review: "入夜后璀璨绝伦，两岸灯光倒映水面，幻彩咏香江表演每晚8点整准时上演",
+          openingHours: "全天开放", ticketPrice: "免费",
+          seasonal: "幻彩咏香江灯光秀每晚 20:00（约 13 分钟）",
+          needsBooking: false, leadDays: 0
+        }
+      ],
+      dining: [
+        {
+          meal: "早午餐", place: "添好运点心专门家（尖沙咀店）", hours: "09:00–21:30，全年不休",
+          dishes: [
+            { name: "酥皮叉烧包", price: "约 ¥38/份" },
+            { name: "鲜虾饺（4件）", price: "约 ¥38/份" },
+            { name: "蛋挞", price: "约 ¥18/件" }
+          ]
+        },
+        {
+          meal: "晚餐", place: "海港城美食广场（尖沙咀）", hours: "10:00–22:00，全年不休",
+          dishes: [
+            { name: "鱼蛋河粉", price: "约 ¥45" },
+            { name: "车仔面", price: "约 ¥50" }
+          ]
+        }
       ]
     },
     {
       date: "2026-07-16",
-      meals: { food: "菠萝包配奶茶：到港式茶餐厅点一份「冰火菠萝油」（热菠萝包夹冰冻牛油），配丝袜奶茶，体验最地道的港式下午茶" },
+      weekday: "周四",
+      theme: "山顶 · 铜锣湾 · 兰桂坊",
+      tips: ["缆车建议 9 点前到山顶人少且视野清晰", "午后1–5点在铜锣湾商场购物避开雷暴", "兰桂坊周四人不多，适合悠闲用餐"],
       slots: [
-        { period: "morning", name: "太平山顶（山顶缆车）", time: "09:00", lat: 22.2756, lng: 114.1455, photo: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/High_West_and_Victoria_Peak_from_Victoria_Gap_%28crop1%29.jpg/330px-High_West_and_Victoria_Peak_from_Victoria_Gap_%28crop1%29.jpg", rating: 4.8, review: "海拔552米俯瞰全港，山顶凌霄阁观景台提供360°全景，清晨人少视野最佳", needsBooking: false, leadDays: 0 },
-        { period: "noon",    name: "铜锣湾时代广场",       time: "13:00", lat: 22.2737, lng: 114.1760, photo: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Tung_Choi_Street_201705.JPG/250px-Tung_Choi_Street_201705.JPG", rating: 4.4, review: "香港最繁华购物区之一，时代广场16层高的购物中心云集国际一线品牌与本地餐饮", needsBooking: false, leadDays: 0 },
-        { period: "evening", name: "兰桂坊夜生活",         time: "20:00", lat: 22.2810, lng: 114.1555, photo: "https://upload.wikimedia.org/wikipedia/commons/4/4b/LKF_Street_View01.jpg", rating: 4.5, review: "中环核心的酒吧街，云集各国餐厅与酒吧，夜晚人声鼎沸，是香港最具活力的夜生活地标", needsBooking: false, leadDays: 0 }
+        {
+          period: "morning", name: "太平山顶（山顶缆车）", time: "09:00",
+          lat: 22.2756, lng: 114.1455,
+          photo: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/High_West_and_Victoria_Peak_from_Victoria_Gap_%28crop1%29.jpg/330px-High_West_and_Victoria_Peak_from_Victoria_Gap_%28crop1%29.jpg",
+          rating: 4.8, review: "海拔552米俯瞰全港，山顶凌霄阁观景台提供360°全景，清晨人少视野最佳",
+          openingHours: "山顶缆车 07:00–24:00",
+          ticketPrice: "缆车套票（来回+凌霄阁）约 ¥168 起，山顶观景台单独约 ¥88",
+          transport: { mode: "港铁 + 山顶缆车", fare: "地铁约 ¥10 + 缆车票另计", duration: "中环站步行 10 分钟至缆车站，缆车约 8 分钟" },
+          needsBooking: false, leadDays: 0
+        },
+        {
+          period: "noon", name: "铜锣湾时代广场", time: "13:00",
+          lat: 22.2737, lng: 114.1760,
+          photo: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Tung_Choi_Street_201705.JPG/250px-Tung_Choi_Street_201705.JPG",
+          rating: 4.4, review: "香港最繁华购物区之一，时代广场16层高的购物中心云集国际一线品牌与本地餐饮",
+          openingHours: "10:00–22:00",
+          transport: { mode: "港铁", fare: "约 ¥10", duration: "中环站至铜锣湾站约 10 分钟" },
+          needsBooking: false, leadDays: 0
+        },
+        {
+          period: "evening", name: "兰桂坊夜生活", time: "20:00",
+          lat: 22.2810, lng: 114.1555,
+          photo: "https://upload.wikimedia.org/wikipedia/commons/4/4b/LKF_Street_View01.jpg",
+          rating: 4.5, review: "中环核心的酒吧街，云集各国餐厅与酒吧，夜晚人声鼎沸，是香港最具活力的夜生活地标",
+          openingHours: "餐厅 18:00 起，酒吧 20:00–凌晨",
+          transport: { mode: "港铁", fare: "约 ¥10", duration: "铜锣湾至中环站约 5 分钟，出站步行约 5 分钟" },
+          needsBooking: false, leadDays: 0
+        }
+      ],
+      dining: [
+        {
+          meal: "午餐", place: "翠华餐厅（铜锣湾店）", hours: "07:30–02:00，全年不休",
+          dishes: [
+            { name: "冰火菠萝油", price: "约 ¥28" },
+            { name: "丝袜奶茶", price: "约 ¥32" },
+            { name: "干炒牛河", price: "约 ¥78" }
+          ]
+        },
+        {
+          meal: "晚餐", place: "兰桂坊 Post 97 餐厅", hours: "11:30–01:00，全年不休",
+          dishes: [
+            { name: "港式牛扒意粉", price: "约 ¥98" },
+            { name: "芒果布甸", price: "约 ¥48" }
+          ]
+        }
       ]
     },
     {
       date: "2026-07-17",
-      meals: { food: "庙街小食：在庙街夜市品尝煎蚝饼、鱼蛋粉、咖喱鱼蛋，感受最市井的香港街头风味" },
+      weekday: "周五",
+      theme: "黄大仙 · 旺角 · 庙街夜市",
+      tips: ["黄大仙 9 点前人少，上午安排", "旺角午后室内商场避雨", "庙街 8 点后最热闹，周五更有本地人"],
       slots: [
-        { period: "morning", name: "黄大仙祠",             time: "09:00", lat: 22.3426, lng: 114.1936, photo: "https://upload.wikimedia.org/wikipedia/commons/2/2e/HK_WongTaiSinTemple.JPG", rating: 4.6, review: "香港最著名的道教寺庙，金碧辉煌的建筑群每日香火鼎盛，签文灵验远近驰名", needsBooking: false, leadDays: 0 },
-        { period: "noon",    name: "旺角女人街（通菜街）", time: "13:00", lat: 22.3191, lng: 114.1706, photo: "https://upload.wikimedia.org/wikipedia/commons/b/b2/Tung_Choi_Street_201705.JPG", rating: 4.3, review: "全港最热闹的街头市集，数百摊位售卖平价服饰、首饰与纪念品，砍价乐趣十足", needsBooking: false, leadDays: 0 },
-        { period: "evening", name: "庙街夜市",             time: "19:30", lat: 22.3059, lng: 114.1699, photo: "https://upload.wikimedia.org/wikipedia/commons/3/35/NightMarketTempleStreet.jpg", rating: 4.5, review: "香港最具传统特色的夜市，算命摊、粤剧歌手、海鲜大排档交织成独一无二的老香港风情", needsBooking: false, leadDays: 0 }
+        {
+          period: "morning", name: "黄大仙祠", time: "09:00",
+          lat: 22.3426, lng: 114.1936,
+          photo: "https://upload.wikimedia.org/wikipedia/commons/2/2e/HK_WongTaiSinTemple.JPG",
+          rating: 4.6, review: "香港最著名的道教寺庙，金碧辉煌的建筑群每日香火鼎盛，签文灵验远近驰名",
+          openingHours: "07:00–17:30（最后入园 17:00）", closedDays: "全年开放",
+          ticketPrice: "免费（香港居民，游客自愿捐献）",
+          transport: { mode: "港铁", fare: "约 ¥10", duration: "黄大仙站出站步行约 3 分钟" },
+          needsBooking: false, leadDays: 0
+        },
+        {
+          period: "noon", name: "旺角女人街（通菜街）", time: "13:00",
+          lat: 22.3191, lng: 114.1706,
+          photo: "https://upload.wikimedia.org/wikipedia/commons/b/b2/Tung_Choi_Street_201705.JPG",
+          rating: 4.3, review: "全港最热闹的街头市集，数百摊位售卖平价服饰、首饰与纪念品，砍价乐趣十足",
+          openingHours: "约 12:00–23:00（摊贩营业时间）", ticketPrice: "免费",
+          transport: { mode: "港铁", fare: "约 ¥10", duration: "旺角站 D3 出口步行约 2 分钟" },
+          needsBooking: false, leadDays: 0
+        },
+        {
+          period: "evening", name: "庙街夜市", time: "19:30",
+          lat: 22.3059, lng: 114.1699,
+          photo: "https://upload.wikimedia.org/wikipedia/commons/3/35/NightMarketTempleStreet.jpg",
+          rating: 4.5, review: "香港最具传统特色的夜市，算命摊、粤剧歌手、海鲜大排档交织成独一无二的老香港风情",
+          openingHours: "16:00–24:00（夜市约 18:00 后最热闹）", ticketPrice: "免费",
+          transport: { mode: "港铁", fare: "约 ¥10", duration: "油麻地站 C 出口步行约 5 分钟" },
+          seasonal: "周五夜晚粤剧表演艺人最活跃",
+          needsBooking: false, leadDays: 0
+        }
+      ],
+      dining: [
+        {
+          meal: "午餐", place: "九记牛腩（中环威灵顿街）", hours: "12:30–22:30，周日休",
+          dishes: [
+            { name: "清汤牛腩面", price: "约 ¥68" },
+            { name: "咖喱牛腩面", price: "约 ¥72" },
+            { name: "腩汁捞面", price: "约 ¥55" }
+          ]
+        },
+        {
+          meal: "晚餐", place: "庙街大排档海鲜（油麻地）", hours: "18:00–01:00，全年不休",
+          dishes: [
+            { name: "煎蚝饼", price: "约 ¥68" },
+            { name: "咖喱鱼蛋串（10颗）", price: "约 ¥20" },
+            { name: "炒丁香鱼", price: "约 ¥78" }
+          ]
+        }
       ]
     },
     {
       date: "2026-07-18",
-      meals: { food: "大澳海鲜：在大澳渔村品尝现捕海鲜，虾膏炒饭、盐水虾、炸鱼皮，渔家风味原汁原味" },
+      weekday: "周六",
+      theme: "大屿山 · 昂坪360 · 大澳渔村 · 返程",
+      tips: ["周六缆车人多，务必提前网购票", "大澳下午较热，可午前游完", "返程航班前至少提前 2 小时到机场"],
+      alternatives: [
+        { label: "方案A 昂坪360 + 大澳（推荐）", summary: "缆车俯瞰大屿山 + 棚屋渔村，自然风光与人文并重；昂坪缆车套票约 ¥168，港铁东涌线 + 缆车直达" },
+        { label: "方案B 香港迪士尼乐园",          summary: "暑期皮克斯主题限定活动（6–9月），成人票约 ¥558 起；港铁迪士尼线直达，适合家庭/动漫粉" }
+      ],
       slots: [
-        { period: "morning", name: "昂坪360缆车 & 天坛大佛", time: "09:30", lat: 22.2565, lng: 113.9016, photo: "https://upload.wikimedia.org/wikipedia/commons/a/ad/Ngong_Ping_360_Cable_Car_and_HKG_2021-09.jpg", rating: 4.7, review: "5.7公里空中缆车俯瞰大屿山全景，山顶天坛大佛庄严巍峨，宝莲禅寺香烟袅袅", needsBooking: true,  leadDays: 7 },
-        { period: "noon",    name: "大澳渔村",               time: "12:30", lat: 22.2544, lng: 113.8642, photo: "https://upload.wikimedia.org/wikipedia/commons/7/74/1_tai_o_hong_kong_2013.jpg", rating: 4.5, review: "香港「东方威尼斯」，棚屋水乡风貌保存完好，乘船游览水道可见白海豚出没", needsBooking: false, leadDays: 0 },
-        { period: "evening", name: "返程 香港国际机场",       time: "16:00", lat: 22.3080, lng: 113.9185, photo: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/1_tai_o_hong_kong_2013.jpg/400px-1_tai_o_hong_kong_2013.jpg", rating: 4.8, review: "香港国际机场，连续多年获评全球最佳机场，免税店与美食选择丰富，提前2小时到达", needsBooking: false, leadDays: 0 }
+        {
+          period: "morning", name: "昂坪360缆车 & 天坛大佛", time: "09:30",
+          lat: 22.2565, lng: 113.9016,
+          photo: "https://upload.wikimedia.org/wikipedia/commons/a/ad/Ngong_Ping_360_Cable_Car_and_HKG_2021-09.jpg",
+          rating: 4.7, review: "5.7公里空中缆车俯瞰大屿山全景，山顶天坛大佛庄严巍峨，宝莲禅寺香烟袅袅",
+          openingHours: "缆车 10:00–18:00（周末 9:00 起）",
+          ticketPrice: "水晶缆车来回套票约 ¥268；标准缆车套票约 ¥168",
+          transport: { mode: "港铁 + 缆车", fare: "港铁至东涌约 ¥30，缆车票另计", duration: "尖沙咀至东涌约 40 分钟，缆车约 25 分钟" },
+          seasonal: "暑期大佛开放夜间参观（7–8月特定日期，需提前确认）",
+          needsBooking: true, leadDays: 7
+        },
+        {
+          period: "noon", name: "大澳渔村", time: "12:30",
+          lat: 22.2544, lng: 113.8642,
+          photo: "https://upload.wikimedia.org/wikipedia/commons/7/74/1_tai_o_hong_kong_2013.jpg",
+          rating: 4.5, review: "香港「东方威尼斯」，棚屋水乡风貌保存完好，乘船游览水道可见白海豚出没",
+          openingHours: "全天开放（商铺 09:00–18:00）",
+          ticketPrice: "大澳免费；水道游船约 ¥30/人",
+          transport: { mode: "巴士", fare: "约 ¥6", duration: "昂坪至大澳公交约 15 分钟" },
+          needsBooking: false, leadDays: 0
+        },
+        {
+          period: "evening", name: "返程 香港国际机场", time: "16:00",
+          lat: 22.3080, lng: 113.9185,
+          photo: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/1_tai_o_hong_kong_2013.jpg/400px-1_tai_o_hong_kong_2013.jpg",
+          rating: 4.8, review: "香港国际机场，连续多年获评全球最佳机场，免税店与美食选择丰富，提前2小时到达",
+          openingHours: "24小时",
+          transport: { mode: "巴士 + 港铁", fare: "大澳至机场约 ¥20，或机场快线从香港站约 ¥115", duration: "大澳至机场约 50 分钟" },
+          needsBooking: false, leadDays: 0
+        }
+      ],
+      dining: [
+        {
+          meal: "午餐", place: "大澳渔村 大澳棚屋特色茶餐厅", hours: "10:00–18:00，全年不休",
+          dishes: [
+            { name: "虾膏炒饭", price: "约 ¥68" },
+            { name: "盐水虾（半斤）", price: "约 ¥88" },
+            { name: "炸鱼皮", price: "约 ¥38" }
+          ]
+        }
       ]
     }
   ]
 };
 
-// ── Render flights ────────────────────────────────────────────
+// ── Helpers ────────────────────────────────────────────────────
+var periodLabels = { morning: '☀ 上午', noon: '🌤 中午', evening: '🌙 晚上' };
+var dayColors    = ['var(--day1)', 'var(--day2)', 'var(--day3)', 'var(--day4)'];
+var diningIcons  = ['🥟', '🧇', '🍢', '🦞', '🍜', '🍱'];
+var mealEmoji    = { '早午餐': '☕', '午餐': '🍜', '晚餐': '🍽', '早餐': '☕', '夜宵': '🌙' };
+
+// ── Render Pre-Trip Info ──────────────────────────────────────
+(function renderPreTrip() {
+  var el = document.getElementById('pretrip-info');
+  if (!el) return;
+  var pt = trip.preTrip;
+  var appsHTML = pt.apps.map(function(a) {
+    return '<span class="app-pill">' + escapeHTML(a) + '</span>';
+  }).join('');
+
+  el.innerHTML =
+    '<div class="pretrip-card">'
+    + '<div class="pretrip-card-header">'
+    +   '<span class="pretrip-icon">🌏</span>'
+    +   '<h3>7 月香港行前须知</h3>'
+    + '</div>'
+    + '<div class="pretrip-grid">'
+    +   '<div class="pretrip-item">'
+    +     '<div class="pretrip-item-label">☁ 天气概况</div>'
+    +     '<div class="pretrip-item-text">' + escapeHTML(pt.weather.summary) + '</div>'
+    +   '</div>'
+    +   '<div class="pretrip-item">'
+    +     '<div class="pretrip-item-label">👕 行李穿搭</div>'
+    +     '<div class="pretrip-item-text">' + escapeHTML(pt.packing) + '</div>'
+    +   '</div>'
+    +   '<div class="pretrip-item">'
+    +     '<div class="pretrip-item-label">💳 支付方式</div>'
+    +     '<div class="pretrip-item-text">' + escapeHTML(pt.payment) + '</div>'
+    +   '</div>'
+    +   '<div class="pretrip-item">'
+    +     '<div class="pretrip-item-label">🎫 购票时机</div>'
+    +     '<div class="pretrip-item-text">' + escapeHTML(pt.ticketTip) + '</div>'
+    +   '</div>'
+    +   '<div class="pretrip-item" style="grid-column:1/-1;border-right:none;">'
+    +     '<div class="pretrip-item-label">📱 必备 App</div>'
+    +     '<div class="apps-list">' + appsHTML + '</div>'
+    +   '</div>'
+    +   '<div class="pretrip-typhoon">'
+    +     '<span class="pretrip-typhoon-icon">🌀</span>'
+    +     '<div class="pretrip-typhoon-text"><strong>台风季预警：</strong>' + escapeHTML(pt.weather.typhoon) + '</div>'
+    +   '</div>'
+    + '</div>'
+    + '</div>';
+})();
+
+// ── Render Flights ────────────────────────────────────────────
 (function renderFlights() {
   var outEl = document.getElementById('outbound-flights');
   var retEl = document.getElementById('return-flights');
   if (!outEl || !retEl) return;
-
   trip.flights.candidates.forEach(function(f) {
     var el = document.createElement('div');
     el.className = 'candidate-card';
-    var abbr = f.code.split(' ')[0]; // airline code abbreviation
+    var abbr = f.code.split(' ')[0];
     el.innerHTML =
       '<div class="candidate-airline-strip">' + escapeHTML(abbr) + '</div>'
       + '<div class="candidate-info">'
@@ -1422,30 +1129,24 @@ const trip = {
       +   '<span class="candidate-note">' + escapeHTML(f.note) + '</span>'
       + '</div>'
       + '<span class="candidate-pill">待选 · 请核实预订</span>';
-    if (f.label === '去程') {
-      outEl.appendChild(el);
-    } else {
-      retEl.appendChild(el);
-    }
+    (f.label === '去程' ? outEl : retEl).appendChild(el);
   });
 })();
 
-// ── Render hotel areas ────────────────────────────────────────
+// ── Render Hotel Areas ────────────────────────────────────────
 (function renderHotelAreas() {
   var container = document.getElementById('hotel-areas');
   if (!container) return;
-
+  var tierClass = { '经济': 'eco', '中档': 'mid', '高端': 'lux' };
   trip.hotelAreas.forEach(function(area, idx) {
-    var tierBadgeClass = { '经济': 'eco', '中档': 'mid', '高端': 'lux' };
     var tiersHTML = area.options.map(function(opt) {
       return '<div class="hotel-tier">'
-        + '<div class="tier-badge ' + (tierBadgeClass[opt.tier] || 'eco') + '">' + escapeHTML(opt.tier) + '</div>'
+        + '<div class="tier-badge ' + (tierClass[opt.tier] || 'eco') + '">' + escapeHTML(opt.tier) + '</div>'
         + '<div class="hotel-name">' + escapeHTML(opt.name) + '</div>'
         + '<div class="hotel-price">' + escapeHTML(opt.priceRange) + '</div>'
         + '<div class="hotel-note">' + escapeHTML(opt.note) + '</div>'
         + '</div>';
     }).join('');
-
     var card = document.createElement('div');
     card.className = 'hotel-area-card';
     card.innerHTML =
@@ -1454,23 +1155,179 @@ const trip = {
       + '<div class="hotel-area-meta">'
       +   '<div class="hotel-area-name">' + escapeHTML(area.area) + '</div>'
       +   '<div class="hotel-area-reason">' + escapeHTML(area.reason) + '</div>'
-      + '</div>'
-      + '</div>'
+      + '</div></div>'
       + '<div class="hotel-tiers">' + tiersHTML + '</div>';
     container.appendChild(card);
   });
 })();
 
-// ── Render disclaimer ─────────────────────────────────────────
+// ── Render Disclaimer ─────────────────────────────────────────
 (function renderDisclaimer() {
   var el = document.getElementById('disclaimer-box');
   if (!el) return;
   el.innerHTML = '<strong>⚠ 免责声明</strong>　' + escapeHTML(trip.disclaimer);
 })();
 
+// ── Render Daily Itinerary ────────────────────────────────────
+(function renderDailyItinerary() {
+  var container = document.getElementById('daily-itinerary');
+  if (!container) return;
+
+  trip.days.forEach(function(day, dayIdx) {
+    var dayNum = dayIdx + 1;
+    var dayClass = 'day-' + dayNum;
+
+    // Day header
+    var dateObj = new Date(day.date + 'T00:00:00Z');
+    var monthNames = ['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'];
+    var dateStr = dateObj.getUTCFullYear() + ' 年 '
+      + String(dateObj.getUTCMonth() + 1).padStart(2,'0') + ' 月 '
+      + String(dateObj.getUTCDate()).padStart(2,'0') + ' 日 · ' + day.weekday;
+
+    var daySection = document.createElement('div');
+    daySection.className = 'day-section ' + dayClass;
+
+    // Day header HTML
+    var headerHTML =
+      '<div class="day-header">'
+      + '<div class="day-number">0' + dayNum + '</div>'
+      + '<div class="day-info">'
+      +   '<div class="day-date">' + escapeHTML(dateStr) + '</div>'
+      +   '<div class="day-title">' + escapeHTML(day.theme || '') + '</div>'
+      + '</div>'
+      + '</div>';
+
+    // Daily tips
+    var tipsHTML = '';
+    if (day.tips && day.tips.length) {
+      var tipItems = day.tips.map(function(t) {
+        return '<div class="day-tip-item"><span class="day-tip-icon">💡</span><span>' + escapeHTML(t) + '</span></div>';
+      }).join('');
+      tipsHTML = '<div class="day-tips-row">' + tipItems + '</div>';
+    }
+
+    // Alternatives panel
+    var altHTML = '';
+    if (day.alternatives && day.alternatives.length) {
+      var altCards = day.alternatives.map(function(a, ai) {
+        return '<div class="alt-card">'
+          + '<div class="alt-label">' + escapeHTML(a.label) + '</div>'
+          + '<div class="alt-summary">' + escapeHTML(a.summary) + '</div>'
+          + '</div>';
+      }).join('');
+      altHTML =
+        '<div class="alternatives-panel">'
+        + '<div class="alternatives-label">二 选 一</div>'
+        + '<div class="alternatives-grid">' + altCards + '</div>'
+        + '</div>';
+    }
+
+    // Timeline slots
+    var slotsHTML = '<div class="timeline">';
+    day.slots.forEach(function(slot) {
+      var periodLabel = periodLabels[slot.period] || slot.period;
+      var stars = '';
+      var fullStars = Math.floor(slot.rating);
+      var hasHalf = (slot.rating - fullStars) >= 0.5;
+      for (var s = 0; s < 5; s++) {
+        if (s < fullStars) stars += '★';
+        else if (s === fullStars && hasHalf) stars += '½';
+        else stars += '☆';
+      }
+
+      // Optional info pills
+      var pillsHTML = '';
+      var pills = [];
+      if (slot.openingHours) pills.push('<span class="slot-pill slot-pill-hours">🕐 ' + escapeHTML(slot.openingHours) + '</span>');
+      if (slot.closedDays)   pills.push('<span class="slot-pill slot-pill-hours">📅 ' + escapeHTML(slot.closedDays) + '</span>');
+      if (slot.ticketPrice)  pills.push('<span class="slot-pill slot-pill-ticket">🎫 ' + escapeHTML(slot.ticketPrice) + '</span>');
+      if (slot.transport) {
+        var t = slot.transport;
+        pills.push('<span class="slot-pill slot-pill-transport">🚇 ' + escapeHTML(t.mode) + ' · ' + escapeHTML(t.fare) + ' · ' + escapeHTML(t.duration) + '</span>');
+      }
+      if (slot.seasonal) pills.push('<span class="slot-pill slot-pill-seasonal">✨ ' + escapeHTML(slot.seasonal) + '</span>');
+      if (pills.length) pillsHTML = '<div class="slot-info-pills">' + pills.join('') + '</div>';
+
+      // Reminder badge
+      var badgeHTML = slot.needsBooking ? reminderBadgeHTML(slot.leadDays) : '';
+
+      slotsHTML +=
+        '<div class="slot-card">'
+        + '<div class="slot-photo-wrap">'
+        +   '<img class="slot-photo" src="' + escapeHTML(slot.photo) + '" alt="' + escapeHTML(slot.name) + '" onerror="this.src=\'https://placehold.co/400x300/1a1410/c8943a?text=图片加载中\'">'
+        +   '<span class="slot-period-badge">' + periodLabel + '</span>'
+        + '</div>'
+        + '<div class="slot-body">'
+        +   '<div class="slot-time">' + escapeHTML(slot.time) + '</div>'
+        +   '<div class="slot-name">' + escapeHTML(slot.name) + '</div>'
+        +   '<div class="slot-meta">'
+        +     '<div class="slot-rating">' + stars + ' ' + slot.rating + '</div>'
+        +   '</div>'
+        +   '<div class="slot-review">' + escapeHTML(slot.review) + '</div>'
+        +   pillsHTML
+        +   badgeHTML
+        + '</div>'
+        + '</div>';
+    });
+    slotsHTML += '</div>';
+
+    // Dining
+    var diningHTML = '';
+    if (day.dining && day.dining.length) {
+      var diningCards = day.dining.map(function(d, di) {
+        var icon = mealEmoji[d.meal] || diningIcons[di % diningIcons.length];
+        var dishItems = (d.dishes || []).map(function(dish) {
+          return '<div class="dish-item">'
+            + '<span class="dish-name">' + escapeHTML(dish.name) + '</span>'
+            + '<span class="dish-price">' + escapeHTML(dish.price) + '</span>'
+            + '</div>';
+        }).join('');
+        return '<div class="dining-card">'
+          + '<div class="dining-header">'
+          +   '<span class="dining-icon">' + icon + '</span>'
+          +   '<div class="dining-meta">'
+          +     '<div class="dining-meal-label">// ' + escapeHTML(d.meal) + '</div>'
+          +     '<div class="dining-place">' + escapeHTML(d.place) + '</div>'
+          +     '<div class="dining-hours">' + escapeHTML(d.hours) + '</div>'
+          +   '</div>'
+          + '</div>'
+          + (dishItems ? '<div class="dining-dishes">' + dishItems + '</div>' : '')
+          + '</div>';
+      }).join('');
+      diningHTML = '<div class="dining-section">' + diningCards + '</div>';
+    }
+
+    daySection.innerHTML = headerHTML + tipsHTML + altHTML + slotsHTML + diningHTML;
+    container.appendChild(daySection);
+
+    // Divider (except last day)
+    if (dayIdx < trip.days.length - 1) {
+      var div = document.createElement('div');
+      div.className = 'divider';
+      container.appendChild(div);
+    }
+  });
+})();
+
+// ── Render Global Tips ────────────────────────────────────────
+(function renderGlobalTips() {
+  var el = document.getElementById('global-tips');
+  if (!el) return;
+  var tipItems = trip.tips.map(function(tip, i) {
+    return '<li class="tip-item">'
+      + '<span class="tip-num">' + (i + 1) + '</span>'
+      + '<span>' + escapeHTML(tip) + '</span>'
+      + '</li>';
+  }).join('');
+  el.innerHTML =
+    '<div class="tips-card">'
+    + '<div class="tips-card-header"><span style="font-size:20px;">📌</span><h3>全程实用贴士</h3></div>'
+    + '<ul class="tips-list">' + tipItems + '</ul>'
+    + '</div>';
+})();
+
 // ── On DOM ready ──────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', function () {
-
   // 1. Pre-trip checklist
   var reminders = computeReminders(trip.startDate, trip.reminders);
   var checklistEl = document.getElementById('pretrip-checklist');
