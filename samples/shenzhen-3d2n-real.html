@@ -485,13 +485,16 @@ ul.pretrip-todo { list-style: none; display: flex; flex-direction: column; gap: 
 .slot-img-wrap {
   flex-shrink: 0;
   width: 140px;
-  height: 120px;
+  align-self: stretch;
+  min-height: 120px;
   overflow: hidden;
   position: relative;
 }
 .slot-img-wrap img {
+  position: absolute; inset: 0;
   width: 100%; height: 100%;
   object-fit: cover;
+  display: block;
   transition: transform .3s;
 }
 .slot-card:hover .slot-img-wrap img { transform: scale(1.05); }
