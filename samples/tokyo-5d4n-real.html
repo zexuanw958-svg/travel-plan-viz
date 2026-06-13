@@ -740,6 +740,11 @@ body {
   white-space: nowrap;
 }
 
+/* ── Slots grid wrapper (mobile: transparent passthrough) */
+.slots-grid {
+  display: contents; /* no visual effect on mobile — slots render as if unwrapped */
+}
+
 /* ── Day block footer (closes the card group) ──────── */
 .day-block-footer {
   height: 4px;
@@ -799,6 +804,132 @@ body {
   height: 1px;
   background: var(--border);
   margin: 12px 0;
+}
+
+/* ── Responsive: Desktop ≥768px ─────────────────────── */
+@media (min-width: 768px) {
+  /* Widen page container */
+  .page-wrap {
+    max-width: 900px;
+    padding: 0 0 80px;
+  }
+
+  /* Section/card outer margin fits wider container */
+  .section,
+  .map-section,
+  .day-block,
+  .checklist-wrap,
+  .disclaimer-box {
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+
+  /* Hero: bigger title on wider canvas */
+  .hero {
+    padding: 64px 40px 48px;
+  }
+  .hero-title {
+    font-size: 80px;
+  }
+
+  /* Pre-trip info: 2-column grid for info rows */
+  .info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px 28px;
+    align-items: start;
+  }
+  /* Typhoon alert spans full width */
+  .info-row:has(.typhoon-alert) {
+    grid-column: 1 / -1;
+  }
+
+  /* Flight candidates: 2-column grid */
+  #flights-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 10px;
+  }
+  .flight-candidate {
+    margin-bottom: 0;
+  }
+
+  /* Hotel options: 3-column tiers per area */
+  .hotel-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 8px;
+  }
+
+  /* Map: taller on desktop */
+  #map {
+    height: 480px !important;
+  }
+
+  /* Checklist: 2-column todo items */
+  .pretrip-todo {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 10px;
+  }
+
+  /* Day block: slot cards in 2-column grid */
+  .day-block .slot-card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 0;
+  }
+
+  /* Tips list: 2-column on desktop */
+  .tips-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 10px 24px;
+  }
+
+  /* Section body padding: a bit more air on desktop */
+  .section-body {
+    padding: 20px 28px;
+  }
+  .section-header {
+    padding: 18px 28px 14px;
+  }
+}
+
+/* ── Responsive: Wide desktop ≥1024px ───────────────── */
+@media (min-width: 1024px) {
+  /* Slot cards in day block: render side-by-side (2–3 cols) */
+  .slots-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 0;
+    border-left: 1px solid var(--border);
+    border-right: 1px solid var(--border);
+  }
+  /* Each slot inside the grid: remove individual side-borders (grid handles them) */
+  .slots-grid .slot-card {
+    border-left: none;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+  }
+  .slots-grid .slot-card:not(:last-child) {
+    border-right: 1px solid var(--border);
+  }
+
+  /* Dining items: 2-column */
+  .dining-section {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 12px 20px;
+    align-items: start;
+  }
+  .dining-section .dining-header {
+    grid-column: 1 / -1;
+    margin-bottom: 4px;
+  }
+  .dining-section .dining-item {
+    margin-bottom: 0;
+  }
 }
 </style>
 </head>
@@ -1676,9 +1807,11 @@ function renderTimeline() {
       });
     }
 
+    html += '<div class="slots-grid">';
     day.slots.forEach(function(slot) {
       html += renderSlotCard(slot);
     });
+    html += '</div>';
 
     // Dining
     html += renderDining(day.dining);
