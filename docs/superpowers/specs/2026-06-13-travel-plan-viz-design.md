@@ -100,5 +100,6 @@ travel-plan-viz/
 - **图片稳健性**：图片 URL 统一用 `https://commons.wikimedia.org/wiki/Special:FilePath/<文件名>?width=N` 形式（不手拼哈希直链），且**每个 URL 必须校验返回 200 才使用**；图片用 `object-fit: cover` 防变形。
 - **设计步骤解耦（无硬依赖）**：原设计硬调 `frontend-design`，现改为可插拔——优先用 `frontend-design` 或 `huashu-design`（任一已安装），都没有则用 `references/design-guidelines.md` 内置准则。使 skill 可独立分享，不强制先装其他 skill。
 - **跨 Agent 支持**：工具名去 Claude 专属化（联网搜索改用通用说法），可安装到 Claude Code（`~/.claude/skills`）与 OpenAI Codex（`~/.codex/skills`）；其他 Agent 的适配方法与通用提示词见 `references/porting-to-other-agents.md`。
+- **模式 B 增值建议**：已有计划时，除了转成 HTML，还顺手对照"完善行程"维度在对话里给最多 3–4 条克制的可选优化建议（不硬凑、不说教、不阻塞生成）。这是相对"纯提示词转 HTML"玩法的差异化。
 
 > 这些能力均已写入 `page-contract.md` / `research-guide.md` / `SKILL.md`，并在 `samples/` 的香港、深圳样例中体现。

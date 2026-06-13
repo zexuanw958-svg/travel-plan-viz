@@ -35,6 +35,7 @@
 | 🏨 | **片区价位酒店**：综合各景点位置推荐住宿片区，每片区给经济/中档/高端选项 |
 | 🍜 | **每日美食**：每餐推荐 + 必点菜及参考价 |
 | 📄 | **单文件离线**：一个 `.html`，手机优先，图片在线加载、无网可截图 |
+| 💡 | **不止转网页，还给建议**：把现成计划丢进来，会顺手对照"完善行程"标准提几条可选优化（克制、不硬来）——这是 Agent 区别于"纯提示词转 HTML"的地方 |
 | ⚠️ | **全覆盖免责声明**：明确所有信息为 AI 整理、可能过时，引导到官方 App 核实 |
 
 ### 🏗️ 工作原理
@@ -133,6 +134,7 @@ Inspired by the community "vibe-coding travel guide" trick, turned into a proper
 | 🏨 | **Hotels by area & price**: recommends staying areas based on the itinerary, with budget/mid/premium options |
 | 🍜 | **Daily food**: per-meal picks with signature dishes and reference prices |
 | 📄 | **Single offline file**: one `.html`, mobile-first; images load online, screenshot it for offline |
+| 💡 | **Not just conversion — advice too**: hand it an existing plan and it offers a few optional improvements against a "complete-itinerary" checklist (restrained, never pushy) — the agent's edge over a plain prompt-to-HTML trick |
 | ⚠️ | **Full disclaimer**: states all info is AI-compiled and may be outdated; points users to official apps |
 
 ### 🏗️ How it works
