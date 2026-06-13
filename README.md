@@ -6,7 +6,7 @@
 
 交互地图 · 每日时间轴 · 出发前订票提醒 · 行前须知 · 待选航班 · 片区价位酒店
 
-一个 [Claude Code](https://claude.com/claude-code) Skill
+一个 [Claude Code](https://claude.com/claude-code) / Codex 通用 Skill（也可适配其他 Agent）
 
 <sub><a href="#-中文">中文</a> · <a href="#-english">English</a></sub>
 
@@ -18,7 +18,7 @@
 
 ### 这是什么
 
-`travel-plan-viz` 是一个 Claude Code Skill。你只要说一句"帮我做香港 4 天 3 晚的旅行计划"，它就会**联网调研、排好行程、生成一个精美的单文件 HTML 网页**——手机上随时打开、离线可看、整页可截图存相册。
+`travel-plan-viz` 是一个 Claude Code / Codex 通用 Skill（也可适配其他 Agent）。你只要说一句"帮我做香港 4 天 3 晚的旅行计划"，它就会**联网调研、排好行程、生成一个精美的单文件 HTML 网页**——手机上随时打开、离线可看、整页可截图存相册。
 
 灵感来自社区的 "vibe coding 旅游攻略" 玩法，升级为一个正式、可复用、把易错逻辑固化下来的 Skill。
 
@@ -64,7 +64,7 @@ ln -sfn "$(pwd)/travel-plan-viz" ~/.codex/skills/travel-plan-viz
 
 ### 💬 用法
 
-在 Claude Code 里直接说：
+在 Claude Code / Codex 里直接说：
 
 ```
 帮我做香港 4 天 3 晚的旅行计划          # 模式 A：从零规划
@@ -116,7 +116,7 @@ node --test test/*.test.js
 
 ### What is this
 
-`travel-plan-viz` is a [Claude Code](https://claude.com/claude-code) Skill. Just say *"plan me a 4-day Hong Kong trip"* and it will **research online, build the itinerary, and generate a polished single-file HTML page** — mobile-first, openable offline, screenshot-friendly.
+`travel-plan-viz` is a [Claude Code](https://claude.com/claude-code) / Codex Skill (and portable to other agents). Just say *"plan me a 4-day Hong Kong trip"* and it will **research online, build the itinerary, and generate a polished single-file HTML page** — mobile-first, openable offline, screenshot-friendly.
 
 Inspired by the community "vibe-coding travel guide" trick, turned into a proper, reusable Skill that hard-codes the error-prone bits.
 
@@ -162,7 +162,7 @@ ln -sfn "$(pwd)/travel-plan-viz" ~/.codex/skills/travel-plan-viz
 
 ### 💬 Usage
 
-In Claude Code, just say:
+In Claude Code or Codex, just say:
 
 ```
 Plan me a 4-day, 3-night trip to Hong Kong       # Mode A: plan from scratch

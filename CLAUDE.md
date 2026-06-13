@@ -4,7 +4,7 @@
 
 ## 这是什么
 
-`travel-plan-viz` —— 一个 Claude Code Skill，把旅行行程生成为单文件、可离线、手机优先的 HTML（交互地图 + 每日时间轴 + 出发前提醒 + 行前须知 + 待选航班 + 片区价位酒店）。
+`travel-plan-viz` —— 一个 Claude Code / Codex 通用 Skill（也可适配其他 Agent），把旅行行程生成为单文件、可离线、手机优先的 HTML（交互地图 + 每日时间轴 + 出发前提醒 + 行前须知 + 待选航班 + 片区价位酒店）。
 
 ## 架构红线
 
