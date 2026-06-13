@@ -8,7 +8,8 @@
 
 ## 架构红线
 
-- **混合架构**：易错的机械逻辑固化为可复用 JS 引擎，视觉表现每次交给 `frontend-design` skill 重新生成。改动时别把布局/配色写死进引擎，也别把日期/导航逻辑塞给 frontend-design 临场生成。
+- **混合架构**：易错的机械逻辑固化为可复用 JS 引擎，视觉表现每次交给**设计步骤**重新生成。改动时别把布局/配色写死进引擎，也别把日期/导航逻辑塞给设计步骤临场生成。
+- **设计步骤可插拔（无硬依赖）**：优先用 `frontend-design` 或 `huashu-design` skill（任一已安装），都没有则走 `references/design-guidelines.md` 内置准则。这样 skill 可独立分享，不强制别人先装别的 skill。别把它改回硬依赖某个外部 skill。
 - **引擎双端可用**：`assets/map.js`、`assets/reminders.js` 同时跑在浏览器和 Node，靠文件底部的 `if (typeof module !== 'undefined' && module.exports)` 守卫导出。改这两个文件别破坏这个守卫。
 - **`escapeHTML` 在 map.js 与 reminders.js 各有一份，是故意重复**——两文件须各自独立，别合并去重。
 - **内容契约是权威**：`assets/page-contract.md` 定义 `trip` 数据结构和必须包含的区块。改了引擎导出的函数名/数据字段，必须同步这份契约和 `SKILL.md`。

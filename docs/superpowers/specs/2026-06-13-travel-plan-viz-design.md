@@ -98,5 +98,6 @@ travel-plan-viz/
 - **单日二选一方案**（`days[].alternatives`）、每日 `weekday`/`theme`。
 - **全覆盖免责声明**：免责范围从"机票/酒店"扩展到全部联网信息（天气、餐厅、评分、营业时间、价格、活动等），强调 AI 整理、可能过时、需自行核实。
 - **图片稳健性**：图片 URL 统一用 `https://commons.wikimedia.org/wiki/Special:FilePath/<文件名>?width=N` 形式（不手拼哈希直链），且**每个 URL 必须校验返回 200 才使用**；图片用 `object-fit: cover` 防变形。
+- **设计步骤解耦（无硬依赖）**：原设计硬调 `frontend-design`，现改为可插拔——优先用 `frontend-design` 或 `huashu-design`（任一已安装），都没有则用 `references/design-guidelines.md` 内置准则。使 skill 可独立分享，不强制先装其他 skill。
 
 > 这些能力均已写入 `page-contract.md` / `research-guide.md` / `SKILL.md`，并在 `samples/` 的香港、深圳样例中体现。

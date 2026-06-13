@@ -28,7 +28,7 @@ description: 把旅行行程做成美观、可离线、手机优先的单文件 
 
 1. 按 `references/research-guide.md` 联网补全：坐标、真实图片 URL、评分、点评、营业时间/休息日、门票参考价、需提前订项及 `leadDays`；**行前须知**（天气/台风/穿搭/支付/App/购票时机）、**点到点交通**（方式/票价/耗时）、**时令限定活动**、每餐**必点菜+参考价**；航班给 3-5 个**待选班次**、酒店按**片区+价位**推荐、并准备**免责声明**与全程**贴士**。排程体现**天气/季节逻辑**（户外排凉爽时段）。**不查实时票价。**
 2. 组织成 `assets/page-contract.md` 里定义的 `trip` 数据结构。
-3. 调用 **frontend-design** skill 生成风格化 HTML，严格遵守 `assets/page-contract.md` 的区块与约束：
+3. 用**设计步骤**生成风格化 HTML：**优先**调用专业设计 skill——`frontend-design` 或 `huashu-design`（花叔Design），任一已安装即用；**两者都没有**时，按 `references/design-guidelines.md` 的内置美学准则自己出。无论哪种方式都要严格遵守 `assets/page-contract.md` 的区块与约束：
    - 内联 `assets/map.js`、`assets/reminders.js` 内容到 HTML（保证单文件）。
    - 页顶清单用 `computeReminders` + `renderChecklistHTML`。
    - 展示行前须知区块；航班区展示待选班次（已预订的高亮），酒店区按片区+价位展示，附近显著展示免责声明。

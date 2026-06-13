@@ -1,6 +1,6 @@
-# 页面内容契约（给 frontend-design）
+# 页面内容契约（给设计步骤）
 
-生成 HTML 时，frontend-design 负责布局与美学，但必须包含以下区块与数据结构，并接入 `map.js` / `reminders.js` 两个引擎脚本（用 `<script>` 内联到单文件 HTML）。
+生成 HTML 时，**设计步骤**（frontend-design / huashu-design / 内置美学准则，见 SKILL.md）负责布局与美学，但必须包含以下区块与数据结构，并接入 `map.js` / `reminders.js` 两个引擎脚本（用 `<script>` 内联到单文件 HTML）。
 
 ## 输入数据结构
 
@@ -8,7 +8,7 @@
 const trip = {
   title: "香港 4 天 3 晚",
   startDate: "2026-07-15",           // ISO，用于提醒日期计算
-  colorScheme: "<每趟行程不同，由 frontend-design 决定>",
+  colorScheme: "<每趟行程不同，由设计步骤决定>",
 
   // 行前须知（按出发日期/季节定制）
   preTrip: {

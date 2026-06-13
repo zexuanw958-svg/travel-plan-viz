@@ -39,12 +39,15 @@
 
 ### 🏗️ 工作原理
 
-混合架构——**易错的机械逻辑固化为可复用引擎，视觉表现每次交给 [frontend-design](https://github.com/) 重新生成**：
+混合架构——**易错的机械逻辑固化为可复用引擎，视觉表现每次交给"设计步骤"重新生成**：
 
 - `assets/map.js`：Leaflet 地图引擎（编号标记、路线、导航深链）
 - `assets/reminders.js`：提醒引擎（截止日期计算、清单/徽标渲染）
-- `assets/page-contract.md`：内容契约，告诉 frontend-design 每个区块要哪些数据
+- `assets/page-contract.md`：内容契约，告诉设计步骤每个区块要哪些数据
 - `references/research-guide.md`：联网调研指南（坐标/图片/营业时间/天气/交通…，含图片必须校验可加载、票价不查实时）
+- `references/design-guidelines.md`：内置美学准则（无外部设计 skill 时的兜底）
+
+> **设计步骤可插拔、无硬依赖**：如果你装了 `frontend-design` 或 `huashu-design`（花叔Design）这类设计 skill，会自动调用、效果更佳；都没装也能用内置美学准则出一份像样的页面。所以本 skill 可独立安装，不强制先装别的。
 
 ### 🚀 安装
 
@@ -82,9 +85,10 @@ travel-plan-viz/
   assets/
     map.js              # Leaflet 地图引擎（已单测）
     reminders.js        # 提醒引擎（已单测）
-    page-contract.md    # 给 frontend-design 的内容契约
+    page-contract.md    # 给设计步骤的内容契约
   references/
     research-guide.md   # 联网调研指南
+    design-guidelines.md # 内置美学准则（无外部设计 skill 时兜底）
 samples/                # 生成的示例页面
 test/                   # 引擎单元测试（node --test）
 docs/superpowers/       # 设计文档与实现计划
@@ -127,12 +131,15 @@ Inspired by the community "vibe-coding travel guide" trick, turned into a proper
 
 ### 🏗️ How it works
 
-A hybrid architecture — **error-prone mechanics are baked into reusable engines, while the visual design is regenerated each time via frontend-design**:
+A hybrid architecture — **error-prone mechanics are baked into reusable engines, while the visual design is regenerated each time by a "design step"**:
 
 - `assets/map.js` — Leaflet engine (numbered markers, route, navigation deep links)
 - `assets/reminders.js` — reminder engine (deadline math, checklist/badge rendering)
-- `assets/page-contract.md` — content contract telling frontend-design what each block needs
+- `assets/page-contract.md` — content contract telling the design step what each block needs
 - `references/research-guide.md` — web-research guide (coords/photos/hours/weather/transport…, images must be verified loadable, no realtime pricing)
+- `references/design-guidelines.md` — built-in aesthetic guidelines (fallback when no external design skill is present)
+
+> **The design step is pluggable, with no hard dependency**: if you have a design skill like `frontend-design` or `huashu-design`, it's used automatically for better results; without any, the built-in guidelines still produce a presentable page. So this skill installs standalone — no need to install anything else first.
 
 ### 🚀 Install
 
@@ -170,9 +177,10 @@ travel-plan-viz/
   assets/
     map.js              # Leaflet engine (unit-tested)
     reminders.js        # reminder engine (unit-tested)
-    page-contract.md    # content contract for frontend-design
+    page-contract.md    # content contract for the design step
   references/
     research-guide.md   # web-research guide
+    design-guidelines.md # built-in aesthetics (fallback w/o external design skill)
 samples/                # generated example pages
 test/                   # engine unit tests (node --test)
 docs/superpowers/       # design specs & implementation plans
