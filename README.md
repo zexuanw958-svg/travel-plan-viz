@@ -34,7 +34,7 @@
 | ✈️ | **待选航班**：未预订时给 3–5 个真实候选班次，订不上有备选 |
 | 🏨 | **片区价位酒店**：综合各景点位置推荐住宿片区，每片区给经济/中档/高端选项 |
 | 🍜 | **每日美食**：每餐推荐 + 必点菜及参考价 |
-| 📄 | **单文件离线**：一个 `.html`，手机优先，图片在线加载、无网可截图 |
+| 📄 | **单文件离线 + 响应式**：一个 `.html`，手机/桌面自适应布局（手机单列、桌面多列加宽），图片在线加载、无网可截图 |
 | 💡 | **不止转网页，还给建议**：把现成计划丢进来，会顺手对照"完善行程"标准提几条可选优化（克制、不硬来）——这是 Agent 区别于"纯提示词转 HTML"的地方 |
 | ⚠️ | **全覆盖免责声明**：明确所有信息为 AI 整理、可能过时，引导到官方 App 核实 |
 
@@ -82,6 +82,7 @@ ln -sfn "$(pwd)/travel-plan-viz" ~/.codex/skills/travel-plan-viz
 
 - `hongkong-4d3n-real.html` —— 香港 4 天 3 晚（真实联网数据）
 - `shenzhen-3d2n-real.html` —— 深圳 3 天 2 晚（只给天数，从零生成）
+- `tokyo-5d4n-real.html` —— 东京 5 天 4 晚（模式 B：粗略计划 + Agent 建议后生成）
 
 ### 📁 项目结构
 
@@ -133,7 +134,7 @@ Inspired by the community "vibe-coding travel guide" trick, turned into a proper
 | ✈️ | **Candidate flights**: 3–5 real options when nothing is booked, so there's a fallback |
 | 🏨 | **Hotels by area & price**: recommends staying areas based on the itinerary, with budget/mid/premium options |
 | 🍜 | **Daily food**: per-meal picks with signature dishes and reference prices |
-| 📄 | **Single offline file**: one `.html`, mobile-first; images load online, screenshot it for offline |
+| 📄 | **Single offline file, responsive**: one `.html`, adapts to phone & desktop (single column on mobile, multi-column on desktop); images load online, screenshot it for offline |
 | 💡 | **Not just conversion — advice too**: hand it an existing plan and it offers a few optional improvements against a "complete-itinerary" checklist (restrained, never pushy) — the agent's edge over a plain prompt-to-HTML trick |
 | ⚠️ | **Full disclaimer**: states all info is AI-compiled and may be outdated; points users to official apps |
 
@@ -181,6 +182,7 @@ Ready-made outputs in `samples/`, open them in a browser:
 
 - `hongkong-4d3n-real.html` — Hong Kong, 4D3N (real researched data)
 - `shenzhen-3d2n-real.html` — Shenzhen, 3D2N (generated from days only)
+- `tokyo-5d4n-real.html` — Tokyo, 5D4N (Mode B: rough plan + agent suggestions)
 
 ### 📁 Structure
 
