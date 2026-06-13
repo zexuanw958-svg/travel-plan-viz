@@ -49,13 +49,18 @@
 
 > **设计步骤可插拔、无硬依赖**：如果你装了 `frontend-design` 或 `huashu-design`（花叔Design）这类设计 skill，会自动调用、效果更佳；都没装也能用内置美学准则出一份像样的页面。所以本 skill 可独立安装，不强制先装别的。
 
-### 🚀 安装
+### 🚀 安装（跨 Agent）
 
-把 skill 链接到 Claude Code 的 skills 目录：
+把 skill 链接到对应 Agent 的 skills 目录：
 
 ```bash
+# Claude Code
 ln -sfn "$(pwd)/travel-plan-viz" ~/.claude/skills/travel-plan-viz
+# OpenAI Codex
+ln -sfn "$(pwd)/travel-plan-viz" ~/.codex/skills/travel-plan-viz
 ```
+
+**用其他 Agent？** 本 skill 平台无关——核心是一份指令 + 两个纯 JS 引擎。没有 skills 机制的 Agent，把 `travel-plan-viz/SKILL.md` 当作指令喂给它即可。完整适配方法与「通用适配提示词」见 [`travel-plan-viz/references/porting-to-other-agents.md`](travel-plan-viz/references/porting-to-other-agents.md)。
 
 ### 💬 用法
 
@@ -89,6 +94,7 @@ travel-plan-viz/
   references/
     research-guide.md   # 联网调研指南
     design-guidelines.md # 内置美学准则（无外部设计 skill 时兜底）
+    porting-to-other-agents.md # 跨 Agent 适配指南 + 通用提示词
 samples/                # 生成的示例页面
 test/                   # 引擎单元测试（node --test）
 docs/superpowers/       # 设计文档与实现计划
@@ -141,13 +147,18 @@ A hybrid architecture — **error-prone mechanics are baked into reusable engine
 
 > **The design step is pluggable, with no hard dependency**: if you have a design skill like `frontend-design` or `huashu-design`, it's used automatically for better results; without any, the built-in guidelines still produce a presentable page. So this skill installs standalone — no need to install anything else first.
 
-### 🚀 Install
+### 🚀 Install (cross-agent)
 
-Link the skill into Claude Code's skills directory:
+Link the skill into your agent's skills directory:
 
 ```bash
+# Claude Code
 ln -sfn "$(pwd)/travel-plan-viz" ~/.claude/skills/travel-plan-viz
+# OpenAI Codex
+ln -sfn "$(pwd)/travel-plan-viz" ~/.codex/skills/travel-plan-viz
 ```
+
+**Using another agent?** This skill is platform-agnostic — it's just an instruction file plus two vanilla-JS engines. For agents without a skills mechanism, feed `travel-plan-viz/SKILL.md` as instructions. Full porting steps and a ready-to-paste adaptation prompt: [`travel-plan-viz/references/porting-to-other-agents.md`](travel-plan-viz/references/porting-to-other-agents.md).
 
 ### 💬 Usage
 
@@ -181,6 +192,7 @@ travel-plan-viz/
   references/
     research-guide.md   # web-research guide
     design-guidelines.md # built-in aesthetics (fallback w/o external design skill)
+    porting-to-other-agents.md # cross-agent porting guide + adaptation prompt
 samples/                # generated example pages
 test/                   # engine unit tests (node --test)
 docs/superpowers/       # design specs & implementation plans

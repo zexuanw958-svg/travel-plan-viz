@@ -29,9 +29,10 @@ node --test test/*.test.js          # 注意是 glob，不是 `node --test test/
 
 ## 部署与仓库
 
-- 本地通过软链接安装：`ln -sfn "$(pwd)/travel-plan-viz" ~/.claude/skills/travel-plan-viz`
+- **跨 Agent 安装**（软链接）：Claude Code → `~/.claude/skills/`；OpenAI Codex → `~/.codex/skills/`。
+- 平台无关：核心是指令 + 纯 JS 引擎，无厂商专有依赖。其他 Agent 的适配方法与通用提示词见 `references/porting-to-other-agents.md`；改动 skill 时别引入某个 Agent 的专有工具名（如直接写 `WebSearch`），用「联网搜索工具」这类通用说法。
 - 远程：GitHub 私有仓库 `zexuanw958-svg/travel-plan-viz`
-- `git push` 若报 `HTTP2 framing layer` 错，用 `git -c http.version=HTTP/1.1 push` 绕过。
+- `git push` 若报 `HTTP2 framing layer` / SSL 瞬时错，用 `git -c http.version=HTTP/1.1 push` 并重试几次。
 
 ## 文档分层
 
