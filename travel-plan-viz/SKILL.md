@@ -26,11 +26,12 @@ description: 把旅行行程做成美观、可离线、手机优先的单文件 
 
 ## 调研补全 + 生成
 
-1. 按 `references/research-guide.md` 联网补全：坐标、真实图片 URL、评分、一句话点评、每日美食、需提前订的项目及 `leadDays`。**不查实时票价。**
+1. 按 `references/research-guide.md` 联网补全：坐标、真实图片 URL、评分、一句话点评、每日美食、需提前订的项目及 `leadDays`；航班给 3-5 个**待选班次**、酒店按**片区+价位**推荐、并准备**免责声明**。**不查实时票价。**
 2. 组织成 `assets/page-contract.md` 里定义的 `trip` 数据结构。
 3. 调用 **frontend-design** skill 生成风格化 HTML，严格遵守 `assets/page-contract.md` 的区块与约束：
    - 内联 `assets/map.js`、`assets/reminders.js` 内容到 HTML（保证单文件）。
    - 页顶清单用 `computeReminders` + `renderChecklistHTML`。
+   - 航班区展示待选班次（已预订的高亮），酒店区按片区+价位展示，附近显著展示免责声明。
    - 地图用 `initTravelMap`，引入 Leaflet CDN 的 CSS/JS。
    - 时间轴上 `needsBooking` 项插入 `reminderBadgeHTML(leadDays)`。
    - 每趟行程用不同配色。
