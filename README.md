@@ -1,12 +1,26 @@
 <div align="center">
 
-# 🗺️ travel-plan-viz · 旅行计划可视化
+<!-- 主视觉：候鸟领航员 Migo（mascot）。图存 docs/banner.png -->
+<img src="docs/banner.png" alt="travel-plan-viz · 候鸟领航员 Migo" width="300">
+
+<sub>👋 我是 <strong>Migo</strong> · 你的旅行领航员 —— 候鸟天生会规划路线、掐准时间</sub>
+
+# 🗺️ Migo · 旅行领航
+
+<sub><code>travel-plan-viz</code></sub>
 
 **把一趟旅行变成一个美观、可离线、手机优先的单文件 HTML 页面**
 
 交互地图 · 每日时间轴 · 出发前订票提醒 · 行前须知 · 待选航班 · 片区价位酒店
 
 一个 [Claude Code](https://claude.com/claude-code) / Codex 通用 Skill（也可适配其他 Agent）
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](LICENSE)
+[![output: single-file HTML](https://img.shields.io/badge/output-single--file%20HTML-ff7a59?style=flat-square)](#-样例)
+[![offline ready](https://img.shields.io/badge/offline-ready-22c55e?style=flat-square)](#-中文)
+[![Claude Code · Codex](https://img.shields.io/badge/Claude%20Code-%C2%B7%20Codex-8b5cf6?style=flat-square)](#-安装跨-agent)
+[![no API key](https://img.shields.io/badge/map-no%20API%20key-0ea5e9?style=flat-square)](#-特点)
+[![tests](https://img.shields.io/badge/tests-passing-brightgreen?style=flat-square)](#-测试)
 
 <sub><a href="#-中文">中文</a> · <a href="#-english">English</a></sub>
 
@@ -80,6 +94,7 @@ ln -sfn "$(pwd)/travel-plan-viz" ~/.codex/skills/travel-plan-viz
 
 `samples/` 目录下有现成产物，浏览器直接打开：
 
+- `chengdu-4d3n-real.html` —— 成都 4 天 3 晚（模式 A：只给目的地+天数，从零规划，含都江堰/青城山一日 + 二选一方案）
 - `hongkong-4d3n-real.html` —— 香港 4 天 3 晚（真实联网数据）
 - `shenzhen-3d2n-real.html` —— 深圳 3 天 2 晚（只给天数，从零生成）
 - `tokyo-5d4n-real.html` —— 东京 5 天 4 晚（模式 B：粗略计划 + Agent 建议后生成）
@@ -111,6 +126,10 @@ node --test test/*.test.js
 ### ⚠️ 免责声明
 
 页面中所有信息（天气、航班、酒店、餐厅、门票、价格、营业时间、评分、活动等）均为 AI 基于公开资料整理的**参考建议**，可能不准确或已过时，**请务必在官方渠道核实后再预订或前往**。
+
+### 📄 许可证
+
+[MIT](LICENSE) —— 随意使用、修改、商用，保留版权声明即可。欢迎 issue / PR。
 
 ---
 
@@ -180,6 +199,7 @@ After it's generated, hand the HTML back to Claude to keep editing, e.g. *"Day 3
 
 Ready-made outputs in `samples/`, open them in a browser:
 
+- `chengdu-4d3n-real.html` — Chengdu, 4D3N (Mode A: planned from just destination + days; Dujiangyan/Mt. Qingcheng day trip + either-or options)
 - `hongkong-4d3n-real.html` — Hong Kong, 4D3N (real researched data)
 - `shenzhen-3d2n-real.html` — Shenzhen, 3D2N (generated from days only)
 - `tokyo-5d4n-real.html` — Tokyo, 5D4N (Mode B: rough plan + agent suggestions)
@@ -211,3 +231,7 @@ node --test test/*.test.js
 ### ⚠️ Disclaimer
 
 All information on the page (weather, flights, hotels, restaurants, tickets, prices, opening hours, ratings, events, etc.) is AI-compiled from public sources, **for reference only** — it may be inaccurate or outdated. **Always verify on official channels before booking or going.**
+
+### 📄 License
+
+[MIT](LICENSE) — use, modify, and ship it freely; just keep the copyright notice. Issues and PRs welcome.

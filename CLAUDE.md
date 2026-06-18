@@ -6,6 +6,8 @@
 
 `travel-plan-viz` —— 一个 Claude Code / Codex 通用 Skill（也可适配其他 Agent），把旅行行程生成为单文件、可离线、手机优先的 HTML（交互地图 + 每日时间轴 + 出发前提醒 + 行前须知 + 待选航班 + 片区价位酒店）。
 
+> **命名分层（别去"统一"）**：README 门面品牌名是 **Migo · 旅行领航**（Migo = 候鸟领航员吉祥物），但技术 id、SKILL.md `name`、触发词、GitHub 仓库名一律保持 `travel-plan-viz` 不变——这是有意的分层设计（门面品牌与技术标识各司其职，保持安装路径与触发词稳定）。README 与 SKILL.md 名称"不一致"属正常，请勿为对齐而改动触发词或仓库名。
+
 ## 架构红线
 
 - **混合架构**：易错的机械逻辑固化为可复用 JS 引擎，视觉表现每次交给**设计步骤**重新生成。改动时别把布局/配色写死进引擎，也别把日期/导航逻辑塞给设计步骤临场生成。
@@ -31,7 +33,7 @@ node --test test/*.test.js          # 注意是 glob，不是 `node --test test/
 
 - **跨 Agent 安装**（软链接）：Claude Code → `~/.claude/skills/`；OpenAI Codex → `~/.codex/skills/`。
 - 平台无关：核心是指令 + 纯 JS 引擎，无厂商专有依赖。其他 Agent 的适配方法与通用提示词见 `references/porting-to-other-agents.md`；改动 skill 时别引入某个 Agent 的专有工具名（如直接写 `WebSearch`），用「联网搜索工具」这类通用说法。
-- 远程：GitHub 私有仓库 `zexuanw958-svg/travel-plan-viz`
+- 远程：GitHub 公开仓库 `zexuanw958-svg/travel-plan-viz`（MIT，见 `LICENSE`）
 - `git push` 若报 `HTTP2 framing layer` / SSL 瞬时错，用 `git -c http.version=HTTP/1.1 push` 并重试几次。
 
 ## 文档分层
