@@ -38,6 +38,10 @@
   </a>
 </p>
 
+<p align="center">
+  <sub>趋势图由 <a href="https://star-history.com">star-history.com</a> 按日聚合生成并缓存,非实时;实时 Star 数请看页面顶部。<br>Chart is aggregated by day and cached (not real-time) — see the count at the top of the page for the live number.</sub>
+</p>
+
 ---
 
 ## 🌏 中文
