@@ -22,9 +22,21 @@
 [![no API key](https://img.shields.io/badge/map-no%20API%20key-0ea5e9?style=flat-square)](#-特点)
 [![tests](https://img.shields.io/badge/tests-passing-brightgreen?style=flat-square)](#-测试)
 
+<sub><a href="#-特点">✨ 特点</a> · <a href="#-安装跨-agent">🚀 安装</a> · <a href="#-工作原理">🏗️ 原理</a> · <a href="#-star-history">⭐ Star</a></sub>
+
 <sub><a href="#-中文">中文</a> · <a href="#-english">English</a></sub>
 
 </div>
+
+---
+
+## ⭐ Star History
+
+<p align="center">
+  <a href="https://star-history.com/#zexuanw958-svg/travel-plan-viz&Date">
+    <img src="https://api.star-history.com/svg?repos=zexuanw958-svg/travel-plan-viz&type=Date" alt="travel-plan-viz Star History" width="68%">
+  </a>
+</p>
 
 ---
 
@@ -231,10 +243,6 @@ node --test test/*.test.js
 ### ⚠️ Disclaimer
 
 All information on the page (weather, flights, hotels, restaurants, tickets, prices, opening hours, ratings, events, etc.) is AI-compiled from public sources, **for reference only** — it may be inaccurate or outdated. **Always verify on official channels before booking or going.**
-
-### ⭐ Star History
-
-[![Star History Chart](https://api.star-history.com/svg?repos=zexuanw958-svg/travel-plan-viz&type=Date)](https://star-history.com/#zexuanw958-svg/travel-plan-viz&Date)
 
 ### 📄 License
 
