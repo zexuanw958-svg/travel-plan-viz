@@ -232,6 +232,10 @@ node --test test/*.test.js
 
 All information on the page (weather, flights, hotels, restaurants, tickets, prices, opening hours, ratings, events, etc.) is AI-compiled from public sources, **for reference only** — it may be inaccurate or outdated. **Always verify on official channels before booking or going.**
 
+### ⭐ Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=zexuanw958-svg/travel-plan-viz&type=Date)](https://star-history.com/#zexuanw958-svg/travel-plan-viz&Date)
+
 ### 📄 License
 
 [MIT](LICENSE) — use, modify, and ship it freely; just keep the copyright notice. Issues and PRs welcome.
