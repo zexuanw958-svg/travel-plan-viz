@@ -66,6 +66,7 @@
 | 🍜 | **每日美食**：每餐推荐 + 必点菜及参考价 |
 | 📄 | **单文件离线 + 响应式**：一个 `.html`，手机/桌面自适应布局（手机单列、桌面多列加宽），图片在线加载、无网可截图 |
 | 💡 | **不止转网页，还给建议**：把现成计划丢进来，会顺手对照"完善行程"标准提几条可选优化（克制、不硬来）——这是 Agent 区别于"纯提示词转 HTML"的地方 |
+| 🔌 | **可选适配官方旅行 skill**：若你另装了飞猪 / 高德 / 腾讯地图 / 滴滴等官方 skill，会调用它们补充实时航班、酒店、路线规划、天气，并附「去预订 / 导航 / 叫车」链接；**没装则照常走联网调研，功能不缺**。这部分数据的实时性由对应官方 skill 负责 |
 | ⚠️ | **全覆盖免责声明**：明确所有信息为 AI 整理、可能过时，引导到官方 App 核实 |
 
 ### 🏗️ 工作原理
@@ -79,6 +80,8 @@
 - `references/design-guidelines.md`：内置美学准则（无外部设计 skill 时的兜底）
 
 > **设计步骤可插拔、无硬依赖**：如果你装了 `frontend-design` 或 `huashu-design`（花叔Design）这类设计 skill，会自动调用、效果更佳；都没装也能用内置美学准则出一份像样的页面。所以本 skill 可独立安装，不强制先装别的。
+
+> **第三方旅行 skill 可选适配（同样是软依赖）**：如果你另装了飞猪、高德、腾讯地图、滴滴等官方旅行 skill，本 skill 会调用它们补充实时数据（航班 / 酒店 / 路线规划 / 天气 / 精确坐标），并在页面附上「去预订 / 导航 / 叫车」链接；没装则照常走联网调研，页面不缺任何区块。这些数据的实时性与真实性由对应官方 skill 负责，本 skill 只做适配与呈现、不做背书。
 
 ### 🚀 安装（跨 Agent）
 
@@ -171,6 +174,7 @@ Inspired by the community "vibe-coding travel guide" trick, turned into a proper
 | 🍜 | **Daily food**: per-meal picks with signature dishes and reference prices |
 | 📄 | **Single offline file, responsive**: one `.html`, adapts to phone & desktop (single column on mobile, multi-column on desktop); images load online, screenshot it for offline |
 | 💡 | **Not just conversion — advice too**: hand it an existing plan and it offers a few optional improvements against a "complete-itinerary" checklist (restrained, never pushy) — the agent's edge over a plain prompt-to-HTML trick |
+| 🔌 | **Optional adapter for official travel skills**: if you also install official skills like Fliggy / Amap / Tencent Maps / DiDi, it calls them for realtime flights, hotels, route planning, and weather, plus "book / navigate / hail a ride" links; **without them it falls back to web research — nothing missing**. Realtime accuracy of that data is owned by those official skills |
 | ⚠️ | **Full disclaimer**: states all info is AI-compiled and may be outdated; points users to official apps |
 
 ### 🏗️ How it works
@@ -184,6 +188,8 @@ A hybrid architecture — **error-prone mechanics are baked into reusable engine
 - `references/design-guidelines.md` — built-in aesthetic guidelines (fallback when no external design skill is present)
 
 > **The design step is pluggable, with no hard dependency**: if you have a design skill like `frontend-design` or `huashu-design`, it's used automatically for better results; without any, the built-in guidelines still produce a presentable page. So this skill installs standalone — no need to install anything else first.
+
+> **Optional adaptation to official travel skills (also a soft dependency)**: if you separately install official travel skills like Fliggy, Amap, Tencent Maps, or DiDi, this skill calls them to enrich realtime data (flights / hotels / route planning / weather / precise coordinates) and adds "book / navigate / hail a ride" links on the page; without them it falls back to web research and no block is missing. The realtime accuracy of that data is owned by those official skills — this skill only adapts and presents it, without endorsement.
 
 ### 🚀 Install (cross-agent)
 
