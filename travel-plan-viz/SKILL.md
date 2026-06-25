@@ -30,18 +30,20 @@ description: 把旅行行程做成美观、可离线、手机优先的单文件 
 
 ## 调研补全 + 生成
 
-1. 按 `references/research-guide.md` 联网补全：坐标、真实图片 URL、评分、点评、营业时间/休息日、门票参考价、需提前订项及 `leadDays`；**行前须知**（天气/台风/穿搭/支付/App/购票时机）、**点到点交通**（方式/票价/耗时）、**时令限定活动**、每餐**必点菜+参考价**；航班给 3-5 个**待选班次**、酒店按**片区+价位**推荐、并准备**免责声明**与全程**贴士**。排程体现**天气/季节逻辑**（户外排凉爽时段）。**不查实时票价。**
-2. 组织成 `assets/page-contract.md` 里定义的 `trip` 数据结构。
-3. 用**设计步骤**生成风格化 HTML：**优先**调用专业设计 skill——`frontend-design` 或 `huashu-design`（花叔Design），任一已安装即用；**两者都没有**时，按 `references/design-guidelines.md` 的内置美学准则自己出。无论哪种方式都要严格遵守 `assets/page-contract.md` 的区块与约束：
+1. **先判断第三方 skill 适配**（详见 `references/research-guide.md`「第三方 skill 适配」节）：若当前 Agent 可调用用户**已装**的官方旅行 skill / MCP（飞猪、高德、腾讯地图、滴滴等），**优先用它们拿对应数据**——高德地理编码拿精确坐标、路线规划增强点到点交通、天气查询、生成专属地图/导航/叫车的行动链接；飞猪拿实时航班/酒店/门票及预订链接。把用到的来源登记进 `trip.dataSources`，行动链接写入对应节点的 `actionLink`（**链接只用官方返回的，绝不手拼**）。**没有这些 skill 就全部走下面的静态调研**，成品不缺区块。数据实时性/真实性由对方官方 skill 负责，本 skill 不背书、措辞中性。
+2. 按 `references/research-guide.md` 联网补全（官方 skill 未覆盖的部分）：坐标、真实图片 URL、评分、点评、营业时间/休息日、门票参考价、需提前订项及 `leadDays`；**行前须知**（天气/台风/穿搭/支付/App/购票时机）、**点到点交通**（方式/票价/耗时）、**时令限定活动**、每餐**必点菜+参考价**；航班给 3-5 个**待选班次**、酒店按**片区+价位**推荐、并准备**免责声明**与全程**贴士**。排程体现**天气/季节逻辑**（户外排凉爽时段）。**本 skill 自身不查实时票价**（实时数据只来自上面用户已装的官方 skill）。
+3. 组织成 `assets/page-contract.md` 里定义的 `trip` 数据结构（含可选的 `dataSources` 与节点 `actionLink`）。
+4. 用**设计步骤**生成风格化 HTML：**优先**调用专业设计 skill——`frontend-design` 或 `huashu-design`（花叔Design），任一已安装即用；**两者都没有**时，按 `references/design-guidelines.md` 的内置美学准则自己出。无论哪种方式都要严格遵守 `assets/page-contract.md` 的区块与约束：
    - 内联 `assets/map.js`、`assets/reminders.js` 内容到 HTML（保证单文件）。
    - 页顶清单用 `computeReminders` + `renderChecklistHTML`。
    - 展示行前须知区块；航班区展示待选班次（已预订的高亮），酒店区按片区+价位展示，附近显著展示免责声明。
    - 时间轴卡片展示营业时间/门票参考价/交通/时令活动等可选字段；展示每日餐饮（必点菜+价）、当日与全程贴士、单日二选一方案（若有）。
    - 地图用 `initTravelMap`，引入 Leaflet CDN 的 CSS/JS。
    - 时间轴上 `needsBooking` 项插入 `reminderBadgeHTML(leadDays)`。
+   - **可选适配元素**：节点带 `actionLink` 时渲染「去预订/导航/叫车」按钮（缺则不渲染、不手拼）；`dataSources` 非空时中性注明数据来源。
    - 每趟行程用不同配色。
-4. 保存为 `<行程名>-旅行计划.html` 到工作目录。
-5. 告诉用户：之后可把该 HTML 文件丢回来，说"把第三天的 X 挪到第四天"，会在原结构上修改。
+5. 保存为 `<行程名>-旅行计划.html` 到工作目录。
+6. 告诉用户：之后可把该 HTML 文件丢回来，说"把第三天的 X 挪到第四天"，会在原结构上修改。
 
 ## 不做
 

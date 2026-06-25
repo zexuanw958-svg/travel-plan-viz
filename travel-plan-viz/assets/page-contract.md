@@ -23,9 +23,10 @@ const trip = {
   },
 
   // 航班：已预订高亮；未预订时给 3-5 个待选班次供自行核实
+  // actionLink 可选：仅当链接来自用户已装的官方 skill（如飞猪）时给，{label,url}；否则省略，别手拼。
   flights: {
     booked: [ { label, code, time } ],
-    candidates: [ { label, code, time, note } ]   // note 写机型/直飞或经停/大致价位区间
+    candidates: [ { label, code, time, note, actionLink } ]   // note 写机型/直飞或经停/大致价位区间
   },
 
   // 酒店：综合各景点位置，按"片区 + 价位"推荐
@@ -33,6 +34,7 @@ const trip = {
     {
       area: "尖沙咀",
       reason: "靠近星光大道、天星小轮，地铁交通便利",
+      // option 可选 actionLink={label,url}：仅当来自官方 skill（如飞猪酒店/高德周边搜索）返回的预订/详情链接
       options: [
         { tier: "经济", name: "...", priceRange: "约 ¥500/晚", note: "..." },
         { tier: "中档", name: "...", priceRange: "约 ¥1000/晚", note: "..." },
@@ -42,6 +44,13 @@ const trip = {
   ],
 
   disclaimer: "本页全部信息（天气、航班、酒店、餐厅、景点、门票、价格、营业时间、评分、活动等）均为 AI 基于公开资料整理的参考建议，可能不准确或已过时，不保证与实时情况一致；请务必在官方渠道 / 订票订房 / 地图等 App 上核实后再做决定或前往。",
+
+  // 可选：本次若用了用户已装的官方旅行 skill（飞猪/高德/腾讯地图/滴滴等）补数据，在此登记来源，页面据此注明；没用到就整个省略。
+  // 责任边界：这些来源的数据实时性/真实性由对方官方 skill 负责，本页只适配呈现、不背书，措辞中性、不替任一家打广告。
+  dataSources: [
+    { name: "高德地图 skill", scope: "点到点路线规划、坐标", realtime: true },
+    { name: "飞猪 flyai",     scope: "航班候选",            realtime: true }
+  ],
 
   // 全程通用避坑贴士
   tips: [
@@ -74,7 +83,7 @@ const trip = {
           openingHours: "全天开放",        // 可选
           closedDays: "周一休",            // 可选，无则省略
           ticketPrice: "免费 / 缆车套票约 ¥88",  // 可选，参考价（非实时）
-          transport: { mode: "天星小轮", fare: "约 ¥3", duration: "约 10 分钟" }, // 可选：如何到达本点
+          transport: { mode: "天星小轮", fare: "约 ¥3", duration: "约 10 分钟", actionLink }, // 可选：如何到达本点；actionLink 可选={label,url}，仅当来自官方地图 skill 的路线规划/导航链接（高德/腾讯/滴滴）
           seasonal: "暑期限定灯光秀（6/12–8/31）",  // 可选：时令活动
           needsBooking: false,
           leadDays: 0
@@ -104,6 +113,12 @@ const trip = {
 7. **每日时间轴**：按天分组，显示当日 `weekday`/`theme`；早/中/晚分段，每个 slot 卡片含 `photo`、`rating`、`review`，并展示存在的可选字段（`openingHours`、`closedDays`、`ticketPrice`、`transport` 的方式/票价/耗时、`seasonal`）；`needsBooking` 为 true 时插入 `reminderBadgeHTML(leadDays)`。当日若有 `tips`、`alternatives`（二选一卡片）也要展示。
 8. **每日餐饮**：展示当日 `dining`，每餐含 `place`、`hours` 与必点菜（`dishes` 的名称 + `price`）。
 9. **全程实用贴士**：展示 `trip.tips` 列表。
+
+## 可选适配元素（仅当数据来自用户已装的官方旅行 skill 时才出现，详见 research-guide「第三方 skill 适配」）
+
+- **行动链接 `actionLink`**：航班 `candidates`、酒店 `options`、`slot.transport` 等若带 `actionLink={label,url}`，渲染成一个明确的「去预订 / 导航 / 叫车」按钮或链接（新标签打开）。**没有就不渲染**，绝不为此手拼链接。
+- **数据来源 `dataSources`**：若 `trip.dataSources` 非空，在相关区块或免责声明附近用一行小字中性注明（如「实时航班/酒店来源：飞猪 skill；路线规划与天气来源：高德 skill，时效性由其官方保证」）。措辞**中性、不夸、不推荐某一家**；与 AI 静态整理的内容（标"参考·可能过时"）做视觉区分即可。
+- 这些是**渐进增强**：缺这些字段时页面与现在完全一致，不留空块、不报错。
 
 ## 硬性约束
 
