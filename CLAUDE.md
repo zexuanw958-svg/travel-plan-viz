@@ -4,7 +4,7 @@
 
 ## 这是什么
 
-`travel-plan-viz` —— 一个 Claude Code / Codex 通用 Skill（也可适配其他 Agent），把旅行行程生成为单文件、可离线、手机优先的 HTML（交互地图 + 每日时间轴 + 出发前提醒 + 行前须知 + 待选航班 + 片区价位酒店）。
+`travel-plan-viz` —— 一个 Claude Code / Codex 通用 Skill（也可适配其他 Agent），把旅行行程生成为单文件、离线可读、手机优先的 HTML（交互地图 + 每日时间轴 + 出发前提醒 + 行前须知 + 待选航班 + 片区价位酒店）。
 
 > **命名分层（别去"统一"）**：README 门面品牌名是 **Migo · 旅行领航**（Migo = 候鸟领航员吉祥物），但技术 id、SKILL.md `name`、触发词、GitHub 仓库名一律保持 `travel-plan-viz` 不变——这是有意的分层设计（门面品牌与技术标识各司其职，保持安装路径与触发词稳定）。README 与 SKILL.md 名称"不一致"属正常，请勿为对齐而改动触发词或仓库名。
 
@@ -13,7 +13,10 @@
 - **混合架构**：易错的机械逻辑固化为可复用 JS 引擎，视觉表现每次交给**设计步骤**重新生成。改动时别把布局/配色写死进引擎，也别把日期/导航逻辑塞给设计步骤临场生成。
 - **设计步骤可插拔（无硬依赖）**：优先用 `frontend-design` 或 `huashu-design` skill（任一已安装），都没有则走 `references/design-guidelines.md` 内置准则。这样 skill 可独立分享，不强制别人先装别的 skill。别把它改回硬依赖某个外部 skill。
 - **第三方旅行 skill 可选适配（软依赖，非代言）**：用户若**同时装了**飞猪、高德、腾讯地图、滴滴等官方旅行类 skill / MCP，本 skill 可调用它们拿实时/权威数据（航班、酒店、坐标、**路线规划**、用车等）来补全调研，并在成品里附「去预订 / 导航 / 叫车」行动链接；**没装则走现有静态调研，功能不缺失、不降级**。这跟「设计步骤可插拔」同构——永远是软依赖、优雅降级，**别改成硬依赖或强制安装**。两条底线不能破：①**责任边界**——这类数据的实时性与真实性由对方官方 skill 负责，本 skill 只做适配与编排，页面须标注数据来源、用中性措辞、不背书不替某一家打广告；②本 skill 引擎/调研**永远不自行抓实时票价**，实时数据只可能来自用户已装的官方 skill（不违背「不查实时票价」红线）。细则见 `references/research-guide.md` 的「第三方 skill 适配」节，字段见 `assets/page-contract.md`。
-- **引擎双端可用**：`assets/map.js`、`assets/reminders.js` 同时跑在浏览器和 Node，靠文件底部的 `if (typeof module !== 'undefined' && module.exports)` 守卫导出。改这两个文件别破坏这个守卫。
+- **引擎双端可用**：`assets/map.js`、`assets/reminders.js` 同时跑在浏览器和 Node，靠文件底部的 `if (typeof module !== 'undefined' && module.exports)` 守卫导出。改这两个文件别破坏这个守卫。`assets/validate.js` 是第三个引擎（契约机械校验，Node 侧用，含 CLI），不内联进页面。
+- **坐标一律 WGS-84**：OSM 瓦片是 WGS-84，高德/腾讯返回 GCJ-02——来自它们的坐标必须经 `map.js` 的 `gcj02ToWgs84` 转换再入 `trip`，否则境内点位偏移几百米。别删这个转换，也别默认所有坐标都要转（静态调研的坐标通常已是 WGS-84）。
+- **数据与呈现分离**：完整 `trip` 以 `<script id="trip-data" type="application/json">` 内嵌进成品页面，迭代修改读这块 JSON、不反解析 DOM。别把这个约定改掉。
+- **离线能力如实表述**：对外说「离线可读」（文字行程离线可读；地图/图片需联网、有 onerror 降级），别写成"完全离线可用"。
 - **`escapeHTML` 在 map.js 与 reminders.js 各有一份，是故意重复**——两文件须各自独立，别合并去重。
 - **内容契约是权威**：`assets/page-contract.md` 定义 `trip` 数据结构和必须包含的区块。改了引擎导出的函数名/数据字段，必须同步这份契约和 `SKILL.md`。
 
@@ -22,7 +25,7 @@
 ```bash
 node --test test/*.test.js          # 注意是 glob，不是 `node --test test/`（后者在本机 Node 会报模块找不到）
 ```
-只覆盖纯函数（提醒日期计算、导航链接、路线坐标）；地图初始化与 HTML 生成靠 `samples/` 手动验证。
+只覆盖纯函数（提醒日期计算、导航链接、路线坐标、GCJ-02→WGS-84 转换、契约校验）；地图初始化与 HTML 生成靠 `samples/` 手动验证。生成成品的机械校验用 `node travel-plan-viz/assets/validate.js <成品.html>`（注意：`samples/` 里的旧样例先于 trip-data 内嵌约定，跑校验会报缺块，属预期）。
 
 ## 数据采集约束（写在 references/research-guide.md，改动要同步）
 
