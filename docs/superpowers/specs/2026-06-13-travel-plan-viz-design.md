@@ -126,3 +126,17 @@ travel-plan-viz/
 **落地文件**：契约新增可选 `dataSources`（来源登记）与节点 `actionLink`（`page-contract.md`）；`research-guide.md` 新增「第三方 skill 适配」节（能力盘点 + 三条铁律 + 交通路线示例）；`SKILL.md` 调研阶段加前置适配判断、生成阶段渲染适配元素；`CLAUDE.md` 架构红线新增对应条目；`README.md` 中英门面同步。
 
 > 全部为渐进增强：缺这些字段时页面与此前完全一致。当前权威见 `CLAUDE.md` 架构红线与 `references/research-guide.md`「第三方 skill 适配」节。
+
+---
+
+## 实现后演进（2026-07-02：可靠性硬化——坐标系、导航、校验、数据内嵌）
+
+**背景**：以"页面到了用户手机上那一刻能不能用"为第一性重审全仓库，发现并修复五个可靠性缺口。均为契约/引擎层修复，不改变混合架构与软依赖定位。
+
+- **GCJ-02 → WGS-84 坐标纠偏**：高德/腾讯返回 GCJ-02 坐标，直接画在 OSM（WGS-84）瓦片上境内点位偏移一百到几百米——恰好制造第三方适配想解决的"坐标翻车"。`map.js` 新增 `gcj02ToWgs84` 纯函数（境外坐标原样返回，含单测），契约/调研指南/SKILL/CLAUDE.md 红线同步"坐标一律 WGS-84"。
+- **导航链接兼容 iOS**：原 `geo:` URI iOS 不识别（点击无反应）。`buildNavLink` 按 UA 分流：iOS 生成 Apple Maps https 链接，其余平台保持 `geo:`；不传 UA 向后兼容。
+- **离线能力如实分层**：原表述"可离线"与实际（Leaflet CDN / OSM 瓦片 / 在线图片离线全挂）矛盾。全仓库统一为「离线可读」：文字行程离线可读，地图/图片需联网；契约新增图片 `onerror` 统一降级约束（中性色块，不露破图），`initTravelMap` 支持 `opts.tileUrl` 替换瓦片源。
+- **数据与呈现分离（trip-data 内嵌）**：完整 `trip` 以 `<script id="trip-data" type="application/json">` 内嵌进成品；迭代修改直接读 JSON 重渲染，不反解析 DOM（必丢 `actionLink`/`leadDays` 等不可见字段）。`samples/` 旧样例先于此约定，跑校验报缺块属预期。
+- **契约机械校验引擎**：新增第三个引擎 `assets/validate.js`（Node 侧，含 CLI `node assets/validate.js <成品.html>`）：trip 必填字段、坐标越界（抓经纬度写反）、离群坐标（与行程中位点差 >3° 报 warning，抓查错城市）、必需区块标记、trip-data 可解析。SKILL 工作流新增"生成后必跑校验，ERROR 修复重跑"一步。ERROR/WARNING 分级：前者机械可判定必须修，后者供人工判断。
+
+> 落地文件：`assets/map.js`、`assets/validate.js`（新增）、`test/`（19 用例）、`page-contract.md` 硬性约束三条新增、`SKILL.md` 第 6 步、`research-guide.md` 坐标系陷阱节、`porting-to-other-agents.md`、`CLAUDE.md` 红线、`README.md` 中英门面。
